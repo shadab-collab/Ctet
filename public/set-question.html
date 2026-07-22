@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Question Setter</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+    background:#f5f5f5;
+    font-family:Arial,sans-serif;
+}
+
+.container{
+    max-width:700px;
+    margin:20px auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+}
+
+input,textarea,select,button{
+
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    font-size:16px;
+    box-sizing:border-box;
+
+}
+
+textarea{
+
+    height:70px;
+    resize:vertical;
+
+}
+
+button{
+
+    background:#0d6efd;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+
+}
+
+button:hover{
+
+    background:#0b5ed7;
+
+}
+
+.question-card{
+
+    border:1px solid #ddd;
+    padding:12px;
+    margin-top:12px;
+    border-radius:8px;
+
+}
+
+.delete{
+
+    background:#dc3545;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Today's Quiz Question</h2>
+
+<input
+id="quizTitle"
+placeholder="Quiz Title">
+
+<textarea
+id="questionHindi"
+placeholder="Question Hindi"></textarea>
+
+<textarea
+id="questionEnglish"
+placeholder="Question English"></textarea>
+
+<input
+id="a_hi"
+placeholder="Option A Hindi">
+
+<input
+id="a_en"
+placeholder="Option A English">
+
+<input
+id="b_hi"
+placeholder="Option B Hindi">
+
+<input
+id="b_en"
+placeholder="Option B English">
+
+<input
+id="c_hi"
+placeholder="Option C Hindi">
+
+<input
+id="c_en"
+placeholder="Option C English">
+
+<input
+id="d_hi"
+placeholder="Option D Hindi">
+
+<input
+id="d_en"
+placeholder="Option D English">
+
+<select id="answer">
+
+<option value="0">
+Correct Answer A
+</option>
+
+<option value="1">
+Correct Answer B
+</option>
+
+<option value="2">
+Correct Answer C
+</option>
+
+<option value="3">
+Correct Answer D
+</option>
+
+</select>
+
+<button onclick="saveQuestion()">
+Save Question
+</button>
+
+<hr>
+
+<h3>Today's Questions</h3>
+
+<div id="list"></div>
+
+</div>
+
+<script src="set-question.js"></script>
+
+</body>
+</html>

@@ -152,3 +152,83 @@ button{
 }
 
 }
+.q-hi {
+    
+    font-size: 22px;
+    font-weight: bold;
+    
+}
+
+.q-en {
+    
+    font-size: 18px;
+    color: #555;
+    
+}
+
+.option {
+    
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    
+}
+.correct {
+    
+    background: #22c55e !important;
+    color: #fff;
+    
+}
+
+.wrong {
+    
+    background: #ef4444 !important;
+    color: #fff;
+    
+}
+
+.option {
+    
+    cursor: pointer;
+    transition: .2s;
+    
+}
+
+.option:hover {
+    
+    transform: scale(1.02);
+    
+}
+.rank {
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    margin: 8px 0;
+    padding: 12px;
+    
+    border-radius: 8px;
+    
+    background: #f2f2f2;
+    
+}
+
+.gold {
+    
+    background: #FFD700;
+    
+}
+
+.silver {
+    
+    background: #C0C0C0;
+    
+}
+
+.bronze {
+    
+    background: #CD7F32;
+    color: white;
+    
+}
