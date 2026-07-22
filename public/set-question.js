@@ -1,5 +1,8 @@
 const API = "/api/questions";
 
+// Edit Mode
+let editingId = null;
+
 window.onload = () => {
   
   loadQuestions();
@@ -12,9 +15,8 @@ window.onload = () => {
 
 function autoFillQuestion() {
   
-  const text = document
-    .getElementById("bulkInput")
-    .value;
+  const text =
+    document.getElementById("bulkInput").value;
   
   function find(start, end) {
     
@@ -24,7 +26,9 @@ function autoFillQuestion() {
     
     const from = s + start.length;
     
-    const e = text.indexOf(end, from);
+    const e = end ?
+      text.indexOf(end, from) :
+      -1;
     
     if (e == -1)
       return text.substring(from).trim();
@@ -34,94 +38,46 @@ function autoFillQuestion() {
   }
   
   document.getElementById("questionHindi").value =
-    
-    find(
-      "Question Hindi:",
-      "Question English:"
-    );
+    find("Question Hindi:", "Question English:");
   
   document.getElementById("questionEnglish").value =
-    
-    find(
-      "Question English:",
-      "A Hindi:"
-    );
+    find("Question English:", "A Hindi:");
   
   document.getElementById("a_hi").value =
-    
-    find(
-      "A Hindi:",
-      "A English:"
-    );
+    find("A Hindi:", "A English:");
   
   document.getElementById("a_en").value =
-    
-    find(
-      "A English:",
-      "B Hindi:"
-    );
+    find("A English:", "B Hindi:");
   
   document.getElementById("b_hi").value =
-    
-    find(
-      "B Hindi:",
-      "B English:"
-    );
+    find("B Hindi:", "B English:");
   
   document.getElementById("b_en").value =
-    
-    find(
-      "B English:",
-      "C Hindi:"
-    );
+    find("B English:", "C Hindi:");
   
   document.getElementById("c_hi").value =
-    
-    find(
-      "C Hindi:",
-      "C English:"
-    );
+    find("C Hindi:", "C English:");
   
   document.getElementById("c_en").value =
-    
-    find(
-      "C English:",
-      "D Hindi:"
-    );
+    find("C English:", "D Hindi:");
   
   document.getElementById("d_hi").value =
-    
-    find(
-      "D Hindi:",
-      "D English:"
-    );
+    find("D Hindi:", "D English:");
   
   document.getElementById("d_en").value =
-    
-    find(
-      "D English:",
-      "Answer:"
-    );
+    find("D English:", "Answer:");
   
-  const ans =
-    
-    find(
-      "Answer:",
-      ""
-    )
+  const ans = find("Answer:", "")
     .trim()
     .toUpperCase();
   
   let index = 0;
   
-  if (ans === "A") index = 0;
   if (ans === "B") index = 1;
   if (ans === "C") index = 2;
   if (ans === "D") index = 3;
   
-  document
-    .getElementById("answer")
-    .value = index;
+  document.getElementById("answer").value = index;
   
 }
 // ===========================
@@ -198,9 +154,23 @@ async function saveQuestion(){
 
     };
 
-    const res=await fetch(API,{
+    // ===================
+    // New या Edit
+    // ===================
 
-        method:"POST",
+    const url =
+    editingId
+    ? API + "/" + editingId
+    : API;
+
+    const method =
+    editingId
+    ? "PUT"
+    : "POST";
+
+    const res = await fetch(url,{
+
+        method:method,
 
         headers:{
             "Content-Type":"application/json"
@@ -210,57 +180,73 @@ async function saveQuestion(){
 
     });
 
-    const data=await res.json();
+    const data =
+    await res.json();
 
     if(data.success){
 
-        alert("Question Saved Successfully");
+        alert(
+            editingId
+            ? "Question Updated Successfully"
+            : "Question Saved Successfully"
+        );
+
+        editingId = null;
 
         clearForm();
 
         loadQuestions();
 
-    }else{
+    }
 
-        alert(data.error);
+    else{
+
+        alert(
+            data.error ||
+            "Save Failed"
+        );
 
     }
 
 }
-
-
-
 // ===========================
 // CLEAR FORM
 // ===========================
 
-function clearForm(){
-
-    document.getElementById("bulkInput").value="";
-
-    document.getElementById("questionHindi").value="";
-
-    document.getElementById("questionEnglish").value="";
-
-    document.getElementById("a_hi").value="";
-
-    document.getElementById("a_en").value="";
-
-    document.getElementById("b_hi").value="";
-
-    document.getElementById("b_en").value="";
-
-    document.getElementById("c_hi").value="";
-
-    document.getElementById("c_en").value="";
-
-    document.getElementById("d_hi").value="";
-
-    document.getElementById("d_en").value="";
-
-    document.getElementById("answer").value="0";
-
+function clearForm() {
+  
+  document.getElementById("bulkInput").value = "";
+  
+  document.getElementById("quizTitle").value = "";
+  
+  document.getElementById("questionHindi").value = "";
+  
+  document.getElementById("questionEnglish").value = "";
+  
+  document.getElementById("a_hi").value = "";
+  
+  document.getElementById("a_en").value = "";
+  
+  document.getElementById("b_hi").value = "";
+  
+  document.getElementById("b_en").value = "";
+  
+  document.getElementById("c_hi").value = "";
+  
+  document.getElementById("c_en").value = "";
+  
+  document.getElementById("d_hi").value = "";
+  
+  document.getElementById("d_en").value = "";
+  
+  document.getElementById("answer").value = "0";
+  
+  editingId = null;
+  
 }
+
+
+
 // ===========================
 // LOAD QUESTIONS
 // ===========================
@@ -291,7 +277,7 @@ async function loadQuestions() {
 
                 <button onclick="editQuestion('${q._id}')">
 
-                    Edit
+                    ✏️ Edit
 
                 </button>
 
@@ -299,7 +285,7 @@ async function loadQuestions() {
                     class="delete"
                     onclick="deleteQuestion('${q._id}')">
 
-                    Delete
+                    🗑 Delete
 
                 </button>
 
@@ -320,25 +306,46 @@ async function loadQuestions() {
   }
   
 }
-
-
-
 // ===========================
 // DELETE QUESTION
 // ===========================
 
 async function deleteQuestion(id) {
   
-  if (!confirm("Delete this question?"))
+  if (!confirm("Delete this Question?"))
     return;
   
-  await fetch(API + "/" + id, {
+  try {
     
-    method: "DELETE"
+    const res = await fetch(API + "/" + id, {
+      
+      method: "DELETE"
+      
+    });
     
-  });
+    const data = await res.json();
+    
+    if (data.success) {
+      
+      alert("Question Deleted");
+      
+      loadQuestions();
+      
+    }
+    
+    else {
+      
+      alert(data.error || "Delete Failed");
+      
+    }
+    
+  }
   
-  loadQuestions();
+  catch (err) {
+    
+    console.log(err);
+    
+  }
   
 }
 
@@ -350,106 +357,145 @@ async function deleteQuestion(id) {
 
 async function editQuestion(id) {
   
-  const res = await fetch(API);
+  try {
+    
+    const res = await fetch(API);
+    
+    const data = await res.json();
+    
+    const q = data.find(item => item._id === id);
+    
+    if (!q) {
+      
+      alert("Question Not Found");
+      
+      return;
+      
+    }
+    
+    editingId = id;
+    
+    document.getElementById("quizTitle").value =
+      q.quizTitle || "";
+    
+    document.getElementById("questionHindi").value =
+      q.questionHindi;
+    
+    document.getElementById("questionEnglish").value =
+      q.questionEnglish;
+    
+    document.getElementById("a_hi").value =
+      q.options[0].hi;
+    
+    document.getElementById("a_en").value =
+      q.options[0].en;
+    
+    document.getElementById("b_hi").value =
+      q.options[1].hi;
+    
+    document.getElementById("b_en").value =
+      q.options[1].en;
+    
+    document.getElementById("c_hi").value =
+      q.options[2].hi;
+    
+    document.getElementById("c_en").value =
+      q.options[2].en;
+    
+    document.getElementById("d_hi").value =
+      q.options[3].hi;
+    
+    document.getElementById("d_en").value =
+      q.options[3].en;
+    
+    document.getElementById("answer").value =
+      q.answer;
+    
+    window.scrollTo({
+      
+      top: 0,
+      
+      behavior: "smooth"
+      
+    });
+    
+  }
   
-  const data = await res.json();
-  
-  const q = data.find(item => item._id === id);
-  
-  if (!q) return;
-  
-  document.getElementById("questionHindi").value =
-    q.questionHindi;
-  
-  document.getElementById("questionEnglish").value =
-    q.questionEnglish;
-  
-  document.getElementById("a_hi").value =
-    q.options[0].hi;
-  
-  document.getElementById("a_en").value =
-    q.options[0].en;
-  
-  document.getElementById("b_hi").value =
-    q.options[1].hi;
-  
-  document.getElementById("b_en").value =
-    q.options[1].en;
-  
-  document.getElementById("c_hi").value =
-    q.options[2].hi;
-  
-  document.getElementById("c_en").value =
-    q.options[2].en;
-  
-  document.getElementById("d_hi").value =
-    q.options[3].hi;
-  
-  document.getElementById("d_en").value =
-    q.options[3].en;
-  
-  document.getElementById("answer").value =
-    q.answer;
-  
-  // पुराना प्रश्न हटाएँ ताकि Save करने पर अपडेट जैसा व्यवहार हो
-  await fetch(API + "/" + id, {
-    method: "DELETE"
-  });
-  
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  catch (err) {
+    
+    console.log(err);
+    
+  }
   
 }
 // ===================================
 // BULK IMPORT
 // ===================================
 
-async function bulkImport() {
+async function bulkImport(){
 
-    const text = document
-        .getElementById("bulkInput")
-        .value
-        .trim();
+    const text =
+    document.getElementById("bulkInput")
+    .value.trim();
 
-    if (!text) {
+    if(!text){
+
         alert("पहले प्रश्न Paste करें");
+
         return;
+
     }
 
-    // प्रत्येक प्रश्न को ====== से अलग करें
-    const blocks = text.split("======");
+    const blocks =
+    text.split("======");
 
     let saved = 0;
 
-    for (const block of blocks) {
+    for(const block of blocks){
 
-        if (!block.trim()) continue;
+        if(!block.trim()) continue;
 
-        const body = parseQuestion(block);
+        const body =
+        parseQuestion(block);
 
-        if (!body) continue;
+        if(!body.questionHindi) continue;
 
-        await fetch(API, {
+        try{
 
-            method: "POST",
+            const res = await fetch(API,{
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                method:"POST",
 
-            body: JSON.stringify(body)
+                headers:{
+                    "Content-Type":"application/json"
+                },
 
-        });
+                body:JSON.stringify(body)
 
-        saved++;
+            });
+
+            const data =
+            await res.json();
+
+            if(data.success){
+
+                saved++;
+
+            }
+
+        }
+
+        catch(err){
+
+            console.log(err);
+
+        }
 
     }
 
     alert(saved + " Questions Imported Successfully");
 
-    document.getElementById("bulkInput").value = "";
+    clearForm();
 
     loadQuestions();
 
@@ -482,9 +528,12 @@ function parseQuestion(text){
 
     }
 
-    const ans=find("Answer:","").toUpperCase();
+    const ans =
+    find("Answer:","")
+    .trim()
+    .toUpperCase();
 
-    let index=0;
+    let index = 0;
 
     if(ans=="B") index=1;
     if(ans=="C") index=2;
@@ -493,7 +542,7 @@ function parseQuestion(text){
     return{
 
         quizTitle:
-        document.getElementById("quizTitle").value,
+        document.getElementById("quizTitle").value.trim(),
 
         quizDate:
         new Date().toISOString().slice(0,10),
@@ -507,23 +556,35 @@ function parseQuestion(text){
         options:[
 
             {
+
                 hi:find("A Hindi:","A English:"),
+
                 en:find("A English:","B Hindi:")
+
             },
 
             {
+
                 hi:find("B Hindi:","B English:"),
+
                 en:find("B English:","C Hindi:")
+
             },
 
             {
+
                 hi:find("C Hindi:","C English:"),
+
                 en:find("C English:","D Hindi:")
+
             },
 
             {
+
                 hi:find("D Hindi:","D English:"),
+
                 en:find("D English:","Answer:")
+
             }
 
         ],
@@ -576,5 +637,31 @@ async function resetLeaderboard() {
     alert("Server Error");
     
   }
+  
+}
+
+
+
+// ===========================
+// CANCEL EDIT
+// ===========================
+
+function cancelEdit() {
+  
+  editingId = null;
+  
+  clearForm();
+  
+}
+
+
+
+// ===========================
+// REFRESH QUESTIONS
+// ===========================
+
+function refreshQuestions() {
+  
+  loadQuestions();
   
 }
