@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTET Quiz</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>CTET LIVE QUIZ</h1>
+
+    <!-- नाम -->
+    <div id="loginBox">
+
+        <h2>अपना नाम लिखें</h2>
+
+        <input
+            type="text"
+            id="studentName"
+            placeholder="नाम">
+
+        <button onclick="startQuiz()">
+            Start Quiz
+        </button>
+
+    </div>
+
+    <!-- Quiz -->
+    <div id="quizBox" style="display:none;">
+
+        <div class="top">
+
+            <span id="questionNumber">
+                Question 1
+            </span>
+
+            <span id="score">
+                Score : 0
+            </span>
+
+        </div>
+
+        <div id="question" class="question">
+        </div>
+
+        <div id="options" class="options">
+        </div>
+
+        <button id="nextBtn" onclick="nextQuestion()">
+            Next
+        </button>
+
+    </div>
+
+    <!-- बीच का Leaderboard -->
+
+    <div id="leaderboardBox"
+         style="display:none;">
+
+        <h2>
+            Leaderboard
+        </h2>
+
+        <div id="leaderboard">
+        </div>
+
+        <button onclick="continueQuiz()">
+            Continue
+        </button>
+
+    </div>
+
+    <!-- Result -->
+
+    <div id="resultBox"
+         style="display:none;">
+
+        <h2>
+            Quiz Finished
+        </h2>
+
+        <h3 id="finalName"></h3>
+
+        <h2 id="finalScore"></h2>
+
+        <h3>
+            Final Leaderboard
+        </h3>
+
+        <div id="finalLeaderboard"></div>
+
+    </div>
+
+</div>
+
+<!-- सही उत्तर की ध्वनि -->
+<audio
+id="correctSound"
+src="correct.mp3">
+</audio>
+
+<!-- गलत उत्तर की ध्वनि -->
+<audio
+id="wrongSound"
+src="wrong.mp3">
+</audio>
+
+<script src="questions.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+</html>

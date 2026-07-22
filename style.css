@@ -1,0 +1,154 @@
+/* =========================
+   CTET LIVE QUIZ
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+}
+
+.container{
+    max-width:700px;
+    margin:30px auto;
+    background:#fff;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+
+h1{
+    text-align:center;
+    color:#0d47a1;
+    margin-bottom:20px;
+}
+
+h2,h3{
+    text-align:center;
+    margin:15px 0;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #bbb;
+    border-radius:8px;
+    font-size:18px;
+    margin-top:15px;
+}
+
+button{
+    width:100%;
+    margin-top:15px;
+    padding:14px;
+    font-size:18px;
+    border:none;
+    border-radius:8px;
+    background:#1565c0;
+    color:#fff;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0d47a1;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.question{
+    font-size:22px;
+    margin-bottom:20px;
+    line-height:1.6;
+}
+
+.option{
+    border:2px solid #ddd;
+    padding:14px;
+    margin:10px 0;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.25s;
+    font-size:18px;
+}
+
+.option:hover{
+    background:#f1f1f1;
+}
+
+.correct{
+    background:#4caf50;
+    color:white;
+    border-color:#4caf50;
+}
+
+.wrong{
+    background:#e53935;
+    color:white;
+    border-color:#e53935;
+}
+
+.selected{
+    border:2px solid #1565c0;
+}
+
+#leaderboard{
+    margin-top:15px;
+}
+
+.rank{
+    display:flex;
+    justify-content:space-between;
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    font-size:18px;
+}
+
+.gold{
+    background:#fff8dc;
+}
+
+.silver{
+    background:#f2f2f2;
+}
+
+.bronze{
+    background:#ffe0b2;
+}
+
+#finalScore{
+    color:#0d47a1;
+    margin:20px 0;
+    text-align:center;
+}
+
+@media(max-width:600px){
+
+.container{
+    margin:10px;
+    padding:15px;
+}
+
+.question{
+    font-size:20px;
+}
+
+.option{
+    font-size:17px;
+}
+
+button{
+    font-size:17px;
+}
+
+}
