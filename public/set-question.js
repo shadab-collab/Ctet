@@ -1,148 +1,335 @@
 const API = "/api/questions";
 
-// पेज खुलते ही प्रश्न लोड करें
 window.onload = () => {
+  
   loadQuestions();
+  
 };
 
-// =======================
-// Save Question
-// =======================
+// ===========================
+// AUTO FILL
+// ===========================
 
-async function saveQuestion() {
+function autoFillQuestion() {
   
-  const today = new Date().toISOString().slice(0, 10);
+  const text = document
+    .getElementById("bulkInput")
+    .value;
   
-  const body = {
+  function find(start, end) {
     
-    quizTitle: document.getElementById("quizTitle").value,
+    const s = text.indexOf(start);
     
-    quizDate: today,
+    if (s == -1) return "";
     
-    questionHindi: document.getElementById("questionHindi").value,
+    const from = s + start.length;
     
-    questionEnglish: document.getElementById("questionEnglish").value,
+    const e = text.indexOf(end, from);
     
-    options: [
-      
-      {
-        hi: document.getElementById("a_hi").value,
-        en: document.getElementById("a_en").value
-      },
-      
-      {
-        hi: document.getElementById("b_hi").value,
-        en: document.getElementById("b_en").value
-      },
-      
-      {
-        hi: document.getElementById("c_hi").value,
-        en: document.getElementById("c_en").value
-      },
-      
-      {
-        hi: document.getElementById("d_hi").value,
-        en: document.getElementById("d_en").value
-      }
-      
-    ],
+    if (e == -1)
+      return text.substring(from).trim();
     
-    answer: Number(
-      document.getElementById("answer").value
-    ),
+    return text.substring(from, e).trim();
     
-    published: true
-    
-  };
+  }
   
-  const res = await fetch(API, {
+  document.getElementById("questionHindi").value =
     
-    method: "POST",
-    
-    headers: {
-      "Content-Type": "application/json"
-    },
-    
-    body: JSON.stringify(body)
-    
-  });
+    find(
+      "Question Hindi:",
+      "Question English:"
+    );
   
-  const data = await res.json();
+  document.getElementById("questionEnglish").value =
+    
+    find(
+      "Question English:",
+      "A Hindi:"
+    );
   
-  if (data.success) {
+  document.getElementById("a_hi").value =
     
-    alert("Question Saved");
+    find(
+      "A Hindi:",
+      "A English:"
+    );
+  
+  document.getElementById("a_en").value =
     
-    document
-      .querySelectorAll("input,textarea")
-      .forEach(e => {
-        
-        if (e.id != "quizTitle")
-          e.value = "";
-        
-      });
+    find(
+      "A English:",
+      "B Hindi:"
+    );
+  
+  document.getElementById("b_hi").value =
     
-    loadQuestions();
+    find(
+      "B Hindi:",
+      "B English:"
+    );
+  
+  document.getElementById("b_en").value =
     
-  } else {
+    find(
+      "B English:",
+      "C Hindi:"
+    );
+  
+  document.getElementById("c_hi").value =
     
-    alert(data.error);
+    find(
+      "C Hindi:",
+      "C English:"
+    );
+  
+  document.getElementById("c_en").value =
+    
+    find(
+      "C English:",
+      "D Hindi:"
+    );
+  
+  document.getElementById("d_hi").value =
+    
+    find(
+      "D Hindi:",
+      "D English:"
+    );
+  
+  document.getElementById("d_en").value =
+    
+    find(
+      "D English:",
+      "Answer:"
+    );
+  
+  const ans =
+    
+    find(
+      "Answer:",
+      ""
+    )
+    .trim()
+    .toUpperCase();
+  
+  let index = 0;
+  
+  if (ans === "A") index = 0;
+  if (ans === "B") index = 1;
+  if (ans === "C") index = 2;
+  if (ans === "D") index = 3;
+  
+  document
+    .getElementById("answer")
+    .value = index;
+  
+}
+// ===========================
+// SAVE QUESTION
+// ===========================
+
+async function saveQuestion(){
+
+    const today =
+    new Date().toISOString().slice(0,10);
+
+    const body={
+
+        quizTitle:
+        document.getElementById("quizTitle").value.trim(),
+
+        quizDate:today,
+
+        questionHindi:
+        document.getElementById("questionHindi").value.trim(),
+
+        questionEnglish:
+        document.getElementById("questionEnglish").value.trim(),
+
+        options:[
+
+            {
+
+                hi:
+                document.getElementById("a_hi").value.trim(),
+
+                en:
+                document.getElementById("a_en").value.trim()
+
+            },
+
+            {
+
+                hi:
+                document.getElementById("b_hi").value.trim(),
+
+                en:
+                document.getElementById("b_en").value.trim()
+
+            },
+
+            {
+
+                hi:
+                document.getElementById("c_hi").value.trim(),
+
+                en:
+                document.getElementById("c_en").value.trim()
+
+            },
+
+            {
+
+                hi:
+                document.getElementById("d_hi").value.trim(),
+
+                en:
+                document.getElementById("d_en").value.trim()
+
+            }
+
+        ],
+
+        answer:Number(
+            document.getElementById("answer").value
+        ),
+
+        published:true
+
+    };
+
+    const res=await fetch(API,{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify(body)
+
+    });
+
+    const data=await res.json();
+
+    if(data.success){
+
+        alert("Question Saved Successfully");
+
+        clearForm();
+
+        loadQuestions();
+
+    }else{
+
+        alert(data.error);
+
+    }
+
+}
+
+
+
+// ===========================
+// CLEAR FORM
+// ===========================
+
+function clearForm(){
+
+    document.getElementById("bulkInput").value="";
+
+    document.getElementById("questionHindi").value="";
+
+    document.getElementById("questionEnglish").value="";
+
+    document.getElementById("a_hi").value="";
+
+    document.getElementById("a_en").value="";
+
+    document.getElementById("b_hi").value="";
+
+    document.getElementById("b_en").value="";
+
+    document.getElementById("c_hi").value="";
+
+    document.getElementById("c_en").value="";
+
+    document.getElementById("d_hi").value="";
+
+    document.getElementById("d_en").value="";
+
+    document.getElementById("answer").value="0";
+
+}
+// ===========================
+// LOAD QUESTIONS
+// ===========================
+
+async function loadQuestions() {
+  
+  try {
+    
+    const res = await fetch(API);
+    
+    const data = await res.json();
+    
+    let html = "";
+    
+    data.forEach((q, index) => {
+      
+      html += `
+
+            <div class="question-card">
+
+                <h4>Question ${index+1}</h4>
+
+                <p><b>Hindi :</b><br>${q.questionHindi}</p>
+
+                <p><b>English :</b><br>${q.questionEnglish}</p>
+
+                <hr>
+
+                <button onclick="editQuestion('${q._id}')">
+
+                    Edit
+
+                </button>
+
+                <button
+                    class="delete"
+                    onclick="deleteQuestion('${q._id}')">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+            `;
+      
+    });
+    
+    document.getElementById("list").innerHTML = html;
+    
+  }
+  
+  catch (err) {
+    
+    console.log(err);
     
   }
   
 }
 
-// =======================
-// Load Questions
-// =======================
 
-async function loadQuestions() {
-  
-  const res = await fetch(API);
-  
-  const data = await res.json();
-  
-  let html = "";
-  
-  data.forEach((q, index) => {
-    
-    html += `
 
-<div class="question-card">
-
-<b>Q${index+1}</b><br><br>
-
-${q.questionHindi}<br>
-
-${q.questionEnglish}
-
-<br><br>
-
-<button
-class="delete"
-onclick="deleteQuestion('${q._id}')">
-
-Delete
-
-</button>
-
-</div>
-
-`;
-    
-  });
-  
-  document.getElementById("list").innerHTML = html;
-  
-}
-
-// =======================
-// Delete
-// =======================
+// ===========================
+// DELETE QUESTION
+// ===========================
 
 async function deleteQuestion(id) {
   
-  if (!confirm("Delete Question?"))
+  if (!confirm("Delete this question?"))
     return;
   
   await fetch(API + "/" + id, {
@@ -153,4 +340,198 @@ async function deleteQuestion(id) {
   
   loadQuestions();
   
+}
+
+
+
+// ===========================
+// EDIT QUESTION
+// ===========================
+
+async function editQuestion(id) {
+  
+  const res = await fetch(API);
+  
+  const data = await res.json();
+  
+  const q = data.find(item => item._id === id);
+  
+  if (!q) return;
+  
+  document.getElementById("questionHindi").value =
+    q.questionHindi;
+  
+  document.getElementById("questionEnglish").value =
+    q.questionEnglish;
+  
+  document.getElementById("a_hi").value =
+    q.options[0].hi;
+  
+  document.getElementById("a_en").value =
+    q.options[0].en;
+  
+  document.getElementById("b_hi").value =
+    q.options[1].hi;
+  
+  document.getElementById("b_en").value =
+    q.options[1].en;
+  
+  document.getElementById("c_hi").value =
+    q.options[2].hi;
+  
+  document.getElementById("c_en").value =
+    q.options[2].en;
+  
+  document.getElementById("d_hi").value =
+    q.options[3].hi;
+  
+  document.getElementById("d_en").value =
+    q.options[3].en;
+  
+  document.getElementById("answer").value =
+    q.answer;
+  
+  // पुराना प्रश्न हटाएँ ताकि Save करने पर अपडेट जैसा व्यवहार हो
+  await fetch(API + "/" + id, {
+    method: "DELETE"
+  });
+  
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+  
+}
+// ===================================
+// BULK IMPORT
+// ===================================
+
+async function bulkImport() {
+
+    const text = document
+        .getElementById("bulkInput")
+        .value
+        .trim();
+
+    if (!text) {
+        alert("पहले प्रश्न Paste करें");
+        return;
+    }
+
+    // प्रत्येक प्रश्न को ====== से अलग करें
+    const blocks = text.split("======");
+
+    let saved = 0;
+
+    for (const block of blocks) {
+
+        if (!block.trim()) continue;
+
+        const body = parseQuestion(block);
+
+        if (!body) continue;
+
+        await fetch(API, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(body)
+
+        });
+
+        saved++;
+
+    }
+
+    alert(saved + " Questions Imported Successfully");
+
+    document.getElementById("bulkInput").value = "";
+
+    loadQuestions();
+
+}
+
+
+
+// ===================================
+// PARSER
+// ===================================
+
+function parseQuestion(text){
+
+    function find(start,end){
+
+        const s=text.indexOf(start);
+
+        if(s==-1) return "";
+
+        const from=s+start.length;
+
+        const e=end
+            ? text.indexOf(end,from)
+            : -1;
+
+        if(e==-1)
+            return text.substring(from).trim();
+
+        return text.substring(from,e).trim();
+
+    }
+
+    const ans=find("Answer:","").toUpperCase();
+
+    let index=0;
+
+    if(ans=="B") index=1;
+    if(ans=="C") index=2;
+    if(ans=="D") index=3;
+
+    return{
+
+        quizTitle:
+        document.getElementById("quizTitle").value,
+
+        quizDate:
+        new Date().toISOString().slice(0,10),
+
+        questionHindi:
+        find("Question Hindi:","Question English:"),
+
+        questionEnglish:
+        find("Question English:","A Hindi:"),
+
+        options:[
+
+            {
+                hi:find("A Hindi:","A English:"),
+                en:find("A English:","B Hindi:")
+            },
+
+            {
+                hi:find("B Hindi:","B English:"),
+                en:find("B English:","C Hindi:")
+            },
+
+            {
+                hi:find("C Hindi:","C English:"),
+                en:find("C English:","D Hindi:")
+            },
+
+            {
+                hi:find("D Hindi:","D English:"),
+                en:find("D English:","Answer:")
+            }
+
+        ],
+
+        answer:index,
+
+        published:true
+
+    };
+
 }

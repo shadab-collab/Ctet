@@ -5,73 +5,116 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Question Setter</title>
-
-<link rel="stylesheet" href="style.css">
+<title>CTET Question Setter</title>
 
 <style>
 
-body{
-    background:#f5f5f5;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
     font-family:Arial,sans-serif;
 }
 
-.container{
-    max-width:700px;
-    margin:20px auto;
-    background:#fff;
-    padding:20px;
-    border-radius:10px;
+body{
+    background:#f5f5f5;
 }
 
-input,textarea,select,button{
+.container{
+
+    max-width:900px;
+
+    margin:20px auto;
+
+    background:#fff;
+
+    padding:20px;
+
+    border-radius:10px;
+
+    box-shadow:0 0 10px rgba(0,0,0,.15);
+
+}
+
+h2,h3{
+
+    margin:15px 0;
+
+}
+
+textarea,
+input,
+select{
 
     width:100%;
-    padding:12px;
-    margin:8px 0;
+
+    padding:10px;
+
+    margin-top:8px;
+
+    margin-bottom:10px;
+
     font-size:16px;
-    box-sizing:border-box;
 
 }
 
 textarea{
 
-    height:70px;
     resize:vertical;
 
 }
 
 button{
 
-    background:#0d6efd;
-    color:#fff;
+    width:100%;
+
+    padding:12px;
+
+    margin-top:8px;
+
     border:none;
+
     border-radius:6px;
+
     cursor:pointer;
+
+    font-size:16px;
+
+    background:#1976d2;
+
+    color:white;
 
 }
 
 button:hover{
 
-    background:#0b5ed7;
+    background:#1258a8;
 
 }
 
 .question-card{
 
     border:1px solid #ddd;
-    padding:12px;
-    margin-top:12px;
+
     border-radius:8px;
+
+    padding:12px;
+
+    margin-top:10px;
 
 }
 
 .delete{
 
-    background:#dc3545;
+    background:#d32f2f;
+
+}
+
+.delete:hover{
+
+    background:#b71c1c;
 
 }
 
@@ -83,7 +126,28 @@ button:hover{
 
 <div class="container">
 
-<h2>Today's Quiz Question</h2>
+<h2>CTET Question Setter</h2>
+
+<!-- Bulk Paste -->
+
+<h3>Bulk Paste</h3>
+
+<textarea
+id="bulkInput"
+rows="12"
+placeholder="ChatGPT से बना हुआ प्रश्न यहाँ Paste करें"></textarea>
+
+<button onclick="autoFillQuestion()">
+Auto Fill
+</button>
+
+<button onclick="bulkImport()">
+🚀 Import All Questions
+</button>
+
+<hr>
+
+<h3>Question Details</h3>
 
 <input
 id="quizTitle"
@@ -164,4 +228,5 @@ Save Question
 <script src="set-question.js"></script>
 
 </body>
+
 </html>
