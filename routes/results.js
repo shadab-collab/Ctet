@@ -3,74 +3,81 @@ const router = express.Router();
 
 const Result = require("../models/Result");
 
-
-// ===============================
-// Save Result
-// ===============================
+// ============================
+// SAVE RESULT
+// POST /api/results
+// ============================
 
 router.post("/", async (req, res) => {
   
   try {
     
-    const result = new Result({
-      
-      name: req.body.name,
-      
-      score: req.body.score,
-      
-      total: req.body.total
-      
-    });
+    const result = new Result(req.body);
     
     await result.save();
     
     res.json({
-      
       success: true,
-      
       message: "Result Saved"
-      
     });
     
   } catch (err) {
     
     res.status(500).json({
-      
       success: false,
-      
       error: err.message
-      
     });
     
   }
   
 });
 
-
-// ===============================
-// Leaderboard
-// ===============================
+// ============================
+// GET LEADERBOARD
+// GET /api/results
+// ============================
 
 router.get("/", async (req, res) => {
   
   try {
     
     const results = await Result.find()
-      
-      .sort({ score: -1, createdAt: 1 })
-      
-      .limit(20);
+      .sort({ score: -1, createdAt: 1 });
     
     res.json(results);
     
   } catch (err) {
     
     res.status(500).json({
-      
       success: false,
-      
       error: err.message
-      
+    });
+    
+  }
+  
+});
+
+// ============================
+// RESET ALL RESULTS
+// DELETE /api/results/reset
+// ============================
+
+router.delete("/reset", async (req, res) => {
+  
+  try {
+    
+    await Result.deleteMany({});
+    
+    res.json({
+      success: true,
+      message: "Leaderboard Reset Successfully"
+    });
+    
+  } catch (err) {
+    
+    res.status(500).json({
+      success: false,
+      error: err.message
     });
     
   }
