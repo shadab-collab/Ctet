@@ -1,7 +1,9 @@
-// =============================
+// ===============================
 // CTET QUIZ
-// script.js (Part 1)
-// =============================
+// Part 1
+// ===============================
+
+const API = "/api/results";
 
 let currentQuestion = 0;
 let score = 0;
@@ -9,35 +11,35 @@ let studentName = "";
 
 const loginBox = document.getElementById("loginBox");
 const quizBox = document.getElementById("quizBox");
-const resultBox = document.getElementById("resultBox");
 const leaderboardBox = document.getElementById("leaderboardBox");
+const resultBox = document.getElementById("resultBox");
 
 const questionEl = document.getElementById("question");
 const optionsEl = document.getElementById("options");
 const scoreEl = document.getElementById("score");
 const numberEl = document.getElementById("questionNumber");
 
-const correctSound =
-  document.getElementById("correctSound");
-
-const wrongSound =
-  document.getElementById("wrongSound");
+const correctSound = document.getElementById("correctSound");
+const wrongSound = document.getElementById("wrongSound");
 
 function startQuiz() {
   
-  studentName =
-    document.getElementById("studentName").value.trim();
+  studentName = document
+    .getElementById("studentName")
+    .value
+    .trim();
   
-  if (studentName == "") {
+  if (studentName === "") {
     
     alert("अपना नाम लिखें");
-    
     return;
     
   }
   
-  loginBox.style.display = "none";
+  currentQuestion = 0;
+  score = 0;
   
+  loginBox.style.display = "none";
   quizBox.style.display = "block";
   
   loadQuestion();
@@ -49,20 +51,16 @@ function loadQuestion() {
   const q = questions[currentQuestion];
   
   numberEl.innerHTML =
-    "Question " +
-    (currentQuestion + 1) +
-    " / " +
-    questions.length;
+    `Question ${currentQuestion+1}/${questions.length}`;
   
   scoreEl.innerHTML =
-    "Score : " +
-    score;
+    `Score : ${score}`;
   
   questionEl.innerHTML = q.question;
   
   optionsEl.innerHTML = "";
   
-  q.options.forEach(function(option, index) {
+  q.options.forEach((option, index) => {
     
     const div = document.createElement("div");
     
@@ -70,11 +68,7 @@ function loadQuestion() {
     
     div.innerHTML = option;
     
-    div.onclick = function() {
-      
-      checkAnswer(div, index);
-      
-    };
+    div.onclick = () => selectOption(div, index);
     
     optionsEl.appendChild(div);
     
@@ -83,29 +77,33 @@ function loadQuestion() {
   document.getElementById("nextBtn").style.display = "none";
   
 }
+// ===============================
+// CTET QUIZ
+// Part 2
+// ===============================
 
-function checkAnswer(box, index) {
+function selectOption(box, index) {
   
   const q = questions[currentQuestion];
   
   const all = document.querySelectorAll(".option");
   
-  all.forEach(function(item) {
-    
+  all.forEach(item => {
     item.style.pointerEvents = "none";
-    
   });
   
-  if (index == q.answer) {
+  if (index === q.answer) {
     
     box.classList.add("correct");
     
     score++;
     
-    scoreEl.innerHTML =
-      "Score : " + score;
+    scoreEl.innerHTML = `Score : ${score}`;
     
-    correctSound.play();
+    if (correctSound) {
+      correctSound.currentTime = 0;
+      correctSound.play();
+    }
     
   } else {
     
@@ -113,104 +111,137 @@ function checkAnswer(box, index) {
     
     all[q.answer].classList.add("correct");
     
-    wrongSound.play();
+    if (wrongSound) {
+      wrongSound.currentTime = 0;
+      wrongSound.play();
+    }
     
   }
   
   document.getElementById("nextBtn").style.display = "block";
   
 }
-// =============================
-// script.js (Part 2)
-// =============================
 
 function nextQuestion() {
   
   currentQuestion++;
   
-  // हर 10 प्रश्न के बाद Leaderboard
-  if (currentQuestion > 0 && currentQuestion % 10 === 0 && currentQuestion < questions.length) {
-    
-    showLeaderboard();
-    return;
-  }
-  
-  // टेस्ट समाप्त
   if (currentQuestion >= questions.length) {
     
     finishQuiz();
     return;
+    
+  }
+  
+  if (currentQuestion > 0 &&
+    currentQuestion % 10 === 0) {
+    
+    showLeaderboard();
+    return;
+    
   }
   
   loadQuestion();
+  
 }
-await saveResult();
-
-await loadLeaderboard();
-
-// =============================
-
-function showLeaderboard() {
-  
-  quizBox.style.display = "none";
-  leaderboardBox.style.display = "block";
-  
-  leaderboard.push({
-    name: studentName,
-    score: score
-  });
-  
-  leaderboard.sort(function(a, b) {
-    return b.score - a.score;
-  });
-  
-  let html = "";
-  
-  leaderboard.forEach(function(item, index) {
-    
-    let cls = "rank";
-    
-    if (index == 0) cls += " gold";
-    else if (index == 1) cls += " silver";
-    else if (index == 2) cls += " bronze";
-    
-    html += `
-        <div class="${cls}">
-            <span>${index + 1}. ${item.name}</span>
-            <span>${item.score}</span>
-        </div>
-        `;
-  });
-  
-  document.getElementById("leaderboard").innerHTML = html;
-}
-
-// =============================
 
 function continueQuiz() {
   
   leaderboardBox.style.display = "none";
+  
   quizBox.style.display = "block";
   
   loadQuestion();
+  
+}
+// ===============================
+// CTET QUIZ
+// Part 3
+// ===============================
+
+// Result Save
+
+async function saveResult() {
+  
+  try {
+    
+    await fetch(API, {
+      
+      method: "POST",
+      
+      headers: {
+        "Content-Type": "application/json"
+      },
+      
+      body: JSON.stringify({
+        
+        name: studentName,
+        score: score,
+        total: questions.length
+        
+      })
+      
+    });
+    
+  } catch (err) {
+    
+    console.log(err);
+    
+  }
+  
 }
 
-// =============================
 
-function finishQuiz() {
+
+// Leaderboard Load
+
+async function loadLeaderboard() {
+  
+  try {
+    
+    const res = await fetch(API);
+    
+    const data = await res.json();
+    
+    let html = "";
+    
+    data.forEach((item, index) => {
+      
+      let cls = "rank";
+      
+      if (index === 0) cls += " gold";
+      if (index === 1) cls += " silver";
+      if (index === 2) cls += " bronze";
+      
+      html += `
+            <div class="${cls}">
+                <span>${index+1}. ${item.name}</span>
+                <span>${item.score}/${item.total}</span>
+            </div>
+            `;
+      
+    });
+    
+    document.getElementById("leaderboard").innerHTML = html;
+    document.getElementById("finalLeaderboard").innerHTML = html;
+    
+  } catch (err) {
+    
+    console.log(err);
+    
+  }
+  
+}
+
+
+
+// Quiz Finish
+
+async function finishQuiz() {
   
   quizBox.style.display = "none";
   
   resultBox.style.display = "block";
-  
-  leaderboard.push({
-    name: studentName,
-    score: score
-  });
-  
-  leaderboard.sort(function(a, b) {
-    return b.score - a.score;
-  });
   
   document.getElementById("finalName").innerHTML =
     "Name : " + studentName;
@@ -218,87 +249,8 @@ function finishQuiz() {
   document.getElementById("finalScore").innerHTML =
     score + " / " + questions.length;
   
-  let html = "";
+  await saveResult();
   
-  leaderboard.forEach(function(item, index) {
-    
-    let cls = "rank";
-    
-    if (index == 0) cls += " gold";
-    else if (index == 1) cls += " silver";
-    else if (index == 2) cls += " bronze";
-    
-    html += `
-        <div class="${cls}">
-            <span>${index + 1}. ${item.name}</span>
-            <span>${item.score}</span>
-        </div>
-        `;
-  });
-  
-  document.getElementById("finalLeaderboard").innerHTML = html;
-}
-// ============================
-// MongoDB API URL
-// ============================
-
-const API = "http://localhost:3000/api/results";
-
-
-// ============================
-// Result Save
-// ============================
-
-async function saveResult() {
-  
-  await fetch(API, {
-    
-    method: "POST",
-    
-    headers: {
-      "Content-Type": "application/json"
-    },
-    
-    body: JSON.stringify({
-      
-      name: studentName,
-      
-      score: score,
-      
-      total: questions.length
-      
-    })
-    
-  });
-  
-}
-
-
-// ============================
-// Leaderboard
-// ============================
-
-async function loadLeaderboard() {
-  
-  const res = await fetch(API);
-  
-  const data = await res.json();
-  
-  let html = "";
-  
-  data.forEach(function(item, index) {
-    
-    html += `
-        <div class="rank">
-            <span>${index+1}. ${item.name}</span>
-            <span>${item.score}/${item.total}</span>
-        </div>
-        `;
-    
-  });
-  
-  document.getElementById("leaderboard").innerHTML = html;
-  
-  document.getElementById("finalLeaderboard").innerHTML = html;
+  await loadLeaderboard();
   
 }
