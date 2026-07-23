@@ -233,7 +233,7 @@ function nextQuestion() {
   // हर 10 प्रश्न पर Leaderboard
   if (
     currentQuestion > 0 &&
-    currentQuestion % 10 === 0 &&
+    currentQuestion % 100 === 0 &&
     currentQuestion < questions.length
   ) {
     
