@@ -448,3 +448,31 @@ document
     }
     
   });
+  
+  // ===========================
+// LOAD TODAY'S TOPIC
+// ===========================
+
+loadTopic();
+
+async function loadTopic() {
+  
+  try {
+    
+    const res = await fetch("/api/topic");
+    
+    const data = await res.json();
+    
+    document.getElementById("quizTopic").innerText =
+      
+      data.title;
+    
+  }
+  
+  catch (err) {
+    
+    console.log(err);
+    
+  }
+  
+}
