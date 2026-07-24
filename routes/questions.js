@@ -200,6 +200,47 @@ router.get("/archive/:date", async (req, res) => {
 });
 
 // ============================
+// DELETE COMPLETE ARCHIVE
+// DELETE /api/questions/archive/:date
+// ============================
+
+router.delete("/archive/:date", async (req, res) => {
+
+    try {
+
+        const result = await Question.deleteMany({
+
+            quizDate: req.params.date
+
+        });
+
+        res.json({
+
+            success: true,
+
+            message:
+                result.deletedCount +
+                " Questions Deleted Successfully"
+
+        });
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({
+
+            success: false,
+
+            error: err.message
+
+        });
+
+    }
+
+});
+
+// ============================
 // REUSE QUIZ (REPLACE TODAY)
 // POST /api/questions/reuse/:date
 // ============================
