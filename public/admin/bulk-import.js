@@ -15,10 +15,9 @@ async function bulkImport(){
 
     }
 
-    const blocks = text
-        .split("======")
-        .map(item=>item.trim())
-        .filter(item=>item.length>0);
+    const blocks = (text.match(/Question Hindi:[\s\S]*?(?=Question Hindi:|$)/g) || [])
+    .map(item => item.trim())
+    .filter(item => item.length > 0);
 
     let saved = 0;
 
