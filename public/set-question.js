@@ -447,7 +447,7 @@ async function bulkImport(){
     }
 
     const blocks =
-    text.split("======");
+  text.split(/(?=Question Hindi:)/);
 
     let saved = 0;
 
