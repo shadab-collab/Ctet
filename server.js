@@ -29,6 +29,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.use("/api/results", require("./routes/results"));
 app.use("/api/questions", require("./routes/questions"));
+app.use("/api/topic", require("./routes/topic"));
 
 // ======================
 // Home Page
