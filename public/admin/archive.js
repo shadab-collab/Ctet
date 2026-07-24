@@ -55,6 +55,16 @@ onclick="viewArchive('${item.quizDate}')">
 
 <button
 
+style="background:#2e7d32"
+
+onclick="reuseQuiz('${item.quizDate}')">
+
+♻️ Reuse
+
+</button>
+
+<button
+
 class="delete"
 
 onclick="deleteArchive('${item.quizDate}')">
@@ -134,5 +144,36 @@ async function deleteArchive(date) {
   alert(data.message);
   
   loadArchive();
+  
+}
+// ==========================
+// REUSE QUIZ
+// ==========================
+
+async function reuseQuiz(date) {
+  
+  if (!confirm(
+      
+      date +
+      
+      "\n\nक्या इस Quiz को आज की Date में Copy करना चाहते हैं?"
+      
+    )) return;
+  
+  const res = await fetch(
+    
+    "/api/questions/reuse/" + date,
+    
+    {
+      
+      method: "POST"
+      
+    }
+    
+  );
+  
+  const data = await res.json();
+  
+  alert(data.message);
   
 }
