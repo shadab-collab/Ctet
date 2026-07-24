@@ -2,11 +2,15 @@
 <html lang="hi">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>CTET LIVE QUIZ</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -14,22 +18,22 @@
 <div class="container">
 
     <h1>CTET LIVE QUIZ</h1>
-    
-    <div id="topicBox">
-    
-    <h3>📘 Today's Topic</h3>
-    
-    <h2 id="quizTopic">
-        
-        Loading...
-        
-    </h2>
-    
-</div>
 
     <!-- Login -->
 
     <div id="loginBox">
+
+        <div id="topicBox">
+
+            <h3>📘 Today's Topic</h3>
+
+            <h2 id="quizTopic">
+
+                Loading...
+
+            </h2>
+
+        </div>
 
         <h2>अपना नाम लिखें</h2>
 
@@ -39,7 +43,9 @@
             placeholder="नाम">
 
         <button onclick="startQuiz()">
+
             Start Quiz
+
         </button>
 
     </div>
@@ -51,11 +57,15 @@
         <div class="top">
 
             <span id="questionNumber">
+
                 Question 1
+
             </span>
 
             <span id="score">
+
                 Score : 0
+
             </span>
 
         </div>
@@ -119,16 +129,9 @@
 
 </div>
 
-<!-- Sounds -->
-
 <audio id="correctSound" src="correct.mp3"></audio>
 
 <audio id="wrongSound" src="wrong.mp3"></audio>
-
-<!-- Question File -->
-
-
-<!-- Main Script -->
 
 <script src="script.js"></script>
 
