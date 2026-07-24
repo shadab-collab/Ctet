@@ -118,6 +118,85 @@ router.put("/:id", async (req, res) => {
   }
   
 });
+// ============================
+// QUIZ ARCHIVE (DATES)
+// GET /api/questions/archive
+// ============================
 
+router.get("/archive", async (req, res) => {
+  
+  try {
+    
+    const dates = await Question.distinct("quizDate");
+    
+    dates.sort((a, b) => b.localeCompare(a));
+    
+    const result = [];
+    
+    for (const date of dates) {
+      
+      const count = await Question.countDocuments({
+        quizDate: date
+      });
+      
+      result.push({
+        quizDate: date,
+        totalQuestions: count
+      });
+      
+    }
+    
+    res.json(result);
+    
+  }
+  
+  catch (err) {
+    
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+    
+  }
+  
+});
+
+
+// ============================
+// QUESTIONS BY DATE
+// GET /api/questions/archive/:date
+// ============================
+
+router.get("/archive/:date", async (req, res) => {
+  
+  try {
+    
+    const questions = await Question.find({
+      
+      quizDate: req.params.date
+      
+    }).sort({
+      
+      createdAt: 1
+      
+    });
+    
+    res.json(questions);
+    
+  }
+  
+  catch (err) {
+    
+    res.status(500).json({
+      
+      success: false,
+      
+      error: err.message
+      
+    });
+    
+  }
+  
+});
 
 module.exports = router;
