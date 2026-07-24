@@ -36,7 +36,11 @@ app.use("/api/topic", require("./routes/topic"));
 // ======================
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  
+  res.sendFile(
+    path.join(__dirname, "public", "index.html")
+  );
+  
 });
 
 // ======================
@@ -44,7 +48,11 @@ app.get("/", (req, res) => {
 // ======================
 
 app.get("/set-question", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "set-question.html"));
+  
+  res.sendFile(
+    path.join(__dirname, "public", "set-question.html")
+  );
+  
 });
 
 // ======================
@@ -52,7 +60,9 @@ app.get("/set-question", (req, res) => {
 // ======================
 
 app.use((req, res) => {
+  
   res.status(404).send("404 Page Not Found");
+  
 });
 
 // ======================
@@ -62,5 +72,7 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server Running on Port ${PORT}`);
+  
+  console.log("🚀 Server Running On Port " + PORT);
+  
 });
