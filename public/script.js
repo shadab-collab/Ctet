@@ -231,7 +231,7 @@ function nextQuestion() {
   
   currentQuestion++;
   
-  // हर 10 प्रश्न पर Leaderboard
+  // हर 100 प्रश्न पर Leaderboard
   if (
     currentQuestion > 0 &&
     currentQuestion % 100 === 0 &&
