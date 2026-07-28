@@ -76,3 +76,7 @@ app.listen(PORT, () => {
   console.log("🚀 Server Running On Port " + PORT);
   
 });
+
+//
+
+app.use("/api/quiz", require("./routes/quiz"));

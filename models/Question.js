@@ -13,6 +13,25 @@ const optionSchema = new mongoose.Schema({
 
 const questionSchema = new mongoose.Schema({
   
+  
+  quizId: {
+    
+    type: String,
+    
+    required: true
+    
+  },
+  
+  quizName: {
+    
+    type: String,
+    
+    required: true,
+    
+    trim: true
+    
+  },
+  
   quizTitle: {
     type: String,
     default: "CTET Live Quiz"

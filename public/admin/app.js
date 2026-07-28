@@ -157,3 +157,84 @@ async function saveTopic() {
   }
   
 }
+const QUIZ_API = "/api/quiz";
+
+async function loadQuizList() {
+  
+  const res = await fetch(QUIZ_API);
+  
+  const quizzes = await res.json();
+  
+  let html = "";
+  
+  quizzes.forEach(q => {
+    
+    html += `
+        <option value="${q.quizId}">
+            ${q.quizName}
+        </option>
+        `;
+    
+  });
+  
+  document.getElementById("quizList").innerHTML = html;
+  
+}
+
+window.addEventListener("load", loadQuizList);
+async function createQuiz() {
+  
+  const quizName =
+    document
+    .getElementById("newQuizName")
+    .value
+    .trim();
+  
+  if (!quizName) {
+    
+    alert("Quiz Name लिखिए");
+    
+    return;
+    
+  }
+  
+  const quizId =
+    Date.now().toString();
+  
+  const body = {
+    
+    quizId,
+    
+    quizName,
+    
+    quizDate: getToday(),
+    
+    topic: "",
+    
+    isLive: false
+    
+  };
+  
+  const res = await fetch(QUIZ_API, {
+    
+    method: "POST",
+    
+    headers: {
+      
+      "Content-Type": "application/json"
+      
+    },
+    
+    body: JSON.stringify(body)
+    
+  });
+  
+  const data = await res.json();
+  
+  alert(data.message);
+  
+  document.getElementById("newQuizName").value = "";
+  
+  loadQuizList();
+  
+}
