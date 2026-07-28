@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Question = require("../models/Question");
+const Quiz = require("../models/Quiz");
 
 
 // ============================
@@ -63,6 +64,52 @@ router.post("/", async (req, res) => {
 });
 
 
+// ===========================
+// LIVE QUESTIONS (ADDED HERE)
+// GET /api/questions/live
+// ===========================
+
+router.get("/live", async (req, res) => {
+
+    try {
+
+        const quiz = await Quiz.findOne({
+
+            isLive: true
+
+        });
+
+        if (!quiz) {
+
+            return res.json([]);
+
+        }
+
+        const questions = await Question.find({
+
+            quizId: quiz.quizId,
+
+            published: true
+
+        });
+
+        res.json(questions);
+
+    } catch (err) {
+
+        res.status(500).json({
+
+            success: false,
+
+            error: err.message
+
+        });
+
+    }
+
+});
+
+
 // ============================
 // प्रश्न हटाएँ
 // DELETE /api/questions/:id
@@ -118,6 +165,8 @@ router.put("/:id", async (req, res) => {
   }
   
 });
+
+
 // ============================
 // QUIZ ARCHIVE (DATES)
 // GET /api/questions/archive
@@ -316,7 +365,7 @@ router.post("/reuse/:date", async (req, res) => {
       error: err.message
       
     });
-    
+  
   }
   
 });

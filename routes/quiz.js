@@ -61,6 +61,54 @@ router.post("/", async (req, res) => {
 });
 
 // ===========================
+// MAKE LIVE QUIZ
+// ===========================
+
+router.put("/live/:quizId", async (req, res) => {
+
+    try {
+
+        await Quiz.updateMany(
+            {},
+            {
+                isLive: false
+            }
+        );
+
+        await Quiz.findOneAndUpdate(
+            {
+                quizId: req.params.quizId
+            },
+            {
+                isLive: true
+            }
+        );
+
+        res.json({
+
+            success: true,
+
+            message: "Live Quiz Updated"
+
+        });
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({
+
+            success: false,
+
+            error: err.message
+
+        });
+
+    }
+
+});
+
+// ===========================
 // DELETE QUIZ
 // ===========================
 

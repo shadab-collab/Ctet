@@ -56,8 +56,9 @@ async function startQuiz() {
   
   try {
     
+    // यहाँ बदलाव किया गया है: live प्रश्नों के लिए नया API Endpoint
     const res =
-      await fetch(QUESTION_API);
+      await fetch("/api/questions/live");
     
     questions =
       await res.json();

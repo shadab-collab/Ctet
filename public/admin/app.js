@@ -79,7 +79,7 @@ function scrollTopForm() {
   
 }
 // ===========================
-// LOAD TOPIC
+// LOAD 
 // ===========================
 
 window.addEventListener("load", loadTopic);
@@ -159,29 +159,35 @@ async function saveTopic() {
 }
 const QUIZ_API = "/api/quiz";
 
+// ===========================
+// LOAD QUIZ LIST (UPDATED)
+// ===========================
+
 async function loadQuizList() {
-  
-  const res = await fetch(QUIZ_API);
-  
-  const quizzes = await res.json();
-  
-  let html = "";
-  
-  quizzes.forEach(q => {
-    
-    html += `
+
+    const res = await fetch(QUIZ_API);
+
+    const quizzes = await res.json();
+
+    let html = "";
+
+    quizzes.forEach(q => {
+
+        html += `
         <option value="${q.quizId}">
             ${q.quizName}
+            ${q.isLive ? " ⭐" : ""}
         </option>
         `;
-    
-  });
-  
-  document.getElementById("quizList").innerHTML = html;
-  
+
+    });
+
+    document.getElementById("quizList").innerHTML = html;
+
 }
 
 window.addEventListener("load", loadQuizList);
+
 async function createQuiz() {
   
   const quizName =
@@ -195,7 +201,7 @@ async function createQuiz() {
     alert("Quiz Name लिखिए");
     
     return;
-    
+  
   }
   
   const quizId =
@@ -237,4 +243,33 @@ async function createQuiz() {
   
   loadQuizList();
   
+}
+
+// ===========================
+// MAKE LIVE QUIZ
+// ===========================
+
+async function makeLiveQuiz(){
+
+    const quizId =
+        document.getElementById("quizList").value;
+
+    const res = await fetch(
+
+        "/api/quiz/live/" + quizId,
+
+        {
+
+            method:"PUT"
+
+        }
+
+    );
+
+    const data = await res.json();
+
+    alert(data.message);
+
+    loadQuizList();
+
 }
