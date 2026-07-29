@@ -165,7 +165,21 @@ placeholder="Today's Topic">
 
 <label><b>Select Quiz</b></label>
 
-<select id="quizList"></select>
+<div style="display:flex;gap:8px;">
+
+    <select
+        id="quizList"
+        style="flex:1;">
+    </select>
+
+    <button
+        onclick="renameQuiz()">
+
+        ✏️
+
+    </button>
+
+</div>
 
 <h3>📦 Merge Quiz</h3>
 
@@ -177,6 +191,12 @@ placeholder="New Quiz Name">
 
 <button onclick="mergeQuiz()">
 🚀 Create Combined Quiz
+</button>
+
+<button onclick="makeLiveQuiz()">
+
+    🚀 Make Live
+    
 </button>
 
 <!-- Bulk Paste -->

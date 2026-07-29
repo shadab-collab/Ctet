@@ -74,7 +74,7 @@ function scrollTopForm() {
     top: 0,
     
     behavior: "smooth"
-    
+  
   });
   
 }
@@ -164,26 +164,39 @@ const QUIZ_API = "/api/quiz";
 // LOAD QUIZ LIST (UPDATED)
 // ===========================
 
-async function loadQuizList() {
+async function loadQuizList(){
 
-    const res = await fetch(QUIZ_API);
+    const res = await fetch("/api/quiz");
 
     const quizzes = await res.json();
 
     let html = "";
 
-    quizzes.forEach(q => {
+    quizzes.forEach(q=>{
 
         html += `
+
         <option value="${q.quizId}">
-            ${q.quizName}
-            ${q.isLive ? " ⭐" : ""}
+
+        ${q.isLive ? "🟢 " : ""}
+
+        ${q.quizName}
+
+        (${q.questionCount})
+
         </option>
+
         `;
 
     });
 
     document.getElementById("quizList").innerHTML = html;
+
+    if(quizzes.length){
+
+        loadQuestions();
+
+    }
 
 }
 
@@ -410,5 +423,98 @@ async function mergeQuiz() {
   loadQuizList();
   
   loadMergeQuizList();
+  
+}
+
+async function renameQuiz() {
+  
+  const quizId =
+    document.getElementById("quizList").value;
+  
+  if (!quizId) {
+    
+    alert("Select Quiz");
+    
+    return;
+    
+  }
+  
+  const newName = prompt("New Quiz Name");
+  
+  if (!newName) return;
+  
+  const quizzes =
+    await fetch("/api/quiz")
+    .then(r => r.json());
+  
+  const quiz =
+    quizzes.find(q => q.quizId === quizId);
+  
+  if (!quiz) {
+    
+    alert("Quiz Not Found");
+    
+    return;
+    
+  }
+  
+  const res =
+    await fetch("/api/quiz/" + quiz._id, {
+      
+      method: "PUT",
+      
+      headers: {
+        
+        "Content-Type": "application/json"
+        
+      },
+      
+      body: JSON.stringify({
+        
+        quizName: newName
+        
+      })
+      
+    });
+  
+  const data =
+    await res.json();
+  
+  alert(data.message);
+  
+  loadQuizList();
+  
+}
+
+async function makeLiveQuiz() {
+  
+  const quizId =
+    document.getElementById("quizList").value;
+  
+  if (!quizId) {
+    
+    alert("Select Quiz");
+    
+    return;
+    
+  }
+  
+  const res = await fetch(
+    
+    "/api/quiz/live/" + quizId,
+    
+    {
+      
+      method: "PUT"
+      
+    }
+    
+  );
+  
+  const data = await res.json();
+  
+  alert(data.message);
+  
+  loadQuizList();
   
 }

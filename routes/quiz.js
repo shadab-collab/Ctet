@@ -12,10 +12,29 @@ router.get("/", async (req, res) => {
   
   try {
     
-    const quizzes = await Quiz.find()
-      .sort({ createdAt: -1 });
-    
-    res.json(quizzes);
+    const quizzes = await Quiz.find().sort({ createdAt: -1 });
+
+    const result = [];
+
+    for (const quiz of quizzes) {
+
+      const count = await Question.countDocuments({
+
+        quizId: quiz.quizId
+
+      });
+
+      result.push({
+
+        ...quiz.toObject(),
+
+        questionCount: count
+
+      });
+
+    }
+
+    res.json(result);
     
   }
   
@@ -179,7 +198,7 @@ router.post("/merge", async (req, res) => {
     });
     
     for (const q of questions) {
-      
+
       const obj = q.toObject();
       
       delete obj._id;
@@ -249,6 +268,50 @@ router.delete("/:id", async (req, res) => {
       success: true,
       
       message: "Quiz Deleted"
+      
+    });
+    
+  }
+  
+  catch (err) {
+    
+    res.status(500).json({
+      
+      success: false,
+      
+      error: err.message
+      
+    });
+    
+  }
+  
+});
+
+// ===========================
+// RENAME QUIZ
+// ===========================
+
+router.put("/:id", async (req, res) => {
+  
+  try {
+    
+    await Quiz.findByIdAndUpdate(
+      
+      req.params.id,
+      
+      {
+        
+        quizName: req.body.quizName
+        
+      }
+      
+    );
+    
+    res.json({
+      
+      success: true,
+      
+      message: "Quiz Renamed"
       
     });
     

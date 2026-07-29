@@ -296,84 +296,68 @@ router.delete("/archive/:date", async (req, res) => {
 });
 
 // ============================
-// REUSE QUIZ (REPLACE TODAY)
-// POST /api/questions/reuse/:date
+// REUSE QUIZ (BY QUIZ ID)
+// POST /api/questions/reuse/:quizId
 // ============================
 
-router.post("/reuse/:date", async (req, res) => {
-  
-  try {
-    
-    const today = new Date().toISOString().slice(0, 10);
-    
-    const oldQuestions = await Question.find({
-      quizDate: req.params.date
-    });
-    
-    if (oldQuestions.length === 0) {
-      
-      return res.json({
-        success: false,
-        message: "No Questions Found"
-      });
-      
+router.post("/reuse/:quizId", async (req, res) => {
+
+    try {
+
+        const oldQuestions = await Question.find({
+
+            quizId: req.params.quizId
+
+        });
+
+        if (!oldQuestions.length) {
+
+            return res.json({
+
+                success: false,
+
+                message: "No Questions Found"
+
+            });
+
+        }
+
+        const newQuizId = req.body.quizId;
+
+        for (const q of oldQuestions) {
+
+            const obj = q.toObject();
+
+            delete obj._id;
+
+            obj.quizId = newQuizId;
+
+            await Question.create(obj);
+
+        }
+
+        res.json({
+
+            success: true,
+
+            message: oldQuestions.length + " Questions Copied"
+
+        });
+
     }
-    
-    // आज के सभी प्रश्न हटाएँ
-    await Question.deleteMany({
-      quizDate: today
-    });
-    
-    let copied = 0;
-    
-    for (const q of oldQuestions) {
-      
-      const newQuestion = new Question({
-        
-        quizTitle: q.quizTitle,
-        
-        quizDate: today,
-        
-        questionHindi: q.questionHindi,
-        
-        questionEnglish: q.questionEnglish,
-        
-        options: q.options,
-        
-        answer: q.answer,
-        
-        published: true
-        
-      });
-      
-      await newQuestion.save();
-      
-      copied++;
-      
+
+    catch (err) {
+
+        res.status(500).json({
+
+            success: false,
+
+            error: err.message
+
+        });
+
     }
-    
-    res.json({
-      
-      success: true,
-      
-      message: copied + " Questions Reused Successfully"
-      
-    });
-    
-  }
-  
-  catch (err) {
-    
-    res.status(500).json({
-      
-      success: false,
-      
-      error: err.message
-      
-    });
-  
-  }
-  
+
 });
 
 module.exports = router;

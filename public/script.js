@@ -6,7 +6,7 @@
 // ---------- API ----------
 
 const RESULT_API = "/api/results";
-const QUESTION_API = "/api/questions";
+const QUESTION_API = "/api/questions/live";
 
 // ---------- Variables ----------
 
@@ -56,9 +56,9 @@ async function startQuiz() {
   
   try {
     
-    // यहाँ बदलाव किया गया है: live प्रश्नों के लिए नया API Endpoint
+    // QUESTION_API वेरिएबल का उपयोग करके लाइव प्रश्नों को लोड किया गया है
     const res =
-      await fetch("/api/questions/live");
+      await fetch(QUESTION_API);
     
     questions =
       await res.json();
