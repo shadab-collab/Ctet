@@ -6,271 +6,417 @@ const API = "/api/questions";
 
 let editingId = null;
 
+
 // ===========================
 // PAGE LOAD
 // ===========================
 
 window.addEventListener("load", () => {
-  loadTopic();
-  loadQuizList();
-  loadDashboard();
-  loadMergeQuizList();
-  
-  document
+
+    loadTopic();
+
+    loadQuizList();
+
+    loadDashboard();
+
+    loadMergeQuizList();
+
+
+    document
     .getElementById("quizList")
-    .addEventListener("change", loadQuestions);
+    .addEventListener(
+        "change",
+        loadQuestions
+    );
+
 });
+
+
 
 // ===========================
 // COMMON FUNCTIONS
 // ===========================
 
-function getToday() {
-  return new Date().toISOString().slice(0, 10);
+function getToday(){
+
+    return new Date()
+    .toISOString()
+    .slice(0,10);
+
 }
 
-function value(id) {
-  return document.getElementById(id).value.trim();
+
+function value(id){
+
+    return document
+    .getElementById(id)
+    .value
+    .trim();
+
 }
 
-function setValue(id, text) {
-  document.getElementById(id).value = text;
+
+function setValue(id,text){
+
+    document
+    .getElementById(id)
+    .value = text;
+
 }
 
-function stopEditing() {
-  editingId = null;
+
+function stopEditing(){
+
+    editingId = null;
+
 }
 
-function scrollTopForm() {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+
+function scrollTopForm(){
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
 }
+
+
 
 // ===========================
 // TOPIC
 // ===========================
 
-async function loadTopic() {
-  
-  try {
-    
-    const res = await fetch("/api/topic");
-    
-    const data = await res.json();
-    
-    document.getElementById("todayTopic").value =
-      data.title || "";
-    
-  }
-  
-  catch (err) {
-    
-    console.log(err);
-    
-  }
-  
+async function loadTopic(){
+
+    try{
+
+        const res =
+        await fetch("/api/topic");
+
+        const data =
+        await res.json();
+
+
+        document
+        .getElementById("todayTopic")
+        .value = data.title || "";
+
+
+    }
+    catch(err){
+
+        console.log(err);
+
+    }
+
 }
 
-async function saveTopic() {
-  
-  const title = value("todayTopic");
-  
-  if (!title) {
-    
-    alert("Topic लिखें");
-    
-    return;
-    
-  }
-  
-  try {
-    
-    const res = await fetch("/api/topic", {
-      
-      method: "PUT",
-      
-      headers: {
-        "Content-Type": "application/json"
-      },
-      
-      body: JSON.stringify({
-        title
-      })
-      
-    });
-    
-    const data = await res.json();
-    
-    alert(data.message);
-    
-    loadTopic();
-    
-  }
-  
-  catch (err) {
-    
-    console.log(err);
-    
-    alert("Topic Save Failed");
-    
-  }
-  
+
+
+async function saveTopic(){
+
+    const title =
+    value("todayTopic");
+
+
+    if(!title){
+
+        alert("Topic लिखें");
+
+        return;
+
+    }
+
+
+    try{
+
+
+        const res =
+        await fetch(
+            "/api/topic",
+            {
+
+                method:"PUT",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+                    title
+                })
+
+            }
+        );
+
+
+        const data =
+        await res.json();
+
+
+        alert(data.message);
+
+
+    }
+    catch(err){
+
+        console.log(err);
+
+        alert("Topic Save Failed");
+
+    }
+
 }
+
+
+
 // ===========================
 // LOAD QUIZ LIST
 // ===========================
 
-async function loadQuizList() {
-  
-  try {
-    
-    const res = await fetch("/api/quiz");
-    
-    const quizzes = await res.json();
-    
-    document.getElementById("quizList").innerHTML =
-      quizzes.map(q => `
-                <option value="${q.quizId}">
-                    ${q.isLive ? "🟢 " : ""}
-                    ${q.quizName} (${q.questionCount || 0})
-                </option>
-            `).join("");
-    
-    if (quizzes.length) {
-      loadQuestions();
+async function loadQuizList(){
+
+    try{
+
+
+        const res =
+        await fetch("/api/quiz");
+
+
+        const quizzes =
+        await res.json();
+
+
+
+        document
+        .getElementById("quizList")
+        .innerHTML =
+
+        quizzes.map(q=>`
+
+        <option value="${q.quizId}">
+
+        ${q.isLive ? "🟢 " : ""}
+
+        ${q.quizName}
+
+        (${q.questionCount || 0})
+
+        </option>
+
+        `).join("");
+
+
+
+        if(quizzes.length){
+
+            loadQuestions();
+
+        }
+
+
     }
-    
-  }
-  
-  catch (err) {
-    
-    console.log(err);
-    
-  }
-  
+    catch(err){
+
+        console.log(err);
+
+    }
+
 }
 
+
+
 // ===========================
-// LOAD DASHBOARD
+// DASHBOARD
 // ===========================
 
-async function loadDashboard() {
-  
-  try {
-    
-    const res = await fetch("/api/quiz");
-    
-    const quizzes = await res.json();
-    
-    document.getElementById("totalQuiz").innerText =
-      quizzes.length;
-    
-    let total = 0;
-    let live = "None";
-    
-    quizzes.forEach(q => {
-      
-      total += q.questionCount || 0;
-      
-      if (q.isLive) {
-        live = q.quizName;
-      }
-      
-    });
-    
-    document.getElementById("totalQuestions").innerText =
-      total;
-    
-    document.getElementById("liveQuiz").innerText =
-      live;
-    
-  }
-  
-  catch (err) {
-    
-    console.log(err);
-    
-  }
-  
+async function loadDashboard(){
+
+    try{
+
+
+        const res =
+        await fetch("/api/quiz");
+
+
+        const quizzes =
+        await res.json();
+
+
+        let total = 0;
+
+        let live = "None";
+
+
+
+        quizzes.forEach(q=>{
+
+
+            total += q.questionCount || 0;
+
+
+            if(q.isLive){
+
+                live = q.quizName;
+
+            }
+
+
+        });
+
+
+
+        document
+        .getElementById("totalQuiz")
+        .innerText = quizzes.length;
+
+
+        document
+        .getElementById("totalQuestions")
+        .innerText = total;
+
+
+        document
+        .getElementById("liveQuiz")
+        .innerText = live;
+
+
+
+    }
+    catch(err){
+
+        console.log(err);
+
+    }
+
 }
+
+
 
 // ===========================
 // CREATE QUIZ
 // ===========================
 
-async function createQuiz() {
-  
-  const quizName = value("newQuizName");
-  const topic = value("newQuizTopic");
-  
-  if (!quizName) {
-    
-    alert("Quiz Name लिखिए");
-    
-    return;
-    
-  }
-  
-  const quizId = Date.now().toString();
-  
-  const res = await fetch("/api/quiz", {
-    
-    method: "POST",
-    
-    headers: {
-      "Content-Type": "application/json"
-    },
-    
-    body: JSON.stringify({
-      
-      quizId,
-      
-      quizName,
-      
-      quizDate: getToday(),
-      
-      topic,
-      
-      isLive: false
-      
-    })
-    
-  });
-  
-  const data = await res.json();
-  
-  if (!data.success) {
-    
-    alert(data.error);
-    
-    return;
-    
-  }
-  
-  alert("Quiz Created");
-  
-  await loadQuizList();
-  
-  document.getElementById("quizList").value = quizId;
-  
-  loadQuestions();
-  
-  setValue("newQuizName", "");
-  setValue("newQuizTopic", "");
-  
-}
+async function createQuiz(){
 
+    const quizName =
+    value("newQuizName");
+
+
+    const topic =
+    value("newQuizTopic");
+
+
+
+    if(!quizName){
+
+        alert("Quiz Name लिखिए");
+
+        return;
+
+    }
+
+
+    try{
+
+
+        const quizId =
+        Date.now().toString();
+
+
+
+        const res =
+        await fetch(
+            "/api/quiz",
+            {
+
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    quizId,
+
+                    quizName,
+
+                    quizDate:getToday(),
+
+                    topic,
+
+                    isLive:false
+
+                })
+
+            }
+        );
+
+
+
+        const data =
+        await res.json();
+
+
+
+        if(!data.success){
+
+            alert(data.error);
+
+            return;
+
+        }
+
+
+
+        alert("Quiz Created");
+
+
+        await loadQuizList();
+
+
+        document
+        .getElementById("quizList")
+        .value = quizId;
+
+
+
+        loadQuestions();
+
+
+
+        setValue("newQuizName","");
+
+        setValue("newQuizTopic","");
+
+
+
+    }
+    catch(err){
+
+        console.log(err);
+
+        alert("Quiz Create Failed");
+
+    }
+
+}
 // ===========================
 // MAKE LIVE QUIZ
 // ===========================
 
-async function makeLiveQuiz() {
+async function makeLiveQuiz(){
 
-    const quizId = value("quizList");
+    const quizId =
+    value("quizList");
 
-    if (!quizId) {
+
+    if(!quizId){
 
         alert("Select Quiz");
 
@@ -278,25 +424,33 @@ async function makeLiveQuiz() {
 
     }
 
-    try {
 
-        const res = await fetch(
+    try{
+
+
+        const res =
+        await fetch(
             "/api/quiz/live/" + quizId,
             {
-                method: "PUT"
+                method:"PUT"
             }
         );
 
-        const data = await res.json();
+
+        const data =
+        await res.json();
+
 
         alert(data.message);
 
+
         loadQuizList();
+
         loadDashboard();
 
-    }
 
-    catch (err) {
+    }
+    catch(err){
 
         console.log(err);
 
@@ -307,37 +461,48 @@ async function makeLiveQuiz() {
 }
 
 
+
 // ===========================
 // MERGE QUIZ LIST
 // ===========================
 
-async function loadMergeQuizList() {
+async function loadMergeQuizList(){
 
-    try {
+    try{
 
-        const res = await fetch("/api/quiz");
 
-        const quizzes = await res.json();
+        const res =
+        await fetch("/api/quiz");
 
-        document.getElementById("mergeQuizList").innerHTML =
 
-            quizzes.map(q => `
+        const quizzes =
+        await res.json();
 
-                <label style="display:block;margin:8px 0">
 
-                    <input 
-                    type="checkbox"
-                    value="${q.quizId}">
 
-                    ${q.quizName}
+        document
+        .getElementById("mergeQuizList")
+        .innerHTML =
 
-                </label>
 
-            `).join("");
+        quizzes.map(q=>`
+
+        <label style="display:block;margin:8px 0">
+
+        <input
+        type="checkbox"
+        value="${q.quizId}">
+
+        ${q.quizName}
+
+        </label>
+
+        `).join("");
+
+
 
     }
-
-    catch (err) {
+    catch(err){
 
         console.log(err);
 
@@ -346,19 +511,25 @@ async function loadMergeQuizList() {
 }
 
 
+
 // ===========================
 // MERGE QUIZ
 // ===========================
 
-async function mergeQuiz() {
+async function mergeQuiz(){
 
     const checked = [
-        ...document.querySelectorAll(
+
+        ...document
+        .querySelectorAll(
             "#mergeQuizList input:checked"
         )
+
     ];
 
-    if (checked.length < 2) {
+
+
+    if(checked.length < 2){
 
         alert("कम से कम 2 Quiz चुनिए");
 
@@ -366,15 +537,19 @@ async function mergeQuiz() {
 
     }
 
+
+
     const quizIds =
-        checked.map(x => x.value);
+    checked.map(x=>x.value);
+
 
 
     const quizName =
-        value("mergeQuizName");
+    value("mergeQuizName");
 
 
-    if (!quizName) {
+
+    if(!quizName){
 
         alert("Quiz Name लिखिए");
 
@@ -383,19 +558,22 @@ async function mergeQuiz() {
     }
 
 
-    try {
 
-        const res = await fetch(
+    try{
+
+
+        const res =
+        await fetch(
             "/api/quiz/merge",
             {
 
-                method: "POST",
+                method:"POST",
 
-                headers: {
-                    "Content-Type": "application/json"
+                headers:{
+                    "Content-Type":"application/json"
                 },
 
-                body: JSON.stringify({
+                body:JSON.stringify({
 
                     quizIds,
 
@@ -407,20 +585,25 @@ async function mergeQuiz() {
         );
 
 
-        const data = await res.json();
+        const data =
+        await res.json();
+
 
 
         alert(data.message);
 
 
+
         loadQuizList();
+
         loadMergeQuizList();
+
         loadDashboard();
 
 
-    }
 
-    catch (err) {
+    }
+    catch(err){
 
         console.log(err);
 
@@ -429,16 +612,19 @@ async function mergeQuiz() {
 }
 
 
+
 // ===========================
 // RENAME QUIZ
 // ===========================
 
-async function renameQuiz() {
+async function renameQuiz(){
 
-    const quizId = value("quizList");
+    const quizId =
+    value("quizList");
 
 
-    if (!quizId) {
+
+    if(!quizId){
 
         alert("Select Quiz");
 
@@ -447,27 +633,33 @@ async function renameQuiz() {
     }
 
 
+
     const newName =
-        prompt("New Quiz Name");
+    prompt("New Quiz Name");
 
 
-    if (!newName) return;
+
+    if(!newName) return;
 
 
-    try {
+
+    try{
+
 
         const quizzes =
-            await fetch("/api/quiz")
-            .then(r => r.json());
+        await fetch("/api/quiz")
+        .then(r=>r.json());
+
 
 
         const quiz =
-            quizzes.find(
-                q => q.quizId === quizId
-            );
+        quizzes.find(
+            q=>q.quizId === quizId
+        );
 
 
-        if (!quiz) {
+
+        if(!quiz){
 
             alert("Quiz Not Found");
 
@@ -476,66 +668,67 @@ async function renameQuiz() {
         }
 
 
+
         const res =
-            await fetch(
-                "/api/quiz/" + quiz._id,
-                {
+        await fetch(
+            "/api/quiz/" + quiz._id,
+            {
 
-                    method: "PUT",
+                method:"PUT",
 
-                    headers: {
+                headers:{
+                    "Content-Type":"application/json"
+                },
 
-                        "Content-Type":
-                        "application/json"
+                body:JSON.stringify({
 
-                    },
+                    quizName:newName
 
-                    body: JSON.stringify({
+                })
 
-                        quizName: newName
+            }
+        );
 
-                    })
-
-                }
-            );
 
 
         const data =
-            await res.json();
+        await res.json();
+
 
 
         alert(data.message);
 
 
+
         loadQuizList();
 
 
-    }
 
-    catch (err) {
+    }
+    catch(err){
 
         console.log(err);
 
     }
 
 }
+
+
+
 // ===========================
-// REFRESH QUESTIONS
+// REFRESH
 // ===========================
 
-function refreshQuestions() {
-  
-  loadQuestions();
-  
+function refreshQuestions(){
+
+    loadQuestions();
+
 }
 
 
-// ===========================
-// RELOAD PAGE
-// ===========================
 
-function reloadPage() {
-  
-  location.reload();
-  
+function reloadPage(){
+
+    location.reload();
+
 }
