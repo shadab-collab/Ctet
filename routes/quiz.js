@@ -9,44 +9,30 @@ const Question = require("../models/Question");
 // ===========================
 
 router.get("/", async (req, res) => {
-  
   try {
-    
     const quizzes = await Quiz.find().sort({ createdAt: -1 });
 
     const result = [];
 
     for (const quiz of quizzes) {
-
       const count = await Question.countDocuments({
-
         quizId: quiz.quizId
-
       });
 
       result.push({
-
         ...quiz.toObject(),
-
         questionCount: count
-
       });
-
     }
 
     res.json(result);
-    
-  }
-  
-  catch (err) {
-    
+
+  } catch (err) {
     res.status(500).json({
       success: false,
       error: err.message
     });
-    
   }
-  
 });
 
 // ===========================
@@ -54,55 +40,35 @@ router.get("/", async (req, res) => {
 // ===========================
 
 router.post("/", async (req, res) => {
-  
   try {
-    
+
     const exists = await Quiz.findOne({
-      
       quizDate: req.body.quizDate,
-      
       quizName: req.body.quizName
-      
     });
-    
+
     if (exists) {
-      
       return res.json({
-        
         success: false,
-        
         error: "Same Quiz Name Already Exists"
-        
       });
-      
     }
-    
-    const quiz = new Quiz(req.body);
-    
-    await quiz.save();
-    
+
+    await Quiz.create(req.body);
+
     res.json({
-      
       success: true,
-      
       message: "Quiz Created Successfully"
-      
     });
-    
-  }
-  
-  catch (err) {
-    
+
+  } catch (err) {
+
     res.status(500).json({
-      
       success: false,
-      
       error: err.message
-      
     });
-    
+
   }
-  
 });
 
 // ===========================
@@ -110,47 +76,36 @@ router.post("/", async (req, res) => {
 // ===========================
 
 router.put("/live/:quizId", async (req, res) => {
-  
   try {
-    
-    await Quiz.updateMany({}, {
-      
-      isLive: false
-      
-    });
-    
-    await Quiz.findOneAndUpdate({
-      
-      quizId: req.params.quizId
-      
-    }, {
-      
-      isLive: true
-      
-    });
-    
+
+    await Quiz.updateMany({}, { isLive: false });
+
+    const quiz = await Quiz.findOneAndUpdate(
+      { quizId: req.params.quizId },
+      { isLive: true },
+      { new: true }
+    );
+
+    if (!quiz) {
+      return res.json({
+        success: false,
+        error: "Quiz Not Found"
+      });
+    }
+
     res.json({
-      
       success: true,
-      
       message: "Live Quiz Updated"
-      
     });
-    
-  }
-  
-  catch (err) {
-    
+
+  } catch (err) {
+
     res.status(500).json({
-      
       success: false,
-      
       error: err.message
-      
     });
-    
+
   }
-  
 });
 
 // ===========================
@@ -158,79 +113,51 @@ router.put("/live/:quizId", async (req, res) => {
 // ===========================
 
 router.post("/merge", async (req, res) => {
-  
   try {
-    
-    const {
-      
-      quizIds,
-      
-      quizName
-      
-    } = req.body;
-    
-    const newQuizId = Date.now().toString();
-    
-    await Quiz.create({
-      
-      quizId: newQuizId,
-      
-      quizName,
-      
-      quizDate: new Date()
-        
-        .toISOString()
-        
-        .slice(0, 10),
-      
-      isLive: false
-      
-    });
-    
-    const questions = await Question.find({
-      
-      quizId: {
-        
-        $in: quizIds
-        
-      }
-      
-    });
-    
-    for (const q of questions) {
 
+    const { quizIds, quizName } = req.body;
+
+    const newQuizId = Date.now().toString();
+
+    await Quiz.create({
+      quizId: newQuizId,
+      quizName,
+      quizDate: new Date().toISOString().slice(0, 10),
+      isLive: false
+    });
+
+    const questions = await Question.find({
+      quizId: {
+        $in: quizIds
+      }
+    });
+
+    const copied = questions.map((q) => {
       const obj = q.toObject();
-      
+
       delete obj._id;
-      
+
       obj.quizId = newQuizId;
-      
-      await Question.create(obj);
-      
-    }
-    
+      obj.quizTitle = quizName;
+
+      return obj;
+    });
+
+    await Question.insertMany(copied);
+
     res.json({
-      
       success: true,
-      
-      message: questions.length + " Questions Merged"
-      
+      message: `${copied.length} Questions Merged`
     });
-    
-  }
-  
-  catch (err) {
-    
+
+  } catch (err) {
+
     res.status(500).json({
-      
       success: false,
-      
       error: err.message
-      
     });
-    
+
   }
-  
 });
 
 // ===========================
@@ -238,53 +165,36 @@ router.post("/merge", async (req, res) => {
 // ===========================
 
 router.delete("/:id", async (req, res) => {
-  
   try {
-    
+
     const quiz = await Quiz.findById(req.params.id);
-    
+
     if (!quiz) {
-      
       return res.json({
-        
         success: false,
-        
         error: "Quiz Not Found"
-        
       });
-      
     }
-    
+
     await Question.deleteMany({
-      
       quizId: quiz.quizId
-      
     });
-    
+
     await Quiz.findByIdAndDelete(req.params.id);
-    
+
     res.json({
-      
       success: true,
-      
       message: "Quiz Deleted"
-      
     });
-    
-  }
-  
-  catch (err) {
-    
+
+  } catch (err) {
+
     res.status(500).json({
-      
       success: false,
-      
       error: err.message
-      
     });
-    
+
   }
-  
 });
 
 // ===========================
@@ -292,43 +202,48 @@ router.delete("/:id", async (req, res) => {
 // ===========================
 
 router.put("/:id", async (req, res) => {
-  
   try {
-    
-    await Quiz.findByIdAndUpdate(
-      
+
+    const quiz = await Quiz.findByIdAndUpdate(
       req.params.id,
-      
       {
-        
         quizName: req.body.quizName
-        
+      },
+      {
+        new: true,
+        runValidators: true
       }
-      
     );
-    
+
+    if (!quiz) {
+      return res.json({
+        success: false,
+        error: "Quiz Not Found"
+      });
+    }
+
+    await Question.updateMany(
+      {
+        quizId: quiz.quizId
+      },
+      {
+        quizTitle: req.body.quizName
+      }
+    );
+
     res.json({
-      
       success: true,
-      
       message: "Quiz Renamed"
-      
     });
-    
-  }
-  
-  catch (err) {
-    
+
+  } catch (err) {
+
     res.status(500).json({
-      
       success: false,
-      
       error: err.message
-      
     });
-    
+
   }
-  
 });
 
 module.exports = router;

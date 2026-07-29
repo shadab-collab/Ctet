@@ -2,7 +2,6 @@ const API = "/api/questions/archive";
 
 window.onload = loadArchive;
 
-
 // ==========================
 // LOAD ARCHIVE
 // ==========================
@@ -21,65 +20,49 @@ async function loadArchive() {
       
       html = "<h3>No Archive Found</h3>";
       
-    }
-    
-    data.forEach(item => {
+    } else {
       
-      html += `
+      data.forEach(item => {
+        
+        html += `
 
 <div class="archive-card">
 
-<div>
+    <div>
 
-<h3>📅 ${item.quizDate}</h3>
+        <h3>📅 ${item.quizDate}</h3>
 
-<p>
+        <p>Questions : ${item.totalQuestions}</p>
 
-Questions : ${item.totalQuestions}
+    </div>
 
-</p>
+    <div>
 
-</div>
+        <button
+            class="view"
+            onclick="viewArchive('${item.quizDate}')">
 
-<div>
+            👁 View
 
-<button
+        </button>
 
-class="view"
+        <button
+            class="delete"
+            onclick="deleteArchive('${item.quizDate}')">
 
-onclick="viewArchive('${item.quizDate}')">
+            🗑 Delete
 
-👁 View
+        </button>
 
-</button>
-
-<button
-
-style="background:#2e7d32"
-
-onclick="reuseQuiz('${item.quizDate}')">
-
-♻️ Reuse
-
-</button>
-
-<button
-
-class="delete"
-
-onclick="deleteArchive('${item.quizDate}')">
-
-🗑 Delete
-
-</button>
-
-</div>
+    </div>
 
 </div>
 
 `;
+        
+      });
       
-    });
+    }
     
     document.getElementById("archiveList").innerHTML = html;
     
@@ -90,14 +73,11 @@ onclick="deleteArchive('${item.quizDate}')">
     console.log(err);
     
     document.getElementById("archiveList").innerHTML =
-      
       "<h3>Server Error</h3>";
     
   }
   
 }
-
-
 
 // ==========================
 // VIEW ARCHIVE
@@ -106,12 +86,9 @@ onclick="deleteArchive('${item.quizDate}')">
 function viewArchive(date) {
   
   location.href =
-    
     "archive-view.html?date=" + date;
   
 }
-
-
 
 // ==========================
 // DELETE ARCHIVE
@@ -119,61 +96,36 @@ function viewArchive(date) {
 
 async function deleteArchive(date) {
   
-  if (!confirm(
-      
-      date +
-      
-      "\n\nइस तारीख के सभी प्रश्न Delete करना चाहते हैं?"
-      
-    )) return;
-  
-  const res = await fetch(
-    
-    "/api/questions/archive/" + date,
-    
-    {
-      
-      method: "DELETE"
-      
-    }
-    
+  const ok = confirm(
+    date +
+    "\n\nइस तारीख के सभी प्रश्न Delete करना चाहते हैं?"
   );
   
-  const data = await res.json();
+  if (!ok) return;
   
-  alert(data.message);
-  
-  loadArchive();
-  
-}
-// ==========================
-// REUSE QUIZ
-// ==========================
-
-async function reuseQuiz(date) {
-  
-  if (!confirm(
-      
-      date +
-      
-      "\n\nक्या इस Quiz को आज की Date में Copy करना चाहते हैं?"
-      
-    )) return;
-  
-  const res = await fetch(
+  try {
     
-    "/api/questions/reuse/" + date,
+    const res = await fetch(
+      "/api/questions/archive/" + date,
+      {
+        method: "DELETE"
+      }
+    );
     
-    {
-      
-      method: "POST"
-      
-    }
+    const data = await res.json();
     
-  );
+    alert(data.message);
+    
+    loadArchive();
+    
+  }
   
-  const data = await res.json();
-  
-  alert(data.message);
+  catch (err) {
+    
+    console.log(err);
+    
+    alert("Server Error");
+    
+  }
   
 }

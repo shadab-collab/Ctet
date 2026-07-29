@@ -1,91 +1,56 @@
 // ===========================
 // APP CONFIG
-// app.js
 // ===========================
 
-// API URL
 const API = "/api/questions";
 
-// Edit Mode
 let editingId = null;
 
-// Page Load
-window.onload = () => {
+// ===========================
+// PAGE LOAD
+// ===========================
 
-    loadQuizList();
-
-    loadDashboard();
-
-};
+window.addEventListener("load", () => {
+  loadTopic();
+  loadQuizList();
+  loadDashboard();
+  loadMergeQuizList();
+  
+  document
+    .getElementById("quizList")
+    .addEventListener("change", loadQuestions);
+});
 
 // ===========================
-// GET TODAY
+// COMMON FUNCTIONS
 // ===========================
 
 function getToday() {
-  
-  return new Date()
-    .toISOString()
-    .slice(0, 10);
-  
+  return new Date().toISOString().slice(0, 10);
 }
-
-// ===========================
-// GET VALUE
-// ===========================
 
 function value(id) {
-  
-  return document
-    .getElementById(id)
-    .value
-    .trim();
-  
+  return document.getElementById(id).value.trim();
 }
-
-// ===========================
-// SET VALUE
-// ===========================
 
 function setValue(id, text) {
-  
-  document
-    .getElementById(id)
-    .value = text;
-  
+  document.getElementById(id).value = text;
 }
-
-// ===========================
-// CLEAR EDIT MODE
-// ===========================
 
 function stopEditing() {
-  
   editingId = null;
-  
 }
-
-// ===========================
-// SCROLL TOP
-// ===========================
 
 function scrollTopForm() {
-  
   window.scrollTo({
-    
     top: 0,
-    
     behavior: "smooth"
-  
   });
-  
 }
 
 // ===========================
-// LOAD TOPIC
+// TOPIC
 // ===========================
-
-window.addEventListener("load", loadTopic);
 
 async function loadTopic() {
   
@@ -95,7 +60,8 @@ async function loadTopic() {
     
     const data = await res.json();
     
-    document.getElementById("todayTopic").value = data.title;
+    document.getElementById("todayTopic").value =
+      data.title || "";
     
   }
   
@@ -107,23 +73,16 @@ async function loadTopic() {
   
 }
 
-// ===========================
-// SAVE TOPIC
-// ===========================
-
 async function saveTopic() {
   
-  const title = document
-    .getElementById("todayTopic")
-    .value
-    .trim();
+  const title = value("todayTopic");
   
-  if (title === "") {
+  if (!title) {
     
     alert("Topic लिखें");
     
     return;
-  
+    
   }
   
   try {
@@ -137,7 +96,7 @@ async function saveTopic() {
       },
       
       body: JSON.stringify({
-        title: title
+        title
       })
       
     });
@@ -159,115 +118,263 @@ async function saveTopic() {
   }
   
 }
-
-const QUIZ_API = "/api/quiz";
-
 // ===========================
-// LOAD QUIZ LIST (UPDATED)
+// LOAD QUIZ LIST
 // ===========================
 
-async function loadQuizList(){
-
+async function loadQuizList() {
+  
+  try {
+    
     const res = await fetch("/api/quiz");
-
+    
     const quizzes = await res.json();
-
-    let html = "";
-
-    quizzes.forEach(q=>{
-
-        html += `
-
-        <option value="${q.quizId}">
-
-        ${q.isLive ? "🟢 " : ""}
-
-        ${q.quizName}
-
-        (${q.questionCount})
-
-        </option>
-
-        `;
-
-    });
-
-    document.getElementById("quizList").innerHTML = html;
-
-    if(quizzes.length){
-
-        loadQuestions();
-
+    
+    document.getElementById("quizList").innerHTML =
+      quizzes.map(q => `
+                <option value="${q.quizId}">
+                    ${q.isLive ? "🟢 " : ""}
+                    ${q.quizName} (${q.questionCount || 0})
+                </option>
+            `).join("");
+    
+    if (quizzes.length) {
+      loadQuestions();
     }
-
+    
+  }
+  
+  catch (err) {
+    
+    console.log(err);
+    
+  }
+  
 }
-
-// Event listener added right after loadQuizList
-document
-  .getElementById("quizList")
-  .addEventListener(
-    "change",
-    loadQuestions
-  );
-
-window.addEventListener("load", loadQuizList);
 
 // ===========================
 // LOAD DASHBOARD
 // ===========================
 
-async function loadDashboard(){
-
+async function loadDashboard() {
+  
+  try {
+    
     const res = await fetch("/api/quiz");
-
+    
     const quizzes = await res.json();
-
+    
     document.getElementById("totalQuiz").innerText =
-        quizzes.length;
-
+      quizzes.length;
+    
     let total = 0;
-
     let live = "None";
-
-    quizzes.forEach(q=>{
-
-        total += q.questionCount || 0;
-
-        if(q.isLive){
-
-            live = q.quizName;
-
-        }
-
+    
+    quizzes.forEach(q => {
+      
+      total += q.questionCount || 0;
+      
+      if (q.isLive) {
+        live = q.quizName;
+      }
+      
     });
-
+    
     document.getElementById("totalQuestions").innerText =
-        total;
-
+      total;
+    
     document.getElementById("liveQuiz").innerText =
-        live;
-
+      live;
+    
+  }
+  
+  catch (err) {
+    
+    console.log(err);
+    
+  }
+  
 }
 
 // ===========================
-// CREATE QUIZ (UPDATED)
+// CREATE QUIZ
 // ===========================
 
-async function createQuiz(){
+async function createQuiz() {
+  
+  const quizName = value("newQuizName");
+  const topic = value("newQuizTopic");
+  
+  if (!quizName) {
+    
+    alert("Quiz Name लिखिए");
+    
+    return;
+    
+  }
+  
+  const quizId = Date.now().toString();
+  
+  const res = await fetch("/api/quiz", {
+    
+    method: "POST",
+    
+    headers: {
+      "Content-Type": "application/json"
+    },
+    
+    body: JSON.stringify({
+      
+      quizId,
+      
+      quizName,
+      
+      quizDate: getToday(),
+      
+      topic,
+      
+      isLive: false
+      
+    })
+    
+  });
+  
+  const data = await res.json();
+  
+  if (!data.success) {
+    
+    alert(data.error);
+    
+    return;
+    
+  }
+  
+  alert("Quiz Created");
+  
+  await loadQuizList();
+  
+  document.getElementById("quizList").value = quizId;
+  
+  loadQuestions();
+  
+  setValue("newQuizName", "");
+  setValue("newQuizTopic", "");
+  
+}
+
+// ===========================
+// MAKE LIVE QUIZ
+// ===========================
+
+async function makeLiveQuiz() {
+
+    const quizId = value("quizList");
+
+    if (!quizId) {
+
+        alert("Select Quiz");
+
+        return;
+
+    }
+
+    try {
+
+        const res = await fetch(
+            "/api/quiz/live/" + quizId,
+            {
+                method: "PUT"
+            }
+        );
+
+        const data = await res.json();
+
+        alert(data.message);
+
+        loadQuizList();
+        loadDashboard();
+
+    }
+
+    catch (err) {
+
+        console.log(err);
+
+        alert("Live Quiz Failed");
+
+    }
+
+}
+
+
+// ===========================
+// MERGE QUIZ LIST
+// ===========================
+
+async function loadMergeQuizList() {
+
+    try {
+
+        const res = await fetch("/api/quiz");
+
+        const quizzes = await res.json();
+
+        document.getElementById("mergeQuizList").innerHTML =
+
+            quizzes.map(q => `
+
+                <label style="display:block;margin:8px 0">
+
+                    <input 
+                    type="checkbox"
+                    value="${q.quizId}">
+
+                    ${q.quizName}
+
+                </label>
+
+            `).join("");
+
+    }
+
+    catch (err) {
+
+        console.log(err);
+
+    }
+
+}
+
+
+// ===========================
+// MERGE QUIZ
+// ===========================
+
+async function mergeQuiz() {
+
+    const checked = [
+        ...document.querySelectorAll(
+            "#mergeQuizList input:checked"
+        )
+    ];
+
+    if (checked.length < 2) {
+
+        alert("कम से कम 2 Quiz चुनिए");
+
+        return;
+
+    }
+
+    const quizIds =
+        checked.map(x => x.value);
+
 
     const quizName =
-        document
-        .getElementById("newQuizName")
-        .value
-        .trim();
+        value("mergeQuizName");
 
-    const topic =
-        document
-        .getElementById("newQuizTopic")
-        .value
-        .trim();
 
-    if(!quizName){
+    if (!quizName) {
 
         alert("Quiz Name लिखिए");
 
@@ -275,285 +382,160 @@ async function createQuiz(){
 
     }
 
-    const quizId = Date.now().toString();
 
-    const body={
+    try {
 
-        quizId,
+        const res = await fetch(
+            "/api/quiz/merge",
+            {
 
-        quizName,
+                method: "POST",
 
-        quizDate:getToday(),
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-        topic,
+                body: JSON.stringify({
 
-        isLive:false
+                    quizIds,
 
-    };
+                    quizName
 
-    const res = await fetch("/api/quiz",{
+                })
 
-        method:"POST",
+            }
+        );
 
-        headers:{
 
-            "Content-Type":"application/json"
+        const data = await res.json();
 
-        },
 
-        body:JSON.stringify(body)
+        alert(data.message);
 
-    });
 
-    const data = await res.json();
+        loadQuizList();
+        loadMergeQuizList();
+        loadDashboard();
 
-    if(data.success){
 
-        alert("Quiz Created");
+    }
 
-        await loadQuizList();
+    catch (err) {
 
-        document.getElementById("quizList").value = quizId;
-
-        loadQuestions();
-
-        document.getElementById("newQuizName").value="";
-
-        document.getElementById("newQuizTopic").value="";
-
-    }else{
-
-        alert(data.error);
+        console.log(err);
 
     }
 
 }
 
+
 // ===========================
-// MAKE LIVE QUIZ
+// RENAME QUIZ
 // ===========================
 
-async function makeLiveQuiz(){
+async function renameQuiz() {
 
-    const quizId =
-        document.getElementById("quizList").value;
+    const quizId = value("quizList");
 
-    const res = await fetch(
 
-        "/api/quiz/live/" + quizId,
+    if (!quizId) {
 
-        {
+        alert("Select Quiz");
 
-            method:"PUT"
+        return;
+
+    }
+
+
+    const newName =
+        prompt("New Quiz Name");
+
+
+    if (!newName) return;
+
+
+    try {
+
+        const quizzes =
+            await fetch("/api/quiz")
+            .then(r => r.json());
+
+
+        const quiz =
+            quizzes.find(
+                q => q.quizId === quizId
+            );
+
+
+        if (!quiz) {
+
+            alert("Quiz Not Found");
+
+            return;
 
         }
 
-    );
 
-    const data = await res.json();
+        const res =
+            await fetch(
+                "/api/quiz/" + quiz._id,
+                {
 
-    alert(data.message);
+                    method: "PUT",
 
-    loadQuizList();
+                    headers: {
+
+                        "Content-Type":
+                        "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        quizName: newName
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await res.json();
+
+
+        alert(data.message);
+
+
+        loadQuizList();
+
+
+    }
+
+    catch (err) {
+
+        console.log(err);
+
+    }
 
 }
+// ===========================
+// REFRESH QUESTIONS
+// ===========================
+
+function refreshQuestions() {
+  
+  loadQuestions();
+  
+}
+
 
 // ===========================
-// MERGE QUIZ LIST
+// RELOAD PAGE
 // ===========================
 
-async function loadMergeQuizList() {
+function reloadPage() {
   
-  const res = await fetch("/api/quiz");
-  
-  const quizzes = await res.json();
-  
-  let html = "";
-  
-  quizzes.forEach(q => {
-    
-    html += `
-        <label style="display:block;margin:8px 0;">
-
-            <input
-            type="checkbox"
-            value="${q.quizId}">
-
-            ${q.quizName}
-
-        </label>
-        `;
-    
-  });
-  
-  document.getElementById("mergeQuizList").innerHTML = html;
-  
-}
-
-window.addEventListener("load", loadMergeQuizList);
-
-async function mergeQuiz() {
-  
-  const checked = [
-    
-    ...document.querySelectorAll(
-      
-      "#mergeQuizList input:checked"
-      
-    )
-    
-  ];
-  
-  if (checked.length < 2) {
-    
-    alert("कम से कम 2 Quiz चुनिए");
-    
-    return;
-  
-  }
-  
-  const quizIds = checked.map(x => x.value);
-  
-  const quizName =
-    
-    document
-    .getElementById("mergeQuizName")
-    .value
-    .trim();
-  
-  if (!quizName) {
-    
-    alert("Quiz Name लिखिए");
-    
-    return;
-  
-  }
-  
-  const res = await fetch(
-    
-    "/api/quiz/merge",
-    
-    {
-      
-      method: "POST",
-      
-      headers: {
-        
-        "Content-Type": "application/json"
-        
-      },
-      
-      body: JSON.stringify({
-        
-        quizIds,
-        
-        quizName
-        
-      })
-      
-    }
-    
-  );
-  
-  const data = await res.json();
-  
-  alert(data.message);
-  
-  loadQuizList();
-  
-  loadMergeQuizList();
-  
-}
-
-async function renameQuiz() {
-  
-  const quizId =
-    document.getElementById("quizList").value;
-  
-  if (!quizId) {
-    
-    alert("Select Quiz");
-    
-    return;
-    
-  }
-  
-  const newName = prompt("New Quiz Name");
-  
-  if (!newName) return;
-  
-  const quizzes =
-    await fetch("/api/quiz")
-    .then(r => r.json());
-  
-  const quiz =
-    quizzes.find(q => q.quizId === quizId);
-  
-  if (!quiz) {
-    
-    alert("Quiz Not Found");
-    
-    return;
-    
-  }
-  
-  const res =
-    await fetch("/api/quiz/" + quiz._id, {
-      
-      method: "PUT",
-      
-      headers: {
-        
-        "Content-Type": "application/json"
-        
-      },
-      
-      body: JSON.stringify({
-        
-        quizName: newName
-        
-      })
-      
-    });
-  
-  const data =
-    await res.json();
-  
-  alert(data.message);
-  
-  loadQuizList();
-  
-}
-
-async function makeLiveQuiz() {
-  
-  const quizId =
-    document.getElementById("quizList").value;
-  
-  if (!quizId) {
-    
-    alert("Select Quiz");
-    
-    return;
-    
-  }
-  
-  const res = await fetch(
-    
-    "/api/quiz/live/" + quizId,
-    
-    {
-      
-      method: "PUT"
-      
-    }
-    
-  );
-  
-  const data = await res.json();
-  
-  alert(data.message);
-  
-  loadQuizList();
+  location.reload();
   
 }

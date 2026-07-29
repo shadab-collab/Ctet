@@ -4,41 +4,33 @@ const router = express.Router();
 const Question = require("../models/Question");
 const Quiz = require("../models/Quiz");
 
-
 // ============================
 // QUIZ ID के आधार पर प्रश्न प्राप्त करें
 // GET /api/questions?quizId=123
 // ============================
 
 router.get("/", async (req, res) => {
-  
   try {
+    const { quizId } = req.query;
     
-    const quizId = req.query.quizId;
-
     if (!quizId) {
       return res.json([]);
     }
-
+    
     const questions = await Question.find({
-      quizId: quizId,
+      quizId,
       published: true
-    }).sort({
-      createdAt: 1
-    });
-
+    }).sort({ createdAt: 1 });
+    
     res.json(questions);
     
   } catch (err) {
-    
     res.status(500).json({
+      success: false,
       error: err.message
     });
-    
   }
-  
 });
-
 
 // ============================
 // नया प्रश्न जोड़ें
@@ -46,12 +38,8 @@ router.get("/", async (req, res) => {
 // ============================
 
 router.post("/", async (req, res) => {
-  
   try {
-    
-    const question = new Question(req.body);
-    
-    await question.save();
+    await Question.create(req.body);
     
     res.json({
       success: true,
@@ -59,62 +47,43 @@ router.post("/", async (req, res) => {
     });
     
   } catch (err) {
-    
     res.status(400).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+// ============================
+// LIVE QUESTIONS
+// GET /api/questions/live
+// ============================
+
+router.get("/live", async (req, res) => {
+  try {
+    
+    const quiz = await Quiz.findOne({ isLive: true });
+    
+    if (!quiz) {
+      return res.json([]);
+    }
+    
+    const questions = await Question.find({
+      quizId: quiz.quizId,
+      published: true
+    }).sort({ createdAt: 1 });
+    
+    res.json(questions);
+    
+  } catch (err) {
+    
+    res.status(500).json({
       success: false,
       error: err.message
     });
     
   }
-  
 });
-
-
-// ===========================
-// LIVE QUESTIONS (ADDED HERE)
-// GET /api/questions/live
-// ===========================
-
-router.get("/live", async (req, res) => {
-
-    try {
-
-        const quiz = await Quiz.findOne({
-
-            isLive: true
-
-        });
-
-        if (!quiz) {
-
-            return res.json([]);
-
-        }
-
-        const questions = await Question.find({
-
-            quizId: quiz.quizId,
-
-            published: true
-
-        });
-
-        res.json(questions);
-
-    } catch (err) {
-
-        res.status(500).json({
-
-            success: false,
-
-            error: err.message
-
-        });
-
-    }
-
-});
-
 
 // ============================
 // प्रश्न हटाएँ
@@ -122,7 +91,6 @@ router.get("/live", async (req, res) => {
 // ============================
 
 router.delete("/:id", async (req, res) => {
-  
   try {
     
     await Question.findByIdAndDelete(req.params.id);
@@ -139,9 +107,7 @@ router.delete("/:id", async (req, res) => {
     });
     
   }
-  
 });
-
 
 // ============================
 // प्रश्न अपडेट करें
@@ -149,12 +115,15 @@ router.delete("/:id", async (req, res) => {
 // ============================
 
 router.put("/:id", async (req, res) => {
-  
   try {
     
     await Question.findByIdAndUpdate(
       req.params.id,
-      req.body
+      req.body,
+      {
+        new: true,
+        runValidators: true
+      }
     );
     
     res.json({
@@ -169,17 +138,14 @@ router.put("/:id", async (req, res) => {
     });
     
   }
-  
 });
 
-
 // ============================
-// QUIZ ARCHIVE (DATES)
+// QUIZ ARCHIVE
 // GET /api/questions/archive
 // ============================
 
 router.get("/archive", async (req, res) => {
-  
   try {
     
     const dates = await Question.distinct("quizDate");
@@ -203,9 +169,7 @@ router.get("/archive", async (req, res) => {
     
     res.json(result);
     
-  }
-  
-  catch (err) {
+  } catch (err) {
     
     res.status(500).json({
       success: false,
@@ -213,9 +177,7 @@ router.get("/archive", async (req, res) => {
     });
     
   }
-  
 });
-
 
 // ============================
 // QUESTIONS BY DATE
@@ -223,35 +185,24 @@ router.get("/archive", async (req, res) => {
 // ============================
 
 router.get("/archive/:date", async (req, res) => {
-  
   try {
     
     const questions = await Question.find({
-      
       quizDate: req.params.date
-      
     }).sort({
-      
       createdAt: 1
-      
     });
     
     res.json(questions);
     
-  }
-  
-  catch (err) {
+  } catch (err) {
     
     res.status(500).json({
-      
       success: false,
-      
       error: err.message
-      
     });
     
   }
-  
 });
 
 // ============================
@@ -260,104 +211,73 @@ router.get("/archive/:date", async (req, res) => {
 // ============================
 
 router.delete("/archive/:date", async (req, res) => {
-
-    try {
-
-        const result = await Question.deleteMany({
-
-            quizDate: req.params.date
-
-        });
-
-        res.json({
-
-            success: true,
-
-            message:
-                result.deletedCount +
-                " Questions Deleted Successfully"
-
-        });
-
-    }
-
-    catch (err) {
-
-        res.status(500).json({
-
-            success: false,
-
-            error: err.message
-
-        });
-
-    }
-
+  try {
+    
+    const result = await Question.deleteMany({
+      quizDate: req.params.date
+    });
+    
+    res.json({
+      success: true,
+      message: `${result.deletedCount} Questions Deleted Successfully`
+    });
+    
+  } catch (err) {
+    
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+    
+  }
 });
 
 // ============================
-// REUSE QUIZ (BY QUIZ ID)
+// REUSE QUIZ
 // POST /api/questions/reuse/:quizId
 // ============================
 
 router.post("/reuse/:quizId", async (req, res) => {
-
-    try {
-
-        const oldQuestions = await Question.find({
-
-            quizId: req.params.quizId
-
-        });
-
-        if (!oldQuestions.length) {
-
-            return res.json({
-
-                success: false,
-
-                message: "No Questions Found"
-
-            });
-
-        }
-
-        const newQuizId = req.body.quizId;
-
-        for (const q of oldQuestions) {
-
-            const obj = q.toObject();
-
-            delete obj._id;
-
-            obj.quizId = newQuizId;
-
-            await Question.create(obj);
-
-        }
-
-        res.json({
-
-            success: true,
-
-            message: oldQuestions.length + " Questions Copied"
-
-        });
-
+  try {
+    
+    const oldQuestions = await Question.find({
+      quizId: req.params.quizId
+    });
+    
+    if (!oldQuestions.length) {
+      return res.json({
+        success: false,
+        message: "No Questions Found"
+      });
     }
-
-    catch (err) {
-
-        res.status(500).json({
-
-            success: false,
-
-            error: err.message
-
-        });
-
-    }
-
+    
+    const newQuizId = req.body.quizId;
+    
+    const newQuestions = oldQuestions.map((q) => {
+      const obj = q.toObject();
+      
+      delete obj._id;
+      
+      obj.quizId = newQuizId;
+      
+      return obj;
+    });
+    
+    await Question.insertMany(newQuestions);
+    
+    res.json({
+      success: true,
+      message: `${newQuestions.length} Questions Copied`
+    });
+    
+  } catch (err) {
+    
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+    
+  }
 });
 
 module.exports = router;

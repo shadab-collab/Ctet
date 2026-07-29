@@ -1,25 +1,17 @@
 const mongoose = require("mongoose");
 
-const TopicSchema = new mongoose.Schema({
-  
-  title: {
-    
-    type: String,
-    
-    required: true,
-    
-    default: "Today's Quiz"
-    
+const topicSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      default: "Today's Quiz",
+      trim: true
+    }
   },
-  
-  updatedAt: {
-    
-    type: Date,
-    
-    default: Date.now
-    
+  {
+    timestamps: true
   }
-  
-});
+);
 
-module.exports = mongoose.model("Topic", TopicSchema);
+module.exports = mongoose.model("Topic", topicSchema);

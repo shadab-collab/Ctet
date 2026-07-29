@@ -8,146 +8,146 @@ async function createQuiz() {
   
   const quizName = prompt("Enter Quiz Name");
   
-  if (!quizName) return;
+  if (!quizName || !quizName.trim()) return;
   
-  const body = {
+  try {
     
-    quizId: Date.now().toString(),
+    const res = await fetch("/api/quiz", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        quizId: Date.now().toString(),
+        quizName: quizName.trim(),
+        quizDate: getToday()
+      })
+    });
     
-    quizName: quizName,
+    const data = await res.json();
     
-    quizDate: getToday()
+    alert(data.message || data.error);
     
-  };
-  
-  const res = await fetch("/api/quiz", {
+    loadQuizList();
+    loadDashboard();
     
-    method: "POST",
+  } catch (err) {
     
-    headers: {
-      "Content-Type": "application/json"
-    },
+    alert("Failed to create quiz.");
+    console.log(err);
     
-    body: JSON.stringify(body)
-    
-  });
-  
-  const data = await res.json();
-  
-  alert(data.message);
-  
-  loadQuizList();
-  
-  loadDashboard();
+  }
   
 }
 
 // RENAME QUIZ
 async function renameQuiz() {
   
-  const quizId =
-    document.getElementById("quizList").value;
+  const quizId = document.getElementById("quizList").value;
   
   const newName = prompt("New Quiz Name");
   
-  if (!newName) return;
+  if (!newName || !newName.trim()) return;
   
-  const quizzes =
-    await fetch("/api/quiz").then(r => r.json());
-  
-  const quiz =
-    quizzes.find(q => q.quizId === quizId);
-  
-  if (!quiz) return;
-  
-  const res = await fetch("/api/quiz/" + quiz._id, {
+  try {
     
-    method: "PUT",
+    const quizzes = await fetch("/api/quiz").then(r => r.json());
     
-    headers: {
-      "Content-Type": "application/json"
-    },
+    const quiz = quizzes.find(q => q.quizId === quizId);
     
-    body: JSON.stringify({
-      
-      quizName: newName
-      
-    })
+    if (!quiz) {
+      alert("Quiz not found.");
+      return;
+    }
     
-  });
-  
-  const data = await res.json();
-  
-  alert(data.message);
-  
-  loadQuizList();
-  
-  loadDashboard();
+    const res = await fetch("/api/quiz/" + quiz._id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        quizName: newName.trim()
+      })
+    });
+    
+    const data = await res.json();
+    
+    alert(data.message || data.error);
+    
+    loadQuizList();
+    loadDashboard();
+    
+  } catch (err) {
+    
+    alert("Rename failed.");
+    console.log(err);
+    
+  }
   
 }
 
 // MAKE LIVE
 async function makeLiveQuiz() {
   
-  const quizId =
-    document.getElementById("quizList").value;
+  const quizId = document.getElementById("quizList").value;
   
-  const res = await fetch(
+  try {
     
-    "/api/quiz/live/" + quizId,
-    
-    {
-      
+    const res = await fetch("/api/quiz/live/" + quizId, {
       method: "PUT"
-      
-    }
+    });
     
-  );
-  
-  const data = await res.json();
-  
-  alert(data.message);
-  
-  loadQuizList();
-  
-  loadDashboard();
+    const data = await res.json();
+    
+    alert(data.message || data.error);
+    
+    loadQuizList();
+    loadDashboard();
+    
+  } catch (err) {
+    
+    alert("Failed to update live quiz.");
+    console.log(err);
+    
+  }
   
 }
 
 // DELETE QUIZ
 async function deleteQuiz() {
   
-  const quizId =
-    document.getElementById("quizList").value;
+  const quizId = document.getElementById("quizList").value;
   
-  if (!confirm("Delete Quiz?"))
-    return;
+  if (!confirm("Delete Quiz?")) return;
   
-  const quizzes =
-    await fetch("/api/quiz").then(r => r.json());
-  
-  const quiz =
-    quizzes.find(q => q.quizId === quizId);
-  
-  if (!quiz) return;
-  
-  const res =
-    await fetch("/api/quiz/" + quiz._id, {
-      
+  try {
+    
+    const quizzes = await fetch("/api/quiz").then(r => r.json());
+    
+    const quiz = quizzes.find(q => q.quizId === quizId);
+    
+    if (!quiz) {
+      alert("Quiz not found.");
+      return;
+    }
+    
+    const res = await fetch("/api/quiz/" + quiz._id, {
       method: "DELETE"
-      
     });
-  
-  const data =
-    await res.json();
-  
-  if (data.success) {
     
-    alert("Quiz Deleted");
+    const data = await res.json();
     
-    loadQuizList();
+    alert(data.message || data.error);
     
-    loadDashboard();
+    if (data.success) {
+      loadQuizList();
+      loadDashboard();
+    }
+    
+  } catch (err) {
+    
+    alert("Delete failed.");
+    console.log(err);
     
   }
   

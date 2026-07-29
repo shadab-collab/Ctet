@@ -9,16 +9,14 @@ const Result = require("../models/Result");
 // ============================
 
 router.post("/", async (req, res) => {
-  
   try {
     
-    const result = new Result(req.body);
-    
-    await result.save();
+    const result = await Result.create(req.body);
     
     res.json({
       success: true,
-      message: "Result Saved"
+      message: "Result Saved",
+      data: result
     });
     
   } catch (err) {
@@ -29,20 +27,26 @@ router.post("/", async (req, res) => {
     });
     
   }
-  
 });
 
 // ============================
 // GET LEADERBOARD
-// GET /api/results
+// GET /api/results?quizId=123
 // ============================
 
 router.get("/", async (req, res) => {
-  
   try {
     
-    const results = await Result.find()
-      .sort({ score: -1, createdAt: 1 });
+    const filter = {};
+    
+    if (req.query.quizId) {
+      filter.quizId = req.query.quizId;
+    }
+    
+    const results = await Result.find(filter).sort({
+      score: -1,
+      createdAt: 1
+    });
     
     res.json(results);
     
@@ -54,7 +58,6 @@ router.get("/", async (req, res) => {
     });
     
   }
-  
 });
 
 // ============================
@@ -63,10 +66,19 @@ router.get("/", async (req, res) => {
 // ============================
 
 router.delete("/reset", async (req, res) => {
-  
   try {
     
-    await Result.deleteMany({});
+    if (req.query.quizId) {
+      
+      await Result.deleteMany({
+        quizId: req.query.quizId
+      });
+      
+    } else {
+      
+      await Result.deleteMany({});
+      
+    }
     
     res.json({
       success: true,
@@ -81,7 +93,6 @@ router.delete("/reset", async (req, res) => {
     });
     
   }
-  
 });
 
 module.exports = router;
