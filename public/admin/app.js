@@ -273,3 +273,105 @@ async function makeLiveQuiz(){
     loadQuizList();
 
 }
+async function loadMergeQuizList() {
+  
+  const res = await fetch("/api/quiz");
+  
+  const quizzes = await res.json();
+  
+  let html = "";
+  
+  quizzes.forEach(q => {
+    
+    html += `
+        <label style="display:block;margin:8px 0;">
+
+            <input
+            type="checkbox"
+            value="${q.quizId}">
+
+            ${q.quizName}
+
+        </label>
+        `;
+    
+  });
+  
+  document.getElementById("mergeQuizList").innerHTML = html;
+  
+}
+
+window.addEventListener("load", loadMergeQuizList);
+
+async function mergeQuiz() {
+  
+  const checked = [
+    
+    ...document.querySelectorAll(
+      
+      "#mergeQuizList input:checked"
+      
+    )
+    
+  ];
+  
+  if (checked.length < 2) {
+    
+    alert("कम से कम 2 Quiz चुनिए");
+    
+    return;
+    
+  }
+  
+  const quizIds = checked.map(x => x.value);
+  
+  const quizName =
+    
+    document
+    .getElementById("mergeQuizName")
+    .value
+    .trim();
+  
+  if (!quizName) {
+    
+    alert("Quiz Name लिखिए");
+    
+    return;
+    
+  }
+  
+  const res = await fetch(
+    
+    "/api/quiz/merge",
+    
+    {
+      
+      method: "POST",
+      
+      headers: {
+        
+        "Content-Type": "application/json"
+        
+      },
+      
+      body: JSON.stringify({
+        
+        quizIds,
+        
+        quizName
+        
+      })
+      
+    }
+    
+  );
+  
+  const data = await res.json();
+  
+  alert(data.message);
+  
+  loadQuizList();
+  
+  loadMergeQuizList();
+  
+}

@@ -135,4 +135,86 @@ router.delete("/:id", async (req, res) => {
   
 });
 
+const Question = require("../models/Question");
+
+router.post("/merge", async (req, res) => {
+  
+  try {
+    
+    const {
+      
+      quizIds,
+      
+      quizName
+      
+    } = req.body;
+    
+    const newQuizId =
+      
+      Date.now().toString();
+    
+    await Quiz.create({
+      
+      quizId: newQuizId,
+      
+      quizName,
+      
+      quizDate: new Date()
+        
+        .toISOString()
+        
+        .slice(0, 10)
+      
+    });
+    
+    const questions =
+      
+      await Question.find({
+        
+        quizId: {
+          
+          $in: quizIds
+          
+        }
+        
+      });
+    
+    for (const q of questions) {
+      
+      const obj = q.toObject();
+      
+      delete obj._id;
+      
+      obj.quizId = newQuizId;
+      
+      obj.quizName = quizName;
+      
+      await Question.create(obj);
+      
+    }
+    
+    res.json({
+      
+      success: true,
+      
+      message: "Combined Quiz Created"
+      
+    });
+    
+  }
+  
+  catch (err) {
+    
+    res.status(500).json({
+      
+      success: false,
+      
+      error: err.message
+      
+    });
+    
+  }
+  
+});
+
 module.exports = router;
