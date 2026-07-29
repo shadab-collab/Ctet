@@ -22,15 +22,6 @@ const questionSchema = new mongoose.Schema({
     
   },
   
-  quizName: {
-    
-    type: String,
-    
-    required: true,
-    
-    trim: true
-    
-  },
   
   quizTitle: {
     type: String,
