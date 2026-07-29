@@ -55,13 +55,75 @@ router.post("/", async (req, res) => {
 });
 
 // ============================
+// GET QUESTIONS BY QUIZ (NEW)
+// /api/questions/reuse/:quizId
+// ============================
+
+router.get("/reuse/:quizId", async (req, res) => {
+  try {
+    const questions = await Question.find({
+      quizId: req.params.quizId
+    });
+
+    res.json({
+      success: true,
+      questions
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+// ============================
+// COPY QUESTIONS (NEW)
+// /api/questions/reuse
+// ============================
+
+router.post("/reuse", async (req, res) => {
+  try {
+    const { sourceQuizId, targetQuizId } = req.body;
+
+    const questions = await Question.find({
+      quizId: sourceQuizId
+    });
+
+    let count = 0;
+
+    for (const q of questions) {
+      const obj = q.toObject();
+
+      delete obj._id;
+      delete obj.createdAt;
+      delete obj.updatedAt;
+
+      obj.quizId = targetQuizId;
+
+      await Question.create(obj);
+      count++;
+    }
+
+    res.json({
+      success: true,
+      message: count + " Questions Copied"
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+// ============================
 // LIVE QUESTIONS
 // GET /api/questions/live
 // ============================
 
 router.get("/live", async (req, res) => {
   try {
-    
     const quiz = await Quiz.findOne({ isLive: true });
     
     if (!quiz) {
@@ -76,67 +138,10 @@ router.get("/live", async (req, res) => {
     res.json(questions);
     
   } catch (err) {
-    
     res.status(500).json({
       success: false,
       error: err.message
     });
-    
-  }
-});
-
-// ============================
-// प्रश्न हटाएँ
-// DELETE /api/questions/:id
-// ============================
-
-router.delete("/:id", async (req, res) => {
-  try {
-    
-    await Question.findByIdAndDelete(req.params.id);
-    
-    res.json({
-      success: true
-    });
-    
-  } catch (err) {
-    
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
-    
-  }
-});
-
-// ============================
-// प्रश्न अपडेट करें
-// PUT /api/questions/:id
-// ============================
-
-router.put("/:id", async (req, res) => {
-  try {
-    
-    await Question.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true
-      }
-    );
-    
-    res.json({
-      success: true
-    });
-    
-  } catch (err) {
-    
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
-    
   }
 });
 
@@ -147,7 +152,6 @@ router.put("/:id", async (req, res) => {
 
 router.get("/archive", async (req, res) => {
   try {
-    
     const dates = await Question.distinct("quizDate");
     
     dates.sort((a, b) => b.localeCompare(a));
@@ -155,7 +159,6 @@ router.get("/archive", async (req, res) => {
     const result = [];
     
     for (const date of dates) {
-      
       const count = await Question.countDocuments({
         quizDate: date
       });
@@ -164,18 +167,15 @@ router.get("/archive", async (req, res) => {
         quizDate: date,
         totalQuestions: count
       });
-      
     }
     
     res.json(result);
     
   } catch (err) {
-    
     res.status(500).json({
       success: false,
       error: err.message
     });
-    
   }
 });
 
@@ -186,7 +186,6 @@ router.get("/archive", async (req, res) => {
 
 router.get("/archive/:date", async (req, res) => {
   try {
-    
     const questions = await Question.find({
       quizDate: req.params.date
     }).sort({
@@ -196,12 +195,10 @@ router.get("/archive/:date", async (req, res) => {
     res.json(questions);
     
   } catch (err) {
-    
     res.status(500).json({
       success: false,
       error: err.message
     });
-    
   }
 });
 
@@ -212,7 +209,6 @@ router.get("/archive/:date", async (req, res) => {
 
 router.delete("/archive/:date", async (req, res) => {
   try {
-    
     const result = await Question.deleteMany({
       quizDate: req.params.date
     });
@@ -223,23 +219,20 @@ router.delete("/archive/:date", async (req, res) => {
     });
     
   } catch (err) {
-    
     res.status(500).json({
       success: false,
       error: err.message
     });
-    
   }
 });
 
 // ============================
-// REUSE QUIZ
+// REUSE QUIZ (EXISTING)
 // POST /api/questions/reuse/:quizId
 // ============================
 
 router.post("/reuse/:quizId", async (req, res) => {
   try {
-    
     const oldQuestions = await Question.find({
       quizId: req.params.quizId
     });
@@ -271,12 +264,59 @@ router.post("/reuse/:quizId", async (req, res) => {
     });
     
   } catch (err) {
-    
     res.status(500).json({
       success: false,
       error: err.message
     });
+  }
+});
+
+// ============================
+// प्रश्न हटाएँ
+// DELETE /api/questions/:id
+// ============================
+
+router.delete("/:id", async (req, res) => {
+  try {
+    await Question.findByIdAndDelete(req.params.id);
     
+    res.json({
+      success: true
+    });
+    
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
+// ============================
+// प्रश्न अपडेट करें
+// PUT /api/questions/:id
+// ============================
+
+router.put("/:id", async (req, res) => {
+  try {
+    await Question.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+    
+    res.json({
+      success: true
+    });
+    
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
   }
 });
 
