@@ -77,44 +77,80 @@ router.get("/reuse/:quizId", async (req, res) => {
   }
 });
 
-// ============================
-// COPY QUESTIONS (NEW)
-// /api/questions/reuse
-// ============================
+// ===========================
+// COPY SELECTED QUESTIONS
+// ===========================
 
 router.post("/reuse", async (req, res) => {
-  try {
-    const { sourceQuizId, targetQuizId } = req.body;
 
-    const questions = await Question.find({
-      quizId: sourceQuizId
-    });
+  try {
+
+    const {
+
+      targetQuizId,
+
+      questionIds
+
+    } = req.body;
+
+    if (!questionIds || questionIds.length === 0) {
+
+      return res.json({
+
+        success: false,
+
+        error: "No Question Selected"
+
+      });
+
+    }
 
     let count = 0;
 
-    for (const q of questions) {
+    for (const id of questionIds) {
+
+      const q = await Question.findById(id);
+
+      if (!q) continue;
+
       const obj = q.toObject();
 
       delete obj._id;
+
       delete obj.createdAt;
+
       delete obj.updatedAt;
 
       obj.quizId = targetQuizId;
 
       await Question.create(obj);
+
       count++;
+
     }
 
     res.json({
+
       success: true,
+
       message: count + " Questions Copied"
+
     });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
+
   }
+
+  catch (err) {
+
+    res.status(500).json({
+
+      success: false,
+
+      error: err.message
+
+    });
+
+  }
+
 });
 
 // ============================
