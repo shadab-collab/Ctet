@@ -118,6 +118,34 @@ button:hover{
 
 }
 
+.dashboard{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+.dashboard .card{
+    flex:1;
+    background:#f8f9fa;
+    border:1px solid #e0e0e0;
+    padding:15px;
+    border-radius:8px;
+    text-align:center;
+}
+
+.dashboard .card h3{
+    margin:0 0 5px 0;
+    font-size:14px;
+    color:#666;
+}
+
+.dashboard .card h2{
+    margin:0;
+    font-size:20px;
+    color:#333;
+}
+
 </style>
 
 </head>
@@ -173,11 +201,31 @@ placeholder="Today's Topic">
     </select>
 
     <button
+        style="width:auto;padding:0 15px;"
         onclick="renameQuiz()">
 
         ✏️
 
     </button>
+
+</div>
+
+<div class="dashboard">
+
+    <div class="card">
+        <h3>Total Quiz</h3>
+        <h2 id="totalQuiz">0</h2>
+    </div>
+
+    <div class="card">
+        <h3>Total Questions</h3>
+        <h2 id="totalQuestions">0</h2>
+    </div>
+
+    <div class="card">
+        <h3>Live Quiz</h3>
+        <h2 id="liveQuiz">None</h2>
+    </div>
 
 </div>
 
@@ -193,7 +241,9 @@ placeholder="New Quiz Name">
 🚀 Create Combined Quiz
 </button>
 
-<button onclick="makeLiveQuiz()">
+<button
+style="background:#e65100"
+onclick="makeLiveQuiz()">
 
     🚀 Make Live
     
@@ -216,7 +266,9 @@ Auto Fill
 🚀 Import All Questions
 </button>
 
-<button onclick="makeLiveQuiz()">
+<button
+style="background:#e65100"
+onclick="makeLiveQuiz()">
     ⭐ Make Live Quiz
 </button>
 
@@ -326,6 +378,8 @@ onclick="location.href='archive.html'">
 <script src="leaderboard.js"></script>
 
 <script src="export.js"></script>
+
+<script src="quiz.js"></script>
 
 </body>
 

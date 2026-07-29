@@ -11,9 +11,11 @@ let editingId = null;
 
 // Page Load
 window.onload = () => {
-  
-  loadQuestions();
-  
+
+    loadQuizList();
+
+    loadDashboard();
+
 };
 
 // ===========================
@@ -209,6 +211,43 @@ document
   );
 
 window.addEventListener("load", loadQuizList);
+
+// ===========================
+// LOAD DASHBOARD
+// ===========================
+
+async function loadDashboard(){
+
+    const res = await fetch("/api/quiz");
+
+    const quizzes = await res.json();
+
+    document.getElementById("totalQuiz").innerText =
+        quizzes.length;
+
+    let total = 0;
+
+    let live = "None";
+
+    quizzes.forEach(q=>{
+
+        total += q.questionCount || 0;
+
+        if(q.isLive){
+
+            live = q.quizName;
+
+        }
+
+    });
+
+    document.getElementById("totalQuestions").innerText =
+        total;
+
+    document.getElementById("liveQuiz").innerText =
+        live;
+
+}
 
 // ===========================
 // CREATE QUIZ (UPDATED)

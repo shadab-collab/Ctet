@@ -132,6 +132,10 @@ async function saveQuestion(){
 
             loadQuestions();
 
+            loadQuizList();
+
+            loadDashboard();
+
         }
 
         else {
@@ -381,6 +385,10 @@ async function deleteQuestion(id) {
       alert("Question Deleted");
       
       loadQuestions();
+
+      loadQuizList();
+
+      loadDashboard();
       
     }
     
