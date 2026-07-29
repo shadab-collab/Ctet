@@ -10,53 +10,64 @@
 
 async function saveQuestion(){
 
-    const body={
+    // 1. Validation check for Quiz Selection
+    const quizId = document.getElementById("quizList").value;
 
-        quizTitle:value("quizTitle"),
+    if (!quizId) {
+        alert("पहले Quiz Select करें");
+        return;
+    }
 
-        quizDate:getToday(),
+    // 2. Prepare Body with quizId included
+    const body = {
 
-        questionHindi:value("questionHindi"),
+        quizId: quizId,
 
-        questionEnglish:value("questionEnglish"),
+        quizTitle: value("quizTitle"),
 
-        options:[
+        quizDate: getToday(),
+
+        questionHindi: value("questionHindi"),
+
+        questionEnglish: value("questionEnglish"),
+
+        options: [
 
             {
 
-                hi:value("a_hi"),
+                hi: value("a_hi"),
 
-                en:value("a_en")
+                en: value("a_en")
 
             },
 
             {
 
-                hi:value("b_hi"),
+                hi: value("b_hi"),
 
-                en:value("b_en")
-
-            },
-
-            {
-
-                hi:value("c_hi"),
-
-                en:value("c_en")
+                en: value("b_en")
 
             },
 
             {
 
-                hi:value("d_hi"),
+                hi: value("c_hi"),
 
-                en:value("d_en")
+                en: value("c_en")
+
+            },
+
+            {
+
+                hi: value("d_hi"),
+
+                en: value("d_en")
 
             }
 
         ],
 
-        answer:Number(
+        answer: Number(
 
             document
             .getElementById("answer")
@@ -64,7 +75,7 @@ async function saveQuestion(){
 
         ),
 
-        published:true
+        published: true
 
     };
 
@@ -83,53 +94,63 @@ async function saveQuestion(){
         : "POST";
 
 
-    const res = await fetch(url,{
+    try {
 
-        method:method,
+        const res = await fetch(url, {
 
-        headers:{
+            method: method,
 
-            "Content-Type":"application/json"
+            headers: {
 
-        },
+                "Content-Type": "application/json"
 
-        body:JSON.stringify(body)
+            },
 
-    });
+            body: JSON.stringify(body)
+
+        });
 
 
-    const data = await res.json();
+        const data = await res.json();
 
 
-    if(data.success){
+        if (data.success) {
 
-        alert(
+            alert(
 
-            editingId
+                editingId
 
-            ? "Question Updated Successfully"
+                ? "Question Updated Successfully"
 
-            : "Question Saved Successfully"
+                : "Question Saved Successfully"
 
-        );
+            );
 
-        stopEditing();
+            stopEditing();
 
-        clearForm();
+            clearForm();
 
-        loadQuestions();
+            loadQuestions();
 
-    }
+        }
 
-    else{
+        else {
 
-        alert(
+            alert(
 
-            data.error ||
+                data.error ||
 
-            "Save Failed"
+                "Save Failed"
 
-        );
+            );
+
+        }
+
+    } catch (err) {
+
+        console.log(err);
+
+        alert("An error occurred while saving.");
 
     }
 
@@ -172,6 +193,9 @@ function clearForm(){
         .value = 0;
 
 }
+
+
+
 // ===========================
 // LOAD QUESTIONS
 // ===========================
@@ -179,8 +203,22 @@ function clearForm(){
 async function loadQuestions() {
   
   try {
-    
-    const res = await fetch(API);
+
+    const quizId = document.getElementById("quizList").value;
+
+    if (!quizId) {
+
+        document.getElementById("list").innerHTML = "";
+
+        return;
+
+    }
+
+    const res = await fetch(
+
+        API + "?quizId=" + quizId
+
+    );
     
     const data = await res.json();
     
@@ -248,8 +286,19 @@ async function loadQuestions() {
 async function editQuestion(id) {
   
   try {
+
+    const quizId = document.getElementById("quizList").value;
+
+    if (!quizId) {
+        alert("पहले Quiz Select करें");
+        return;
+    }
     
-    const res = await fetch(API);
+    const res = await fetch(
+
+        API + "?quizId=" + quizId
+
+    );
     
     const data = await res.json();
     
@@ -264,6 +313,10 @@ async function editQuestion(id) {
     }
     
     editingId = id;
+
+    if (q.quizId && document.getElementById("quizList")) {
+        document.getElementById("quizList").value = q.quizId;
+    }
     
     setValue("quizTitle", q.quizTitle || "");
     

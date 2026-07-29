@@ -6,21 +6,27 @@ const Quiz = require("../models/Quiz");
 
 
 // ============================
-// आज के प्रश्न प्राप्त करें
-// GET /api/questions
+// QUIZ ID के आधार पर प्रश्न प्राप्त करें
+// GET /api/questions?quizId=123
 // ============================
 
 router.get("/", async (req, res) => {
   
   try {
     
-    const today = new Date().toISOString().slice(0, 10);
-    
+    const quizId = req.query.quizId;
+
+    if (!quizId) {
+      return res.json([]);
+    }
+
     const questions = await Question.find({
-      quizDate: today,
+      quizId: quizId,
       published: true
-    }).sort({ createdAt: 1 });
-    
+    }).sort({
+      createdAt: 1
+    });
+
     res.json(questions);
     
   } catch (err) {

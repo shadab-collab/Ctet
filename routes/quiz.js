@@ -1,8 +1,8 @@
 const express = require("express");
-
 const router = express.Router();
 
 const Quiz = require("../models/Quiz");
+const Question = require("../models/Question");
 
 // ===========================
 // GET ALL QUIZZES
@@ -38,13 +38,36 @@ router.post("/", async (req, res) => {
   
   try {
     
+    const exists = await Quiz.findOne({
+      
+      quizDate: req.body.quizDate,
+      
+      quizName: req.body.quizName
+      
+    });
+    
+    if (exists) {
+      
+      return res.json({
+        
+        success: false,
+        
+        error: "Same Quiz Name Already Exists"
+        
+      });
+      
+    }
+    
     const quiz = new Quiz(req.body);
     
     await quiz.save();
     
     res.json({
+      
       success: true,
+      
       message: "Quiz Created Successfully"
+      
     });
     
   }
@@ -52,8 +75,11 @@ router.post("/", async (req, res) => {
   catch (err) {
     
     res.status(500).json({
+      
       success: false,
+      
       error: err.message
+      
     });
     
   }
@@ -65,61 +91,31 @@ router.post("/", async (req, res) => {
 // ===========================
 
 router.put("/live/:quizId", async (req, res) => {
-
-    try {
-
-        await Quiz.updateMany(
-            {},
-            {
-                isLive: false
-            }
-        );
-
-        await Quiz.findOneAndUpdate(
-            {
-                quizId: req.params.quizId
-            },
-            {
-                isLive: true
-            }
-        );
-
-        res.json({
-
-            success: true,
-
-            message: "Live Quiz Updated"
-
-        });
-
-    }
-
-    catch (err) {
-
-        res.status(500).json({
-
-            success: false,
-
-            error: err.message
-
-        });
-
-    }
-
-});
-
-// ===========================
-// DELETE QUIZ
-// ===========================
-
-router.delete("/:id", async (req, res) => {
   
   try {
     
-    await Quiz.findByIdAndDelete(req.params.id);
+    await Quiz.updateMany({}, {
+      
+      isLive: false
+      
+    });
+    
+    await Quiz.findOneAndUpdate({
+      
+      quizId: req.params.quizId
+      
+    }, {
+      
+      isLive: true
+      
+    });
     
     res.json({
-      success: true
+      
+      success: true,
+      
+      message: "Live Quiz Updated"
+      
     });
     
   }
@@ -127,15 +123,20 @@ router.delete("/:id", async (req, res) => {
   catch (err) {
     
     res.status(500).json({
+      
       success: false,
+      
       error: err.message
+      
     });
     
   }
   
 });
 
-const Question = require("../models/Question");
+// ===========================
+// MERGE QUIZ
+// ===========================
 
 router.post("/merge", async (req, res) => {
   
@@ -149,9 +150,7 @@ router.post("/merge", async (req, res) => {
       
     } = req.body;
     
-    const newQuizId =
-      
-      Date.now().toString();
+    const newQuizId = Date.now().toString();
     
     await Quiz.create({
       
@@ -163,21 +162,21 @@ router.post("/merge", async (req, res) => {
         
         .toISOString()
         
-        .slice(0, 10)
+        .slice(0, 10),
+      
+      isLive: false
       
     });
     
-    const questions =
+    const questions = await Question.find({
       
-      await Question.find({
+      quizId: {
         
-        quizId: {
-          
-          $in: quizIds
-          
-        }
+        $in: quizIds
         
-      });
+      }
+      
+    });
     
     for (const q of questions) {
       
@@ -187,8 +186,6 @@ router.post("/merge", async (req, res) => {
       
       obj.quizId = newQuizId;
       
-      obj.quizName = quizName;
-      
       await Question.create(obj);
       
     }
@@ -197,7 +194,61 @@ router.post("/merge", async (req, res) => {
       
       success: true,
       
-      message: "Combined Quiz Created"
+      message: questions.length + " Questions Merged"
+      
+    });
+    
+  }
+  
+  catch (err) {
+    
+    res.status(500).json({
+      
+      success: false,
+      
+      error: err.message
+      
+    });
+    
+  }
+  
+});
+
+// ===========================
+// DELETE QUIZ
+// ===========================
+
+router.delete("/:id", async (req, res) => {
+  
+  try {
+    
+    const quiz = await Quiz.findById(req.params.id);
+    
+    if (!quiz) {
+      
+      return res.json({
+        
+        success: false,
+        
+        error: "Quiz Not Found"
+        
+      });
+      
+    }
+    
+    await Question.deleteMany({
+      
+      quizId: quiz.quizId
+      
+    });
+    
+    await Quiz.findByIdAndDelete(req.params.id);
+    
+    res.json({
+      
+      success: true,
+      
+      message: "Quiz Deleted"
       
     });
     

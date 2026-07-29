@@ -78,8 +78,9 @@ function scrollTopForm() {
   });
   
 }
+
 // ===========================
-// LOAD 
+// LOAD TOPIC
 // ===========================
 
 window.addEventListener("load", loadTopic);
@@ -104,7 +105,6 @@ async function loadTopic() {
   
 }
 
-
 // ===========================
 // SAVE TOPIC
 // ===========================
@@ -121,7 +121,7 @@ async function saveTopic() {
     alert("Topic लिखें");
     
     return;
-    
+  
   }
   
   try {
@@ -157,6 +157,7 @@ async function saveTopic() {
   }
   
 }
+
 const QUIZ_API = "/api/quiz";
 
 // ===========================
@@ -186,63 +187,94 @@ async function loadQuizList() {
 
 }
 
+// Event listener added right after loadQuizList
+document
+  .getElementById("quizList")
+  .addEventListener(
+    "change",
+    loadQuestions
+  );
+
 window.addEventListener("load", loadQuizList);
 
-async function createQuiz() {
-  
-  const quizName =
-    document
-    .getElementById("newQuizName")
-    .value
-    .trim();
-  
-  if (!quizName) {
-    
-    alert("Quiz Name लिखिए");
-    
-    return;
-  
-  }
-  
-  const quizId =
-    Date.now().toString();
-  
-  const body = {
-    
-    quizId,
-    
-    quizName,
-    
-    quizDate: getToday(),
-    
-    topic: "",
-    
-    isLive: false
-    
-  };
-  
-  const res = await fetch(QUIZ_API, {
-    
-    method: "POST",
-    
-    headers: {
-      
-      "Content-Type": "application/json"
-      
-    },
-    
-    body: JSON.stringify(body)
-    
-  });
-  
-  const data = await res.json();
-  
-  alert(data.message);
-  
-  document.getElementById("newQuizName").value = "";
-  
-  loadQuizList();
-  
+// ===========================
+// CREATE QUIZ (UPDATED)
+// ===========================
+
+async function createQuiz(){
+
+    const quizName =
+        document
+        .getElementById("newQuizName")
+        .value
+        .trim();
+
+    const topic =
+        document
+        .getElementById("newQuizTopic")
+        .value
+        .trim();
+
+    if(!quizName){
+
+        alert("Quiz Name लिखिए");
+
+        return;
+
+    }
+
+    const quizId = Date.now().toString();
+
+    const body={
+
+        quizId,
+
+        quizName,
+
+        quizDate:getToday(),
+
+        topic,
+
+        isLive:false
+
+    };
+
+    const res = await fetch("/api/quiz",{
+
+        method:"POST",
+
+        headers:{
+
+            "Content-Type":"application/json"
+
+        },
+
+        body:JSON.stringify(body)
+
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+
+        alert("Quiz Created");
+
+        await loadQuizList();
+
+        document.getElementById("quizList").value = quizId;
+
+        loadQuestions();
+
+        document.getElementById("newQuizName").value="";
+
+        document.getElementById("newQuizTopic").value="";
+
+    }else{
+
+        alert(data.error);
+
+    }
+
 }
 
 // ===========================
@@ -273,6 +305,11 @@ async function makeLiveQuiz(){
     loadQuizList();
 
 }
+
+// ===========================
+// MERGE QUIZ LIST
+// ===========================
+
 async function loadMergeQuizList() {
   
   const res = await fetch("/api/quiz");
@@ -320,7 +357,7 @@ async function mergeQuiz() {
     alert("कम से कम 2 Quiz चुनिए");
     
     return;
-    
+  
   }
   
   const quizIds = checked.map(x => x.value);
@@ -337,7 +374,7 @@ async function mergeQuiz() {
     alert("Quiz Name लिखिए");
     
     return;
-    
+  
   }
   
   const res = await fetch(

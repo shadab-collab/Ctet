@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const QuizSchema = new mongoose.Schema({
+const quizSchema = new mongoose.Schema({
   
   quizId: {
     type: String,
@@ -10,7 +10,8 @@ const QuizSchema = new mongoose.Schema({
   
   quizName: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   
   quizDate: {
@@ -35,4 +36,4 @@ const QuizSchema = new mongoose.Schema({
   
 });
 
-module.exports = mongoose.model("Quiz", QuizSchema);
+module.exports = mongoose.model("Quiz", quizSchema);
