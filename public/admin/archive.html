@@ -5,105 +5,166 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Quiz Archive</title>
+
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
+
 
 body{
-    background:#f5f5f5;
+
+background:#f5f5f5;
+
 }
+
 
 .container{
-    max-width:900px;
-    margin:20px auto;
-    background:#fff;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,.15);
+
+max-width:900px;
+
+margin:20px auto;
+
+background:#fff;
+
+padding:20px;
+
+border-radius:10px;
+
+box-shadow:0 0 10px rgba(0,0,0,.15);
+
 }
+
 
 h2{
-    text-align:center;
-    margin-bottom:20px;
+
+text-align:center;
+
+margin-bottom:20px;
+
 }
+
+
 
 .archive-card{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    border:1px solid #ddd;
-    border-radius:8px;
-    padding:15px;
-    margin-bottom:12px;
+
+border:1px solid #ddd;
+
+padding:15px;
+
+border-radius:8px;
+
+margin-bottom:12px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+gap:10px;
+
 }
+
+
 
 button{
-    padding:10px 16px;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-    color:#fff;
+
+padding:10px 16px;
+
+border:none;
+
+border-radius:6px;
+
+cursor:pointer;
+
+color:white;
+
 }
 
-.back{
-    background:#555;
-    margin-bottom:20px;
-}
+
 
 .view{
-    background:#1976d2;
+
+background:#1976d2;
+
 }
 
+
+
 .delete{
-    background:#d32f2f;
+
+background:#d32f2f;
+
 }
+
+
+
+.back{
+
+background:#444;
+
+margin-bottom:20px;
+
+}
+
+
 
 @media(max-width:600px){
 
 .archive-card{
-    flex-direction:column;
-    align-items:flex-start;
-}
 
-.archive-card>div:last-child{
-    width:100%;
-    display:flex;
-    gap:10px;
-}
+flex-direction:column;
 
-.archive-card button{
-    flex:1;
-}
+align-items:stretch;
 
 }
+
+button{
+
+width:100%;
+
+}
+
+}
+
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
+
 <button
 class="back"
-onclick="location.href='set-question.html'">
+onclick="location.href='set-questions.html'">
 
 ⬅ Back
 
 </button>
 
-<h2>📅 Quiz Archive</h2>
+
+
+<h2>
+
+📅 Quiz Archive
+
+</h2>
+
+
 
 <div id="archiveList">
 
@@ -111,9 +172,14 @@ Loading...
 
 </div>
 
+
+
 </div>
 
+
+
 <script src="archive.js"></script>
+
 
 </body>
 
