@@ -3,9 +3,25 @@
 // bulk-import.js
 // ===========================
 
+
 async function bulkImport(){
 
-    const text = value("bulkInput");
+    const quizId =
+    document.getElementById("quizList").value;
+
+
+    if(!quizId){
+
+        alert("पहले Quiz Select करें");
+
+        return;
+
+    }
+
+
+    const text =
+    value("bulkInput");
+
 
     if(!text){
 
@@ -15,19 +31,41 @@ async function bulkImport(){
 
     }
 
-    const blocks = (text.match(/Question Hindi:[\s\S]*?(?=Question Hindi:|$)/g) || [])
-    .map(item => item.trim())
-    .filter(item => item.length > 0);
+
+
+    const blocks =
+    (text.match(/Question Hindi:[\s\S]*?(?=Question Hindi:|$)/g) || [])
+    .map(x=>x.trim())
+    .filter(Boolean);
+
+
+
+    if(!blocks.length){
+
+        alert("कोई Question नहीं मिला");
+
+        return;
+
+    }
+
+
 
     let saved = 0;
 
     let failed = 0;
 
+
+
     for(const block of blocks){
+
 
         try{
 
-            const body = parseQuestion(block);
+
+            const body =
+            parseQuestion(block);
+
+
 
             if(!body.questionHindi){
 
@@ -37,36 +75,42 @@ async function bulkImport(){
 
             }
 
-            const res = await fetch(API,{
 
-                method:"POST",
 
-                headers:{
+            body.quizId = quizId;
 
-                    "Content-Type":"application/json"
 
-                },
 
-                body:JSON.stringify(body)
+            const res =
+            await fetch(
+                API,
+                {
 
-            });
+                    method:"POST",
 
-            const data = await res.json();
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
 
-            if(data.success){
+                    body:JSON.stringify(body)
 
-                saved++;
+                }
+            );
 
-            }
 
-            else{
 
-                failed++;
+            const data =
+            await res.json();
 
-            }
+
+
+            data.success
+            ? saved++
+            : failed++;
+
+
 
         }
-
         catch(err){
 
             console.log(err);
@@ -75,20 +119,31 @@ async function bulkImport(){
 
         }
 
+
     }
+
+
 
     alert(
 
-        "Import Completed\n\n"
+        "Import Completed\n\n" +
 
-        +"Saved : "+saved+"\n"
+        "Saved : " + saved +
 
-        +"Failed : "+failed
+        "\nFailed : " + failed
 
     );
 
-    clearForm();
+
+
+    setValue("bulkInput","");
+
 
     loadQuestions();
+
+    loadQuizList();
+
+    loadDashboard();
+
 
 }
