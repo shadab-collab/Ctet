@@ -14,6 +14,7 @@ let questions = [];
 let currentQuestion = 0;
 let score = 0;
 let studentName = "";
+let quizId = "";
 
 // ---------- Elements ----------
 
@@ -62,6 +63,10 @@ async function startQuiz() {
     
     questions =
       await res.json();
+    
+    if (questions.length > 0) {
+      quizId = questions[0].quizId;
+    }
     
   } catch (err) {
     
@@ -355,6 +360,7 @@ async function saveResult() {
       
       body: JSON.stringify({
         
+        quizId: quizId,
         name: studentName,
         score: score,
         total: questions.length
