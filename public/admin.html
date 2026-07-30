@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CTET Admin</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>CTET Quiz Admin</h2>
+
+<input id="quizTitle" placeholder="Quiz Name">
+
+<br><br>
+
+<input id="topic" placeholder="Today's Topic">
+
+<br><br>
+
+<textarea
+id="bulkText"
+rows="18"
+style="width:100%;"
+placeholder="Paste Bulk Questions Here"></textarea>
+
+<br><br>
+
+<button onclick="importQuestions()">Import</button>
+
+<button onclick="saveQuiz()">Save Quiz</button>
+
+<hr>
+
+<h3>Imported Questions</h3>
+
+<div id="questionList"></div>
+
+<!-- Edit Question Section -->
+<div id="editBox" style="display:none;border:1px solid #999;padding:10px;margin-top:20px;margin-bottom:20px;">
+<h3>Edit Question</h3>
+
+<input id="eqh" placeholder="Question Hindi"><br><br>
+
+<input id="eqe" placeholder="Question English"><br><br>
+
+<input id="aH" placeholder="A Hindi">
+<input id="aE" placeholder="A English"><br><br>
+
+<input id="bH" placeholder="B Hindi">
+<input id="bE" placeholder="B English"><br><br>
+
+<input id="cH" placeholder="C Hindi">
+<input id="cE" placeholder="C English"><br><br>
+
+<input id="dH" placeholder="D Hindi">
+<input id="dE" placeholder="D English"><br><br>
+
+<select id="ans">
+<option>A</option>
+<option>B</option>
+<option>C</option>
+<option>D</option>
+</select>
+
+<button onclick="updateQuestion()">Save Changes</button>
+
+</div>
+
+<hr>
+
+<h3>Active Quiz</h3>
+
+<div id="activeQuiz"></div>
+
+<hr>
+
+<h3>Archive</h3>
+
+<div id="archiveQuiz"></div>
+
+<hr>
+
+<h3>Leaderboard</h3>
+
+<button onclick="loadLeaderboard()">Refresh</button>
+
+<button onclick="resetLeaderboard()">Reset</button>
+
+<button onclick="exportLeaderboard()">Export Image</button>
+
+<div id="leaderboard"></div>
+
+<script src="admin.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+</body>
+</html>
