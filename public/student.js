@@ -4,7 +4,13 @@ let quiz = null;
 let current = 0;
 let score = 0;
 
+const studentName = document.getElementById("studentName");
+
 const todayTopic = document.getElementById("todayTopic");
+
+const startPage = document.getElementById("startPage");
+const quizPage = document.getElementById("quizPage");
+const resultPage = document.getElementById("resultPage");
 
 const questionHindi = document.getElementById("questionHindi");
 const questionEnglish = document.getElementById("questionEnglish");
@@ -15,12 +21,8 @@ const cBtn = document.getElementById("cBtn");
 const dBtn = document.getElementById("dBtn");
 
 const scoreBox = document.getElementById("score");
-
-const startPage = document.getElementById("startPage");
-const quizPage = document.getElementById("quizPage");
-const resultPage = document.getElementById("resultPage");
-
 const finalScore = document.getElementById("finalScore");
+
 const leaderboard = document.getElementById("leaderboard");
 
 const correctSound = document.getElementById("correctSound");
@@ -28,38 +30,90 @@ const wrongSound = document.getElementById("wrongSound");
 
 async function loadQuiz() {
   
-  const res = await fetch(API + "/quiz");
-  
-  quiz = await res.json();
-  
-  todayTopic.innerHTML = "Today's Topic : " + quiz.topic;
+  try {
+    
+    const res = await fetch(API + "/quiz");
+    
+    if (!res.ok) {
+      throw new Error("Quiz Not Found");
+    }
+    
+    quiz = await res.json();
+    
+    if (!quiz || !quiz.questions || quiz.questions.length === 0) {
+      
+      todayTopic.innerHTML = "No Active Quiz";
+      
+      return;
+      
+    }
+    
+    todayTopic.innerHTML = "Today's Topic : " + quiz.topic;
+    
+  } catch (err) {
+    
+    todayTopic.innerHTML = "No Active Quiz";
+    
+    console.log(err);
+    
+  }
   
 }
 
 loadQuiz();
 
 
+
 function startQuiz() {
   
   if (studentName.value.trim() == "") {
     
-    alert("Enter Name");
+    alert("Enter Your Name");
     
     return;
     
   }
   
+  if (!quiz) {
+    
+    alert("No Active Quiz");
+    
+    return;
+    
+  }
+  
+  current = 0;
+  
+  score = 0;
+  
+  scoreBox.innerHTML = "0";
+  
   startPage.style.display = "none";
   
   quizPage.style.display = "block";
+  
+  resultPage.style.display = "none";
   
   showQuestion();
   
 }
 
 
+
 function showQuestion() {
+  
+  if (!quiz) return;
+  
+  if (current >= quiz.questions.length) {
+    
+    finishQuiz();
+    
+    return;
+    
+  }
+  
   disableButtons(false);
+  
   const q = quiz.questions[current];
   
   questionHindi.innerHTML = q.questionHindi;
@@ -75,15 +129,21 @@ function showQuestion() {
   dBtn.innerHTML = "D. " + q.options[3].hi;
   
 }
+
+
+
 function disableButtons(state) {
   
   aBtn.disabled = state;
+  
   bBtn.disabled = state;
+  
   cBtn.disabled = state;
+  
   dBtn.disabled = state;
   
 }
-
+// -------------------- ANSWER --------------------
 
 function checkAnswer(selected) {
   
@@ -97,11 +157,17 @@ function checkAnswer(selected) {
     
     scoreBox.innerHTML = score;
     
-    correctSound.play();
+    if (correctSound) {
+      correctSound.currentTime = 0;
+      correctSound.play().catch(() => {});
+    }
     
   } else {
     
-    wrongSound.play();
+    if (wrongSound) {
+      wrongSound.currentTime = 0;
+      wrongSound.play().catch(() => {});
+    }
     
   }
   
@@ -117,14 +183,15 @@ function checkAnswer(selected) {
       
       showQuestion();
       
-      disableButtons(false);
-      
     }
     
   }, 700);
   
 }
 
+
+
+// -------------------- FINISH --------------------
 
 function finishQuiz() {
   
@@ -133,6 +200,7 @@ function finishQuiz() {
   resultPage.style.display = "block";
   
   finalScore.innerHTML =
+    
     "Your Score : " + score + " / " + quiz.questions.length;
   
   saveResult();
@@ -140,60 +208,97 @@ function finishQuiz() {
 }
 
 
+
+// -------------------- SAVE RESULT --------------------
+
 async function saveResult() {
   
-  await fetch(API + "/result", {
+  try {
     
-    method: "POST",
+    const res = await fetch(API + "/result", {
+      
+      method: "POST",
+      
+      headers: {
+        "Content-Type": "application/json"
+      },
+      
+      body: JSON.stringify({
+        
+        studentName: studentName.value.trim(),
+        
+        quizId: quiz._id,
+        
+        score: score,
+        
+        total: quiz.questions.length
+        
+      })
+      
+    });
     
-    headers: {
-      "Content-Type": "application/json"
-    },
+    if (!res.ok) {
+      
+      alert("Result Save Failed");
+      
+      return;
+      
+    }
     
-    body: JSON.stringify({
-      
-      studentName: studentName.value,
-      
-      quizId: quiz._id,
-      
-      score: score,
-      
-      total: quiz.questions.length
-      
-    })
+    loadLeaderboard();
     
-  });
-  
-  loadLeaderboard();
+  } catch (err) {
+    
+    console.log(err);
+    
+  }
   
 }
 
 
+
+// -------------------- LEADERBOARD --------------------
+
 async function loadLeaderboard() {
   
-  const res = await fetch(API + "/leaderboard");
-  
-  const data = await res.json();
-  
-  leaderboard.innerHTML = "";
-  
-  data.forEach((s, index) => {
+  try {
     
-    leaderboard.innerHTML += `
-
-        <p>
-
-        ${index+1}.
-        ${s.studentName}
-
-        -
-
-        ${s.score}/${s.total}
-
-        </p>
-
-        `;
+    const res = await fetch(API + "/leaderboard");
     
-  });
+    const data = await res.json();
+    
+    leaderboard.innerHTML = "";
+    
+    if (data.length === 0) {
+      
+      leaderboard.innerHTML = "<p>No Result Yet</p>";
+      
+      return;
+      
+    }
+    
+    data.forEach((s, index) => {
+      
+      leaderboard.innerHTML += `
+
+            <div style="padding:8px;border-bottom:1px solid #ddd;">
+
+            <b>${index+1}. ${s.studentName}</b>
+
+            <br>
+
+            Score : ${s.score}/${s.total}
+
+            </div>
+
+            `;
+      
+    });
+    
+  } catch (err) {
+    
+    console.log(err);
+    
+  }
   
 }
