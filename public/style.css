@@ -1,49 +1,152 @@
-body{
-    font-family:Arial,sans-serif;
-    max-width:700px;
-    margin:auto;
-    padding:20px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f2f5f9;
+    padding: 15px;
+    max-width: 900px;
+    margin: auto;
+}
+
+h2 {
+    text-align: center;
+    color: #1565c0;
+    margin-bottom: 15px;
+}
+
+h3 {
+    margin: 15px 0 10px;
+    color: #333;
+}
+
+h4 {
+    margin: 10px 0;
 }
 
 input,
 textarea,
-select{
-    width:100%;
-    padding:10px;
-    margin:5px 0;
-    box-sizing:border-box;
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
 }
 
-button{
-    width:100%;
-    padding:12px;
-    margin:5px 0;
-    cursor:pointer;
-    font-size:16px;
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #1976d2;
 }
 
-button:disabled{
-    opacity:.6;
-    cursor:not-allowed;
+textarea {
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border: none;
+    border-radius: 6px;
+    background: #1976d2;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #125ea8;
+}
+
+button:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+#questionHindi {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#questionEnglish {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+#aBtn,
+#bBtn,
+#cBtn,
+#dBtn {
+    text-align: left;
+}
+
+#score {
+    color: #0a8f39;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+#todayTopic {
+    text-align: center;
+    background: #fff3cd;
+    color: #7a5200;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
 }
 
 #questionList div,
 #activeQuiz div,
-#archiveQuiz div{
-    border:1px solid #999;
-    padding:10px;
-    margin:10px 0;
+#archiveQuiz div {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
 }
 
-#leaderboard p{
-    border-bottom:1px solid #ddd;
-    padding:5px;
+#leaderboard div,
+#leaderboard p {
+    background: #fff;
+    border-left: 5px solid #1976d2;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
 }
 
-h2,h3,h4{
-    margin:10px 0;
+#editBox {
+    background: #ffffff;
+    border: 2px solid #1976d2;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
 }
 
-hr{
-    margin:20px 0;
+hr {
+    margin: 20px 0;
+}
+
+@media(max-width:600px) {
+    
+    body {
+        padding: 10px;
+    }
+    
+    h2 {
+        font-size: 24px;
+    }
+    
+    button {
+        font-size: 15px;
+    }
+    
 }
