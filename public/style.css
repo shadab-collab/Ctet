@@ -1,3 +1,8 @@
+/* ===========================
+   CTET QUIZ APP
+   PART 1
+=========================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,147 +11,562 @@
 }
 
 body {
+    
     background: #f2f5f9;
-    padding: 15px;
+    
+    color: #222;
+    
     max-width: 900px;
+    
     margin: auto;
+    
+    padding: 15px;
+    
 }
 
 h2 {
+    
     text-align: center;
+    
+    font-size: 32px;
+    
     color: #1565c0;
+    
     margin-bottom: 15px;
+    
 }
 
 h3 {
+    
+    font-size: 22px;
+    
     margin: 15px 0 10px;
+    
     color: #333;
+    
 }
 
 h4 {
-    margin: 10px 0;
+    
+    font-size: 18px;
+    
+    margin: 8px 0;
+    
+    color: #666;
+    
 }
 
 input,
 textarea,
 select {
+    
     width: 100%;
-    padding: 12px;
-    margin: 6px 0;
-    border: 1px solid #bbb;
-    border-radius: 6px;
-    font-size: 16px;
+    
+    padding: 14px;
+    
+    margin: 8px 0;
+    
+    font-size: 18px;
+    
+    border: 1px solid #ccc;
+    
+    border-radius: 10px;
+    
     outline: none;
+    
+    background: #fff;
+    
 }
 
 input:focus,
 textarea:focus,
 select:focus {
+    
     border-color: #1976d2;
+    
 }
 
 textarea {
+    
     resize: vertical;
+    
+    min-height: 220px;
+    
 }
 
 button {
+    
     width: 100%;
-    padding: 12px;
-    margin: 6px 0;
-    border: none;
-    border-radius: 6px;
-    background: #1976d2;
-    color: #fff;
-    font-size: 16px;
+    
+    padding: 18px;
+    
+    margin: 8px 0;
+    
+    font-size: 20px;
+    
+    font-weight: bold;
+    
+    background: #fff;
+    
+    color: #222;
+    
+    border: 2px solid #d0d0d0;
+    
+    border-radius: 12px;
+    
     cursor: pointer;
+    
+    transition: .2s;
+    
 }
 
 button:hover {
-    background: #125ea8;
+    
+    background: #f5f5f5;
+    
+}
+
+button:active {
+    
+    transform: scale(.98);
+    
 }
 
 button:disabled {
-    background: #999;
+    
+    opacity: .7;
+    
     cursor: not-allowed;
+    
+}
+
+hr {
+    
+    margin: 20px 0;
+    
+    border: none;
+    
+    border-top: 1px solid #ddd;
+    
+}
+
+#startPage,
+#quizPage,
+#resultPage,
+#editBox {
+    
+    background: #fff;
+    
+    padding: 18px;
+    
+    border-radius: 15px;
+    
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+    
+    margin-top: 15px;
+    
+}
+
+#todayTopic {
+    
+    background: #fff3cd;
+    
+    color: #7a5200;
+    
+    padding: 14px;
+    
+    border-radius: 10px;
+    
+    text-align: center;
+    
+    font-size: 20px;
+    
+    font-weight: bold;
+    
+    margin-bottom: 15px;
+    
+}
+/* ===========================
+   CTET QUIZ APP
+   PART 2 (Student)
+=========================== */
+
+#progress {
+    
+    text-align: center;
+    
+    font-size: 22px;
+    
+    font-weight: bold;
+    
+    color: #1565c0;
+    
+    margin: 12px 0;
+    
+}
+
+#score {
+    
+    font-size: 26px;
+    
+    font-weight: bold;
+    
+    color: #0b8f39;
+    
 }
 
 #questionHindi {
-    font-size: 22px;
+    
+    font-size: 24px;
+    
     font-weight: bold;
-    margin-bottom: 10px;
+    
+    line-height: 1.6;
+    
+    margin: 15px 0 8px;
+    
 }
 
 #questionEnglish {
+    
+    font-size: 18px;
+    
     color: #666;
-    margin-bottom: 15px;
+    
+    line-height: 1.5;
+    
+    margin-bottom: 18px;
+    
 }
 
 #aBtn,
 #bBtn,
 #cBtn,
 #dBtn {
+    
+    width: 100%;
+    
+    padding: 18px;
+    
+    margin: 10px 0;
+    
     text-align: left;
+    
+    font-size: 19px;
+    
+    line-height: 1.6;
+    
+    background: #ffffff;
+    
+    color: #222;
+    
+    border: 2px solid #d6d6d6;
+    
+    border-radius: 12px;
+    
+    word-break: break-word;
+    
 }
 
-#score {
-    color: #0a8f39;
+#aBtn:hover,
+#bBtn:hover,
+#cBtn:hover,
+#dBtn:hover {
+    
+    background: #f8f8f8;
+    
+}
+
+.correct {
+    
+    background: #2e7d32 !important;
+    
+    color: #fff !important;
+    
+    border-color: #2e7d32 !important;
+    
+}
+
+.wrong {
+    
+    background: #d32f2f !important;
+    
+    color: #fff !important;
+    
+    border-color: #d32f2f !important;
+    
+}
+
+#nextBtn {
+    
+    display: none;
+    
+    background: #2e7d32;
+    
+    color: #fff;
+    
+    border: 2px solid #2e7d32;
+    
+    margin-top: 18px;
+    
+}
+
+#nextBtn:hover {
+    
+    background: #256628;
+    
+}
+
+#finalScore {
+    
+    font-size: 30px;
+    
     font-weight: bold;
-    font-size: 22px;
+    
+    text-align: center;
+    
+    color: #0b8f39;
+    
+    margin: 20px 0;
+    
 }
 
-#todayTopic {
-    text-align: center;
-    background: #fff3cd;
-    color: #7a5200;
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 15px;
+#leaderboard {
+    
+    margin-top: 15px;
+    
 }
+
+#leaderboard div {
+    
+    background: #fff;
+    
+    padding: 14px;
+    
+    margin: 10px 0;
+    
+    border-radius: 12px;
+    
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    
+    border-left: 6px solid #1565c0;
+    
+}
+
+#leaderboard b {
+    
+    font-size: 20px;
+    
+}
+
+#leaderboard p {
+    
+    font-size: 18px;
+    
+    margin-top: 5px;
+    
+}
+/* ===========================
+   CTET QUIZ APP
+   PART 3 (Admin + Mobile)
+=========================== */
+
+/* ---------- Admin Cards ---------- */
 
 #questionList div,
 #activeQuiz div,
 #archiveQuiz div {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 12px;
-    margin: 12px 0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+    
+    background: #ffffff;
+    
+    border: 1px solid #dddddd;
+    
+    border-radius: 14px;
+    
+    padding: 16px;
+    
+    margin: 14px 0;
+    
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    
 }
 
-#leaderboard div,
-#leaderboard p {
-    background: #fff;
-    border-left: 5px solid #1976d2;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 6px;
+#questionList b,
+#activeQuiz b,
+#archiveQuiz b {
+    
+    font-size: 20px;
+    
+    color: #1565c0;
+    
 }
+
+#questionList button,
+#activeQuiz button,
+#archiveQuiz button {
+    
+    margin-top: 10px;
+    
+}
+
+/* ---------- Edit Box ---------- */
 
 #editBox {
+    
     background: #ffffff;
-    border: 2px solid #1976d2;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
+    
+    border: 2px solid #1565c0;
+    
+    border-radius: 14px;
+    
+    padding: 18px;
+    
+    margin: 20px 0;
+    
 }
 
-hr {
-    margin: 20px 0;
+#editBox h3 {
+    
+    text-align: center;
+    
+    margin-bottom: 15px;
+    
 }
+
+/* ---------- Leaderboard (Admin) ---------- */
+
+#leaderboard {
+    
+    margin-top: 15px;
+    
+}
+
+#leaderboard div {
+    
+    background: #ffffff;
+    
+    padding: 14px;
+    
+    margin: 10px 0;
+    
+    border-radius: 12px;
+    
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    
+}
+
+/* ---------- Scroll ---------- */
+
+textarea {
+    
+    overflow: auto;
+    
+}
+
+/* ---------- Mobile ---------- */
 
 @media(max-width:600px) {
     
     body {
+        
         padding: 10px;
+        
     }
     
     h2 {
-        font-size: 24px;
+        
+        font-size: 28px;
+        
+    }
+    
+    h3 {
+        
+        font-size: 20px;
+        
+    }
+    
+    h4 {
+        
+        font-size: 17px;
+        
+    }
+    
+    input,
+    textarea,
+    select {
+        
+        font-size: 18px;
+        
+        padding: 14px;
+        
     }
     
     button {
-        font-size: 15px;
+        
+        font-size: 18px;
+        
+        padding: 18px;
+        
+    }
+    
+    #questionHindi {
+        
+        font-size: 22px;
+        
+    }
+    
+    #questionEnglish {
+        
+        font-size: 17px;
+        
+    }
+    
+    #todayTopic {
+        
+        font-size: 18px;
+        
+    }
+    
+    #progress {
+        
+        font-size: 20px;
+        
+    }
+    
+    #score {
+        
+        font-size: 24px;
+        
+    }
+    
+    #finalScore {
+        
+        font-size: 26px;
+        
+    }
+    
+    #leaderboard b {
+        
+        font-size: 18px;
+        
+    }
+    
+}
+
+/* ---------- Desktop ---------- */
+
+@media(min-width:601px) {
+    
+    body {
+        
+        padding: 20px;
+        
+    }
+    
+    button {
+        
+        max-width: 100%;
+        
     }
     
 }

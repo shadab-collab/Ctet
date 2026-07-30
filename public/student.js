@@ -148,15 +148,23 @@ function showQuestion() {
   
   questionHindi.innerHTML = q.questionHindi;
   
-  questionEnglish.innerHTML = q.questionEnglish;
+  questionEnglish.innerHTML = q.questionEnglish || "";
   
-  aBtn.innerHTML = "A. " + q.options[0].hi;
+  aBtn.innerHTML =
+  "<b>A.</b> " + q.options[0].hi +
+  "<br><small>" + (q.options[0].en || "") + "</small>";
   
-  bBtn.innerHTML = "B. " + q.options[1].hi;
+  bBtn.innerHTML =
+  "<b>B.</b> " + q.options[1].hi +
+  "<br><small>" + (q.options[1].en || "") + "</small>";
   
-  cBtn.innerHTML = "C. " + q.options[2].hi;
+  cBtn.innerHTML =
+  "<b>C.</b> " + q.options[2].hi +
+  "<br><small>" + (q.options[2].en || "") + "</small>";
   
-  dBtn.innerHTML = "D. " + q.options[3].hi;
+  dBtn.innerHTML =
+  "<b>D.</b> " + q.options[3].hi +
+  "<br><small>" + (q.options[3].en || "") + "</small>";
   
 }
 
