@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -14,13 +15,14 @@
 
 <h2>CTET Quiz</h2>
 
-<h3 id="todayTopic"></h3>
+<h3 id="todayTopic">Loading Quiz...</h3>
 
 <div id="startPage">
 
 <input
 id="studentName"
-placeholder="Enter Your Name">
+placeholder="Enter Your Name"
+autocomplete="off">
 
 <br><br>
 
@@ -39,11 +41,13 @@ style="display:none;">
 <h3>
 
 Score :
-<span id="score">
+<span id="score">0</span>
 
-0
+</h3>
 
-</span>
+<h3 id="progress">
+
+Question 1 / 1
 
 </h3>
 
@@ -53,21 +57,42 @@ Score :
 
 <h4 id="questionEnglish"></h4>
 
-<button id="aBtn" onclick="checkAnswer(0)"></button>
+<button
+id="aBtn"
+onclick="checkAnswer(0)">
+</button>
 
 <br><br>
 
-<button id="bBtn" onclick="checkAnswer(1)"></button>
+<button
+id="bBtn"
+onclick="checkAnswer(1)">
+</button>
 
 <br><br>
 
-<button id="cBtn" onclick="checkAnswer(2)"></button>
+<button
+id="cBtn"
+onclick="checkAnswer(2)">
+</button>
 
 <br><br>
 
-<button id="dBtn" onclick="checkAnswer(3)"></button>
+<button
+id="dBtn"
+onclick="checkAnswer(3)">
+</button>
 
 <br><br>
+
+<button
+id="nextBtn"
+onclick="nextQuestion()"
+style="display:none;">
+
+Next Question
+
+</button>
 
 </div>
 
