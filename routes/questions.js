@@ -160,30 +160,29 @@ router.post("/reuse", async (req, res) => {
 
 router.get("/live", async (req, res) => {
   try {
+    
     const liveQuiz = await Quiz.findOne({ isLive: true });
     
     if (!liveQuiz) {
       return res.json([]);
     }
     
-    const today = new Date().toISOString().slice(0, 10);
-
     const questions = await Question.find({
       quizId: liveQuiz.quizId,
-      quizDate: today,
       published: true
     }).sort({ createdAt: 1 });
     
     res.json(questions);
     
   } catch (err) {
+    
     res.status(500).json({
       success: false,
       error: err.message
     });
+    
   }
 });
-
 // ============================
 // QUIZ ARCHIVE
 // GET /api/questions/archive
