@@ -160,14 +160,17 @@ router.post("/reuse", async (req, res) => {
 
 router.get("/live", async (req, res) => {
   try {
-    const quiz = await Quiz.findOne({ isLive: true });
+    const liveQuiz = await Quiz.findOne({ isLive: true });
     
-    if (!quiz) {
+    if (!liveQuiz) {
       return res.json([]);
     }
     
+    const today = new Date().toISOString().slice(0, 10);
+
     const questions = await Question.find({
-      quizId: quiz.quizId,
+      quizId: liveQuiz.quizId,
+      quizDate: today,
       published: true
     }).sort({ createdAt: 1 });
     

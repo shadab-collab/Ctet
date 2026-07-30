@@ -355,3 +355,10 @@ button{
     border-radius: 10px;
     
 }
+#mergeQuizList {
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+}
