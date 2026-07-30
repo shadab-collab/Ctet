@@ -570,3 +570,144 @@ textarea {
     }
     
 }
+/* ===========================
+   CTET QUIZ APP
+   PART 4 (Mobile Compact)
+=========================== */
+
+@media (max-width:600px) {
+    
+    body {
+        padding: 6px;
+    }
+    
+    h2 {
+        font-size: 22px;
+        margin: 4px 0;
+    }
+    
+    h3 {
+        font-size: 18px;
+        margin: 4px 0;
+    }
+    
+    h4 {
+        font-size: 15px;
+        margin: 2px 0 6px;
+    }
+    
+    hr {
+        margin: 8px 0;
+    }
+    
+    #todayTopic {
+        
+        padding: 8px;
+        
+        margin-bottom: 8px;
+        
+        font-size: 15px;
+        
+        border-radius: 8px;
+        
+    }
+    
+    #startPage,
+    #quizPage,
+    #resultPage,
+    #editBox {
+        
+        padding: 10px;
+        
+        margin-top: 8px;
+        
+        border-radius: 10px;
+        
+    }
+    
+    #progress {
+        
+        font-size: 18px;
+        
+        margin: 4px 0;
+        
+    }
+    
+    #score {
+        
+        font-size: 22px;
+        
+    }
+    
+    #questionHindi {
+        
+        font-size: 19px;
+        
+        line-height: 1.35;
+        
+        margin: 6px 0 3px;
+        
+    }
+    
+    #questionEnglish {
+        
+        font-size: 14px;
+        
+        line-height: 1.3;
+        
+        margin-bottom: 8px;
+        
+    }
+    
+    #aBtn,
+    #bBtn,
+    #cBtn,
+    #dBtn {
+        
+        padding: 12px;
+        
+        margin: 5px 0;
+        
+        font-size: 16px;
+        
+        line-height: 1.35;
+        
+        border-radius: 10px;
+        
+    }
+    
+    #nextBtn {
+        
+        padding: 13px;
+        
+        margin-top: 8px;
+        
+    }
+    
+    #leaderboard div {
+        
+        padding: 10px;
+        
+        margin: 6px 0;
+        
+    }
+    
+    input,
+    textarea,
+    select {
+        
+        padding: 10px;
+        
+        font-size: 16px;
+        
+    }
+    
+    button {
+        
+        font-size: 17px;
+        
+        padding: 14px;
+        
+    }
+    
+}
