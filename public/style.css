@@ -1,6 +1,6 @@
 /*==================================================
-CTET QUIZ PREMIUM UI
-PART 1 : GLOBAL + APP + START PAGE
+CTET QUIZ PREMIUM
+PART 1
 ==================================================*/
 
 * {
@@ -10,178 +10,165 @@ PART 1 : GLOBAL + APP + START PAGE
     -webkit-tap-highlight-color: transparent;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     
     font-family: Arial, Helvetica, sans-serif;
     
-    background: #eef3f8;
-    
-    background-image:
-        radial-gradient(circle at top, #dfefff 0%, transparent 40%);
+    background: #f4f5f7;
     
     color: #222;
-    
-    min-height: 100vh;
-    
-    padding: 18px;
     
 }
 
 .app {
     
-    width: 100%;
-    
-    max-width: 650px;
+    max-width: 700px;
     
     margin: auto;
     
+    min-height: 100vh;
+    
 }
 
-/*==========================
-APP TITLE
-==========================*/
+/*======================
+TOP HEADER
+======================*/
 
-.appTitle {
+.topBar {
     
-    text-align: center;
-    
-    color: #fff;
-    
-    font-size: 28px;
-    
-    font-weight: 800;
+    background: #1f2128;
     
     padding: 18px;
     
-    border-radius: 20px;
+    color: #fff;
     
-    background: linear-gradient(135deg, #0057d9, #1976d2, #42a5f5);
+    position: sticky;
     
-    box-shadow: 0 12px 30px rgba(25, 118, 210, .28);
+    top: 0;
     
-    letter-spacing: .5px;
+    z-index: 1000;
+    
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
     
 }
 
-/*==========================
-TODAY TOPIC
-==========================*/
-
-#todayTopic {
+.logoBox h2 {
     
-    margin-top: 16px;
-    
-    background: #ffffff;
-    
-    border-left: 6px solid #1976d2;
-    
-    border-radius: 16px;
-    
-    padding: 15px;
-    
-    font-size: 17px;
+    font-size: 26px;
     
     font-weight: 700;
     
-    color: #0d47a1;
-    
-    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+    margin-bottom: 6px;
     
 }
 
-/*==========================
+#todayTopic {
+    
+    display: inline-block;
+    
+    background: #2d313c;
+    
+    padding: 8px 14px;
+    
+    border-radius: 20px;
+    
+    font-size: 14px;
+    
+    color: #d7dce5;
+    
+}
+
+/*======================
 CARD
-==========================*/
+======================*/
 
 .card {
     
-    margin-top: 18px;
+    background: #fff;
     
-    background: #ffffff;
+    margin: 14px;
     
-    border-radius: 22px;
+    padding: 18px;
     
-    padding: 22px;
+    border-radius: 14px;
     
-    box-shadow: 0 10px 28px rgba(0, 0, 0, .08);
-    
-    border: 1px solid #edf2f7;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
     
 }
 
-/*==========================
+/*======================
 START PAGE
-==========================*/
+======================*/
+
+#startPage {
+    
+    margin-top: 30px;
+    
+}
 
 #startPage h3 {
     
-    text-align: center;
+    font-size: 28px;
     
-    font-size: 23px;
-    
-    color: #1b4f9c;
-    
-    margin-bottom: 18px;
+    margin-bottom: 8px;
     
 }
 
-/*==========================
+.subtitle {
+    
+    font-size: 15px;
+    
+    color: #666;
+    
+    margin-bottom: 20px;
+    
+}
+
+/*======================
 INPUT
-==========================*/
+======================*/
 
 input {
     
     width: 100%;
     
-    height: 58px;
+    height: 52px;
     
-    border: 2px solid #d9e5f3;
+    border: 1px solid #d9d9d9;
     
-    border-radius: 14px;
+    border-radius: 10px;
+    
+    padding: 0 14px;
+    
+    font-size: 17px;
     
     outline: none;
     
-    font-size: 18px;
-    
-    padding: 0 16px;
-    
     margin-bottom: 18px;
-    
-    transition: .25s;
-    
-    background: #fafcff;
     
 }
 
 input:focus {
     
-    border-color: #1976d2;
-    
-    background: #fff;
-    
-    box-shadow: 0 0 0 4px rgba(25, 118, 210, .12);
+    border-color: #3b82f6;
     
 }
 
-/*==========================
-PRIMARY BUTTON
-==========================*/
+/*======================
+BUTTON
+======================*/
 
 button {
     
     width: 100%;
     
-    height: 56px;
+    height: 52px;
     
     border: none;
     
-    border-radius: 14px;
+    border-radius: 10px;
     
-    background: linear-gradient(135deg, #1976d2, #1565c0);
+    background: #2f80ed;
     
     color: #fff;
     
@@ -191,9 +178,7 @@ button {
     
     cursor: pointer;
     
-    transition: .25s;
-    
-    box-shadow: 0 8px 18px rgba(25, 118, 210, .25);
+    transition: .2s;
     
 }
 
@@ -202,30 +187,20 @@ button:active {
     transform: scale(.98);
     
 }
-
-button:hover {
-    
-    filter: brightness(1.05);
-    
-}
 /*==================================================
-CTET QUIZ PREMIUM UI
-PART 2 : QUIZ HEADER + QUESTION CARD
+PART 2
+QUIZ HEADER + QUESTION
 ==================================================*/
-
-/*==========================
-QUIZ PAGE
-==========================*/
 
 #quizPage {
     
-    margin-top: 18px;
+    padding: 12px;
     
 }
 
-/*==========================
-QUIZ HEADER
-==========================*/
+/*======================
+HEADER
+======================*/
 
 #quizHeader {
     
@@ -237,588 +212,145 @@ QUIZ HEADER
     
     gap: 12px;
     
-    background: #ffffff;
-    
-    border-radius: 18px;
-    
-    padding: 14px 18px;
-    
-    margin-bottom: 18px;
-    
-    box-shadow: 0 8px 22px rgba(0, 0, 0, .08);
-    
-    border: 1px solid #e8eef7;
-    
-    position: sticky;
-    
-    top: 10px;
-    
-    z-index: 100;
+    margin-bottom: 14px;
     
 }
 
-/*==========================
-SCORE
-==========================*/
+.scoreBox {
+    
+    background: #fff;
+    
+    border-radius: 12px;
+    
+    padding: 12px 18px;
+    
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    
+    min-width: 95px;
+    
+    text-align: center;
+    
+}
 
-#quizHeader div:first-child {
+.scoreBox .label {
     
-    font-size: 16px;
+    font-size: 13px;
     
-    font-weight: 700;
+    color: #666;
     
-    color: #555;
+    margin-bottom: 3px;
     
 }
 
 #score {
     
-    font-size: 24px;
+    font-size: 30px;
+    
+    font-weight: 700;
     
     color: #16a34a;
     
-    font-weight: 800;
-    
-    margin-left: 4px;
-    
 }
-
-/*==========================
-PROGRESS
-==========================*/
 
 #progress {
     
-    background: linear-gradient(135deg, #1976d2, #42a5f5);
+    flex: 1;
+    
+    background: #2f80ed;
     
     color: #fff;
     
-    padding: 8px 16px;
+    padding: 15px;
     
-    border-radius: 30px;
+    border-radius: 12px;
     
-    font-size: 15px;
-    
-    font-weight: 700;
-    
-    box-shadow: 0 4px 12px rgba(25, 118, 210, .25);
-    
-}
-
-/*==========================
-QUESTION CARD
-==========================*/
-
-#questionBox {
-    
-    background: #ffffff;
-    
-    border-radius: 22px;
-    
-    padding: 24px;
-    
-    margin-bottom: 20px;
-    
-    border-left: 7px solid #1976d2;
-    
-    box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
-    
-}
-
-/*==========================
-QUESTION HINDI
-==========================*/
-
-#questionHindi {
-    
-    font-size: 23px;
+    font-size: 18px;
     
     font-weight: 700;
-    
-    line-height: 1.7;
-    
-    color: #202124;
-    
-    margin-bottom: 12px;
-    
-}
-
-/*==========================
-QUESTION ENGLISH
-==========================*/
-
-#questionEnglish {
-    
-    font-size: 16px;
-    
-    color: #666;
-    
-    line-height: 1.7;
-    
-}
-
-/*==========================
-QUESTION NUMBER BADGE
-==========================*/
-
-.questionNo {
-    
-    display: inline-block;
-    
-    background: #1976d2;
-    
-    color: #fff;
-    
-    font-size: 13px;
-    
-    font-weight: 700;
-    
-    padding: 6px 12px;
-    
-    border-radius: 25px;
-    
-    margin-bottom: 14px;
-    
-}
-
-/*==========================
-SMALL TEXT
-==========================*/
-
-small {
-    
-    display: block;
-    
-    margin-top: 5px;
-    
-    font-size: 14px;
-    
-    color: #777;
-    
-}
-
-/*==========================
-FADE EFFECT
-==========================*/
-
-#questionHindi,
-#questionEnglish {
-    
-    animation: fadeQuestion .35s ease;
-    
-}
-
-@keyframes fadeQuestion {
-    
-    from {
-        
-        opacity: 0;
-        
-        transform: translateY(8px);
-        
-    }
-    
-    to {
-        
-        opacity: 1;
-        
-        transform: translateY(0);
-        
-    }
-    
-}
-/*==================================================
-CTET QUIZ PREMIUM UI
-PART 3 : OPTIONS + NEXT BUTTON
-==================================================*/
-
-#optionsBox{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:14px;
-
-    margin-top:10px;
-
-}
-
-/*==========================
-OPTION BUTTONS
-==========================*/
-
-#aBtn,
-#bBtn,
-#cBtn,
-#dBtn{
-
-    position:relative;
-
-    width:100%;
-
-    min-height:72px;
-
-    padding:16px 18px 16px 62px;
-
-    background:#ffffff;
-
-    color:#222;
-
-    border:2px solid #dbe6f3;
-
-    border-radius:18px;
-
-    text-align:left;
-
-    font-size:17px;
-
-    font-weight:600;
-
-    line-height:1.6;
-
-    box-shadow:0 6px 18px rgba(0,0,0,.06);
-
-    transition:.25s;
-
-}
-
-/* A B C D Circle */
-
-#aBtn::before,
-#bBtn::before,
-#cBtn::before,
-#dBtn::before{
-
-    position:absolute;
-
-    left:16px;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
-    width:32px;
-
-    height:32px;
-
-    border-radius:50%;
-
-    background:#eaf3ff;
-
-    color:#1976d2;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-weight:800;
-
-    font-size:15px;
-
-}
-
-#aBtn::before{content:"A";}
-#bBtn::before{content:"B";}
-#cBtn::before{content:"C";}
-#dBtn::before{content:"D";}
-
-/* Hover */
-
-#aBtn:hover,
-#bBtn:hover,
-#cBtn:hover,
-#dBtn:hover{
-
-    border-color:#1976d2;
-
-    background:#f7fbff;
-
-    transform:translateY(-2px);
-
-}
-
-/* Active */
-
-#aBtn:active,
-#bBtn:active,
-#cBtn:active,
-#dBtn:active{
-
-    transform:scale(.98);
-
-}
-
-/* English */
-
-#aBtn small,
-#bBtn small,
-#cBtn small,
-#dBtn small{
-
-    display:block;
-
-    margin-top:6px;
-
-    color:#666;
-
-    font-size:14px;
-
-    line-height:1.5;
-
-}
-
-/*==========================
-CORRECT
-==========================*/
-
-.correct{
-
-    background:#16a34a !important;
-
-    color:#fff !important;
-
-    border-color:#16a34a !important;
-
-}
-
-.correct::before{
-
-    background:#fff !important;
-
-    color:#16a34a !important;
-
-}
-
-.correct small{
-
-    color:#eefdee !important;
-
-}
-
-/*==========================
-WRONG
-==========================*/
-
-.wrong{
-
-    background:#dc2626 !important;
-
-    color:#fff !important;
-
-    border-color:#dc2626 !important;
-
-}
-
-.wrong::before{
-
-    background:#fff !important;
-
-    color:#dc2626 !important;
-
-}
-
-.wrong small{
-
-    color:#ffeaea !important;
-
-}
-
-/*==========================
-DISABLED
-==========================*/
-
-#aBtn:disabled,
-#bBtn:disabled,
-#cBtn:disabled,
-#dBtn:disabled{
-
-    opacity:1;
-
-    cursor:not-allowed;
-
-}
-
-/*==========================
-NEXT BUTTON
-==========================*/
-
-#nextBtn{
-
-    margin-top:22px;
-
-    height:58px;
-
-    border-radius:16px;
-
-    font-size:18px;
-
-    font-weight:700;
-
-    background:linear-gradient(135deg,#ff9800,#fb8c00);
-
-    color:#fff;
-
-    box-shadow:0 10px 24px rgba(251,140,0,.30);
-
-}
-
-#nextBtn:hover{
-
-    filter:brightness(1.05);
-
-}
-/*==================================================
-CTET QUIZ PREMIUM UI
-PART 4 : RESULT + LEADERBOARD + MOBILE
-==================================================*/
-
-/*==========================
-RESULT PAGE
-==========================*/
-
-#resultPage {
-    
-    margin-top: 20px;
-    
-    background: #ffffff;
-    
-    border-radius: 22px;
-    
-    padding: 25px;
     
     text-align: center;
     
-    box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+    box-shadow: 0 2px 8px rgba(47, 128, 237, .25);
     
 }
 
-#resultPage h2 {
+/*======================
+QUESTION CARD
+======================*/
+
+#questionBox {
     
-    color: #1565c0;
+    background: #fff;
     
-    font-size: 30px;
+    border-left: 5px solid #2f80ed;
+    
+    padding: 18px;
+    
+    border-radius: 14px;
+    
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+    
+    margin-bottom: 15px;
+    
+}
+
+.questionTag {
+    
+    display: inline-block;
+    
+    padding: 5px 12px;
+    
+    border-radius: 20px;
+    
+    background: #e8f1ff;
+    
+    color: #2f80ed;
+    
+    font-size: 12px;
+    
+    font-weight: 700;
+    
+    margin-bottom: 12px;
+    
+    letter-spacing: .5px;
+    
+}
+
+#questionHindi {
+    
+    font-size: 26px;
+    
+    line-height: 1.55;
+    
+    font-weight: 700;
+    
+    color: #222;
     
     margin-bottom: 10px;
     
 }
 
-#finalScore {
-    
-    margin: 18px 0;
-    
-    padding: 18px;
-    
-    border-radius: 18px;
-    
-    background: linear-gradient(135deg, #1976d2, #42a5f5);
-    
-    color: #fff;
-    
-    font-size: 30px;
-    
-    font-weight: 800;
-    
-    box-shadow: 0 10px 25px rgba(25, 118, 210, .25);
-    
-}
-
-/*==========================
-LEADERBOARD
-==========================*/
-
-#leaderboard {
-    
-    margin-top: 20px;
-    
-    border-radius: 18px;
-    
-    overflow: hidden;
-    
-    background: #fff;
-    
-    border: 1px solid #e6edf5;
-    
-}
-
-#leaderboard div {
-    
-    display: flex;
-    
-    justify-content: space-between;
-    
-    align-items: center;
-    
-    padding: 15px 18px;
+#questionEnglish {
     
     font-size: 17px;
     
-    border-bottom: 1px solid #edf2f7;
+    line-height: 1.6;
+    
+    color: #666;
     
 }
 
-#leaderboard div:nth-child(1) {
-    
-    background: #fff8dc;
-    
-    font-weight: 700;
-    
-}
-
-#leaderboard div:nth-child(2) {
-    
-    background: #f7f9fc;
-    
-}
-
-#leaderboard div:nth-child(3) {
-    
-    background: #fcfcfc;
-    
-}
-
-#leaderboard div:last-child {
-    
-    border-bottom: none;
-    
-}
-
-/*==========================
-SCROLLBAR
-==========================*/
-
-::-webkit-scrollbar {
-    
-    width: 8px;
-    
-}
-
-::-webkit-scrollbar-thumb {
-    
-    background: #1976d2;
-    
-    border-radius: 20px;
-    
-}
-
-/*==========================
+/*======================
 ANIMATION
-==========================*/
+======================*/
 
-.card,
-button,
-#aBtn,
-#bBtn,
-#cBtn,
-#dBtn {
+#questionBox {
     
-    animation: fadeUp .35s ease;
+    animation: fadeIn .25s;
     
 }
 
-@keyframes fadeUp {
+@keyframes fadeIn {
     
     from {
         
@@ -837,105 +369,562 @@ button,
     }
     
 }
+/*==================================================
+PART 3
+TESTBOOK STYLE OPTIONS
+==================================================*/
 
-/*==========================
-MOBILE
-==========================*/
+#optionsBox{
 
-@media(max-width:600px) {
-    
-    body {
-        
-        padding: 12px;
-        
-    }
-    
-    .appTitle {
-        
-        font-size: 24px;
-        
-        padding: 16px;
-        
-    }
-    
-    #quizHeader {
-        
-        flex-direction: column;
-        
-        gap: 10px;
-        
-    }
-    
-    #progress {
-        
-        width: 100%;
-        
-        text-align: center;
-        
-    }
-    
-    #questionHindi {
-        
-        font-size: 21px;
-        
-    }
-    
-    #questionEnglish {
-        
-        font-size: 15px;
-        
-    }
-    
-    #aBtn,
-    #bBtn,
-    #cBtn,
-    #dBtn {
-        
-        font-size: 16px;
-        
-        min-height: 68px;
-        
-    }
-    
-    button {
-        
-        font-size: 17px;
-        
-    }
-    
-    #finalScore {
-        
-        font-size: 26px;
-        
-    }
-    
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+margin-bottom:16px;
+
 }
 
-/*==========================
-TABLET
-==========================*/
+/*=========================
+OPTION BUTTON
+=========================*/
 
-@media(min-width:768px) {
-    
-    .app {
-        
-        max-width: 720px;
-        
-    }
-    
-    #questionHindi {
-        
-        font-size: 25px;
-        
-    }
-    
-    #aBtn,
-    #bBtn,
-    #cBtn,
-    #dBtn {
-        
-        font-size: 18px;
-        
-    }
-    
+#aBtn,
+#bBtn,
+#cBtn,
+#dBtn{
+
+position:relative;
+
+display:block;
+
+width:100%;
+
+padding:16px 18px 16px 60px;
+
+background:#ffffff;
+
+border:2px solid #e4e7ec;
+
+border-radius:14px;
+
+color:#222;
+
+font-size:17px;
+
+font-weight:600;
+
+text-align:left;
+
+line-height:1.5;
+
+transition:.25s;
+
+box-shadow:0 2px 8px rgba(0,0,0,.05);
+
+min-height:68px;
+
+}
+
+/*=========================
+OPTION NUMBER
+=========================*/
+
+#aBtn::before,
+#bBtn::before,
+#cBtn::before,
+#dBtn::before{
+
+position:absolute;
+
+left:16px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+width:30px;
+
+height:30px;
+
+border-radius:50%;
+
+background:#eef4ff;
+
+color:#2f80ed;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:15px;
+
+font-weight:700;
+
+}
+
+#aBtn::before{content:"A";}
+#bBtn::before{content:"B";}
+#cBtn::before{content:"C";}
+#dBtn::before{content:"D";}
+
+/*=========================
+ENGLISH TEXT
+=========================*/
+
+#aBtn small,
+#bBtn small,
+#cBtn small,
+#dBtn small{
+
+display:block;
+
+margin-top:6px;
+
+font-size:14px;
+
+font-weight:400;
+
+color:#666;
+
+line-height:1.45;
+
+}
+
+/*=========================
+HOVER
+=========================*/
+
+#aBtn:hover,
+#bBtn:hover,
+#cBtn:hover,
+#dBtn:hover{
+
+border-color:#2f80ed;
+
+background:#f8fbff;
+
+}
+
+/*=========================
+CORRECT
+=========================*/
+
+.correct{
+
+background:#e9f8ef !important;
+
+border-color:#22c55e !important;
+
+color:#166534 !important;
+
+}
+
+.correct::before{
+
+background:#22c55e !important;
+
+color:#fff !important;
+
+}
+
+.correct small{
+
+color:#166534 !important;
+
+}
+
+/*=========================
+WRONG
+=========================*/
+
+.wrong{
+
+background:#fdecec !important;
+
+border-color:#ef4444 !important;
+
+color:#b91c1c !important;
+
+}
+
+.wrong::before{
+
+background:#ef4444 !important;
+
+color:#fff !important;
+
+}
+
+.wrong small{
+
+color:#b91c1c !important;
+
+}
+
+/*=========================
+DISABLED
+=========================*/
+
+#aBtn:disabled,
+#bBtn:disabled,
+#cBtn:disabled,
+#dBtn:disabled{
+
+opacity:1;
+
+cursor:not-allowed;
+
+}
+
+/*=========================
+NEXT BUTTON
+=========================*/
+
+#nextBtn{
+
+margin-top:8px;
+
+background:#2f80ed;
+
+height:54px;
+
+font-size:18px;
+
+font-weight:700;
+
+border-radius:12px;
+
+box-shadow:0 4px 14px rgba(47,128,237,.30);
+
+}
+
+#nextBtn:hover{
+
+background:#1f6fd8;
+
+}
+/*==================================================
+PART 4
+RESULT PAGE + MOBILE + EFFECTS
+==================================================*/
+
+/*=========================
+RESULT PAGE
+=========================*/
+
+#resultPage{
+
+margin:14px;
+
+text-align:center;
+
+}
+
+.resultIcon{
+
+width:90px;
+
+height:90px;
+
+margin:0 auto 18px;
+
+border-radius:50%;
+
+background:linear-gradient(135deg,#2f80ed,#56ccf2);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:42px;
+
+color:#fff;
+
+box-shadow:0 8px 20px rgba(47,128,237,.25);
+
+}
+
+#resultPage h2{
+
+font-size:28px;
+
+margin-bottom:12px;
+
+color:#222;
+
+}
+
+#finalScore{
+
+font-size:34px;
+
+font-weight:700;
+
+color:#2f80ed;
+
+margin-bottom:20px;
+
+}
+
+.resultSummary{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:12px;
+
+margin-bottom:22px;
+
+}
+
+.resultSummary div{
+
+background:#f7f8fb;
+
+border-radius:12px;
+
+padding:14px;
+
+}
+
+.resultSummary span{
+
+display:block;
+
+font-size:13px;
+
+color:#777;
+
+margin-bottom:6px;
+
+}
+
+.resultSummary b{
+
+font-size:20px;
+
+color:#222;
+
+}
+
+/*=========================
+LEADERBOARD
+=========================*/
+
+.leaderTitle{
+
+margin:18px 0 12px;
+
+font-size:22px;
+
+color:#2f80ed;
+
+}
+
+#leaderboard{
+
+background:#fff;
+
+border:1px solid #e6e8ee;
+
+border-radius:14px;
+
+overflow:hidden;
+
+box-shadow:0 2px 10px rgba(0,0,0,.05);
+
+}
+
+#leaderboard div{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:14px 16px;
+
+border-bottom:1px solid #eceff4;
+
+font-size:16px;
+
+}
+
+#leaderboard div:last-child{
+
+border-bottom:none;
+
+}
+
+#leaderboard div:nth-child(1){
+
+background:#fff8e1;
+
+font-weight:700;
+
+}
+
+#leaderboard div:nth-child(2){
+
+background:#f8f9fb;
+
+}
+
+#leaderboard div:nth-child(3){
+
+background:#fafafa;
+
+}
+
+/*=========================
+BUTTON EFFECT
+=========================*/
+
+button{
+
+transition:all .25s ease;
+
+}
+
+button:hover{
+
+transform:translateY(-2px);
+
+}
+
+button:active{
+
+transform:scale(.98);
+
+}
+
+/*=========================
+CARD ANIMATION
+=========================*/
+
+.card{
+
+animation:showCard .35s ease;
+
+}
+
+@keyframes showCard{
+
+0%{
+
+opacity:0;
+
+transform:translateY(15px);
+
+}
+
+100%{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/*=========================
+SCROLLBAR
+=========================*/
+
+::-webkit-scrollbar{
+
+width:7px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#2f80ed;
+
+border-radius:20px;
+
+}
+
+/*=========================
+MOBILE
+=========================*/
+
+@media(max-width:600px){
+
+body{
+
+font-size:15px;
+
+}
+
+.app{
+
+width:100%;
+
+}
+
+#questionHindi{
+
+font-size:21px;
+
+}
+
+#questionEnglish{
+
+font-size:15px;
+
+}
+
+#aBtn,
+#bBtn,
+#cBtn,
+#dBtn{
+
+font-size:15px;
+
+padding:14px 14px 14px 56px;
+
+}
+
+#quizHeader{
+
+flex-direction:column;
+
+align-items:stretch;
+
+}
+
+.scoreBox{
+
+width:100%;
+
+}
+
+#progress{
+
+width:100%;
+
+}
+
+.resultSummary{
+
+grid-template-columns:1fr;
+
+}
+
+#finalScore{
+
+font-size:28px;
+
+}
+
 }
