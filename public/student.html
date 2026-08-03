@@ -16,31 +16,41 @@ content="width=device-width,initial-scale=1.0">
 
 <body>
 
-<div class="app">
+<div class="container">
 
-<header class="topBar">
+<!-- Header -->
 
-<div class="logoBox">
+<header class="header">
 
-<h2>CTET Quiz</h2>
+<div>
 
-<span id="todayTopic">
+<h2 class="logo">
+
+CTET Quiz
+
+</h2>
+
+<p id="todayTopic">
+
 Loading Quiz...
-</span>
+
+</p>
 
 </div>
 
 </header>
 
-<!-- START PAGE -->
+<!-- Start Page -->
 
-<div id="startPage" class="card">
+<section id="startPage" class="card">
 
-<h3>
-Welcome
-</h3>
+<h2>
 
-<p class="subtitle">
+Welcome 👋
+
+</h2>
+
+<p>
 
 Enter your name to begin today's quiz.
 
@@ -48,38 +58,45 @@ Enter your name to begin today's quiz.
 
 <input
 id="studentName"
+type="text"
 placeholder="Enter Your Name"
 autocomplete="off">
 
-<button onclick="startQuiz()">
+<button
+class="primaryBtn"
+onclick="startQuiz()">
 
 Start Quiz
 
 </button>
 
-</div>
+</section>
 
-<!-- QUIZ PAGE -->
+<!-- Quiz -->
 
-<div id="quizPage" style="display:none;">
+<section
+id="quizPage"
+style="display:none;">
 
-<div id="quizHeader">
+<div class="topInfo">
 
-<div class="scoreBox">
+<div class="scoreCard">
 
-<div class="label">
+<span>
 
 Score
 
-</div>
+</span>
 
-<div id="score">
+<h2 id="score">
 
 0
 
-</div>
+</h2>
 
 </div>
+
+<div class="progressCard">
 
 <div id="progress">
 
@@ -89,54 +106,73 @@ Question 1 / 10
 
 </div>
 
-<div id="questionBox" class="card">
+</div>
 
-<div class="questionTag">
+<div
+id="questionBox"
+class="card">
+
+<div class="badge">
 
 QUESTION
 
 </div>
 
-<h3 id="questionHindi"></h3>
+<h3 id="questionHindi">
 
-<p id="questionEnglish"></p>
+</h3>
+
+<p id="questionEnglish">
+
+</p>
 
 </div>
 
 <div id="optionsBox">
 
-<button id="aBtn"
-onclick="checkAnswer(0)"></button>
+<button
+id="aBtn"
+onclick="checkAnswer(0)">
+</button>
 
-<button id="bBtn"
-onclick="checkAnswer(1)"></button>
+<button
+id="bBtn"
+onclick="checkAnswer(1)">
+</button>
 
-<button id="cBtn"
-onclick="checkAnswer(2)"></button>
+<button
+id="cBtn"
+onclick="checkAnswer(2)">
+</button>
 
-<button id="dBtn"
-onclick="checkAnswer(3)"></button>
+<button
+id="dBtn"
+onclick="checkAnswer(3)">
+</button>
 
 </div>
 
 <button
 id="nextBtn"
-style="display:none"
+class="primaryBtn"
+style="display:none;"
 onclick="nextQuestion()">
 
-Next Question →
+Next →
 
 </button>
 
-</div>
+</section>
 <!-- RESULT PAGE -->
 
-<div
+<section
 id="resultPage"
 class="card"
 style="display:none;">
 
-<div class="resultIcon">
+<div class="resultTop">
+
+<div class="trophy">
 
 🏆
 
@@ -144,7 +180,7 @@ style="display:none;">
 
 <h2>
 
-Quiz Finished
+Quiz Completed
 
 </h2>
 
@@ -154,9 +190,11 @@ Quiz Finished
 
 </h3>
 
-<div class="resultSummary">
+</div>
 
-<div>
+<div class="summary">
+
+<div class="summaryCard">
 
 <span>
 
@@ -172,7 +210,7 @@ Score
 
 </div>
 
-<div>
+<div class="summaryCard">
 
 <span>
 
@@ -190,7 +228,7 @@ Excellent
 
 </div>
 
-<h3 class="leaderTitle">
+<h3 class="leaderboardTitle">
 
 Leaderboard
 
@@ -201,13 +239,14 @@ Leaderboard
 </div>
 
 <button
+class="primaryBtn"
 onclick="location.reload()">
 
 Restart Quiz
 
 </button>
 
-</div>
+</section>
 
 </div>
 

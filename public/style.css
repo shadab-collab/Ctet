@@ -1,6 +1,6 @@
 /*==================================================
-CTET QUIZ PREMIUM
-PART 1
+CTET QUIZ PREMIUM UI
+PART 1 : GLOBAL + HEADER + START PAGE
 ==================================================*/
 
 * {
@@ -10,123 +10,139 @@ PART 1
     -webkit-tap-highlight-color: transparent;
 }
 
+:root {
+    
+    --primary: #2F80ED;
+    --primary-light: #EAF3FF;
+    --success: #EAF8EF;
+    --danger: #FDEDED;
+    --text: #222222;
+    --subtext: #666666;
+    --border: #E4E8EF;
+    --bg: #F5F7FB;
+    --card: #FFFFFF;
+    
+}
+
 body {
     
     font-family: Arial, Helvetica, sans-serif;
     
-    background: #f4f5f7;
+    background: var(--bg);
     
-    color: #222;
+    color: var(--text);
     
 }
 
-.app {
+.container {
     
     max-width: 700px;
     
     margin: auto;
     
+    padding: 14px;
+    
     min-height: 100vh;
     
 }
 
-/*======================
-TOP HEADER
-======================*/
+/*=========================
+HEADER
+=========================*/
 
-.topBar {
+.header {
     
-    background: #1f2128;
+    background: #fff;
     
-    padding: 18px;
+    border-radius: 16px;
     
-    color: #fff;
+    padding: 16px 18px;
     
-    position: sticky;
+    display: flex;
     
-    top: 0;
+    justify-content: space-between;
     
-    z-index: 1000;
+    align-items: center;
     
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+    margin-bottom: 14px;
+    
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+    
+    border: 1px solid var(--border);
     
 }
 
-.logoBox h2 {
+.logo {
     
-    font-size: 26px;
+    font-size: 24px;
     
     font-weight: 700;
     
-    margin-bottom: 6px;
+    color: var(--primary);
+    
+    margin-bottom: 4px;
     
 }
 
 #todayTopic {
     
-    display: inline-block;
-    
-    background: #2d313c;
-    
-    padding: 8px 14px;
-    
-    border-radius: 20px;
-    
     font-size: 14px;
     
-    color: #d7dce5;
+    color: #666;
+    
+    line-height: 1.4;
     
 }
 
-/*======================
+/*=========================
 CARD
-======================*/
+=========================*/
 
 .card {
     
     background: #fff;
     
-    margin: 14px;
+    border-radius: 16px;
     
     padding: 18px;
     
-    border-radius: 14px;
+    border: 1px solid var(--border);
     
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
     
 }
 
-/*======================
+/*=========================
 START PAGE
-======================*/
+=========================*/
 
 #startPage {
     
-    margin-top: 30px;
+    margin-top: 20px;
     
 }
 
-#startPage h3 {
+#startPage h2 {
     
     font-size: 28px;
     
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     
 }
 
-.subtitle {
+#startPage p {
     
     font-size: 15px;
     
     color: #666;
     
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     
 }
 
-/*======================
+/*=========================
 INPUT
-======================*/
+=========================*/
 
 input {
     
@@ -134,31 +150,35 @@ input {
     
     height: 52px;
     
-    border: 1px solid #d9d9d9;
-    
-    border-radius: 10px;
-    
-    padding: 0 14px;
+    padding: 0 15px;
     
     font-size: 17px;
     
+    border: 1px solid var(--border);
+    
+    border-radius: 12px;
+    
     outline: none;
     
-    margin-bottom: 18px;
+    margin-bottom: 16px;
+    
+    transition: .2s;
     
 }
 
 input:focus {
     
-    border-color: #3b82f6;
+    border-color: var(--primary);
+    
+    box-shadow: 0 0 0 3px rgba(47, 128, 237, .10);
     
 }
 
-/*======================
-BUTTON
-======================*/
+/*=========================
+PRIMARY BUTTON
+=========================*/
 
-button {
+.primaryBtn {
     
     width: 100%;
     
@@ -166,13 +186,13 @@ button {
     
     border: none;
     
-    border-radius: 10px;
+    border-radius: 12px;
     
-    background: #2f80ed;
+    background: var(--primary);
     
     color: #fff;
     
-    font-size: 18px;
+    font-size: 17px;
     
     font-weight: 700;
     
@@ -182,33 +202,31 @@ button {
     
 }
 
-button:active {
+.primaryBtn:active {
     
     transform: scale(.98);
     
 }
 /*==================================================
 PART 2
-QUIZ HEADER + QUESTION
+QUIZ HEADER + QUESTION CARD
 ==================================================*/
 
 #quizPage {
     
-    padding: 12px;
+    margin-top: 14px;
+    
+    padding-bottom: 80px;
     
 }
 
-/*======================
-HEADER
-======================*/
+/*=========================
+TOP INFO
+=========================*/
 
-#quizHeader {
+.topInfo {
     
     display: flex;
-    
-    justify-content: space-between;
-    
-    align-items: center;
     
     gap: 12px;
     
@@ -216,99 +234,103 @@ HEADER
     
 }
 
-.scoreBox {
+.scoreCard {
+    
+    width: 95px;
     
     background: #fff;
     
-    border-radius: 12px;
+    border: 1px solid var(--border);
     
-    padding: 12px 18px;
+    border-radius: 14px;
     
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
-    
-    min-width: 95px;
+    padding: 12px;
     
     text-align: center;
     
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+    
 }
 
-.scoreBox .label {
+.scoreCard span {
     
-    font-size: 13px;
+    display: block;
     
-    color: #666;
+    font-size: 12px;
     
-    margin-bottom: 3px;
+    color: #777;
+    
+    margin-bottom: 4px;
     
 }
 
 #score {
     
-    font-size: 30px;
+    font-size: 28px;
     
     font-weight: 700;
     
-    color: #16a34a;
+    color: var(--primary);
+    
+}
+
+.progressCard {
+    
+    flex: 1;
+    
+    background: #fff;
+    
+    border: 1px solid var(--border);
+    
+    border-radius: 14px;
+    
+    padding: 12px 16px;
+    
+    display: flex;
+    
+    align-items: center;
+    
+    justify-content: center;
+    
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
     
 }
 
 #progress {
     
-    flex: 1;
-    
-    background: #2f80ed;
-    
-    color: #fff;
-    
-    padding: 15px;
-    
-    border-radius: 12px;
-    
-    font-size: 18px;
+    font-size: 17px;
     
     font-weight: 700;
     
-    text-align: center;
-    
-    box-shadow: 0 2px 8px rgba(47, 128, 237, .25);
+    color: var(--primary);
     
 }
 
-/*======================
+/*=========================
 QUESTION CARD
-======================*/
+=========================*/
 
 #questionBox {
     
-    background: #fff;
-    
-    border-left: 5px solid #2f80ed;
-    
-    padding: 18px;
-    
-    border-radius: 14px;
-    
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
-    
-    margin-bottom: 15px;
+    margin-bottom: 14px;
     
 }
 
-.questionTag {
+.badge {
     
     display: inline-block;
     
     padding: 5px 12px;
     
-    border-radius: 20px;
+    background: #EAF3FF;
     
-    background: #e8f1ff;
-    
-    color: #2f80ed;
+    color: var(--primary);
     
     font-size: 12px;
     
     font-weight: 700;
+    
+    border-radius: 50px;
     
     margin-bottom: 12px;
     
@@ -318,11 +340,11 @@ QUESTION CARD
 
 #questionHindi {
     
-    font-size: 26px;
-    
-    line-height: 1.55;
+    font-size: 22px;
     
     font-weight: 700;
+    
+    line-height: 1.5;
     
     color: #222;
     
@@ -332,7 +354,7 @@ QUESTION CARD
 
 #questionEnglish {
     
-    font-size: 17px;
+    font-size: 15px;
     
     line-height: 1.6;
     
@@ -340,23 +362,23 @@ QUESTION CARD
     
 }
 
-/*======================
-ANIMATION
-======================*/
+/*=========================
+QUESTION ANIMATION
+=========================*/
 
 #questionBox {
     
-    animation: fadeIn .25s;
+    animation: questionFade .25s ease;
     
 }
 
-@keyframes fadeIn {
+@keyframes questionFade {
     
     from {
         
         opacity: 0;
         
-        transform: translateY(10px);
+        transform: translateY(8px);
         
     }
     
@@ -369,9 +391,55 @@ ANIMATION
     }
     
 }
+
+/*=========================
+MOBILE
+=========================*/
+
+@media(max-width:600px) {
+    
+    .topInfo {
+        
+        gap: 10px;
+        
+    }
+    
+    .scoreCard {
+        
+        width: 82px;
+        
+        padding: 10px;
+        
+    }
+    
+    #score {
+        
+        font-size: 24px;
+        
+    }
+    
+    #progress {
+        
+        font-size: 15px;
+        
+    }
+    
+    #questionHindi {
+        
+        font-size: 19px;
+        
+    }
+    
+    #questionEnglish {
+        
+        font-size: 14px;
+        
+    }
+    
+}
 /*==================================================
 PART 3
-TESTBOOK STYLE OPTIONS
+OPTION CARD UI
 ==================================================*/
 
 #optionsBox{
@@ -380,14 +448,14 @@ display:flex;
 
 flex-direction:column;
 
-gap:12px;
+gap:10px;
 
-margin-bottom:16px;
+margin-top:8px;
 
 }
 
 /*=========================
-OPTION BUTTON
+OPTION CARD
 =========================*/
 
 #aBtn,
@@ -401,35 +469,33 @@ display:block;
 
 width:100%;
 
-padding:16px 18px 16px 60px;
+padding:14px 14px 14px 56px;
 
-background:#ffffff;
+background:#fff;
 
-border:2px solid #e4e7ec;
+border:1.5px solid #E4E8EF;
 
 border-radius:14px;
 
-color:#222;
+text-align:left;
 
-font-size:17px;
+font-size:16px;
 
 font-weight:600;
 
-text-align:left;
+color:#202124;
 
-line-height:1.5;
+line-height:1.4;
 
-transition:.25s;
+box-shadow:0 1px 4px rgba(0,0,0,.04);
 
-box-shadow:0 2px 8px rgba(0,0,0,.05);
+transition:.18s;
 
-min-height:68px;
+min-height:auto;
 
 }
 
-/*=========================
-OPTION NUMBER
-=========================*/
+/* OPTION CIRCLE */
 
 #aBtn::before,
 #bBtn::before,
@@ -438,21 +504,15 @@ OPTION NUMBER
 
 position:absolute;
 
-left:16px;
+left:14px;
 
-top:50%;
+top:16px;
 
-transform:translateY(-50%);
+width:28px;
 
-width:30px;
-
-height:30px;
+height:28px;
 
 border-radius:50%;
-
-background:#eef4ff;
-
-color:#2f80ed;
 
 display:flex;
 
@@ -460,7 +520,11 @@ align-items:center;
 
 justify-content:center;
 
-font-size:15px;
+background:#EAF3FF;
+
+color:#2F80ED;
+
+font-size:14px;
 
 font-weight:700;
 
@@ -471,9 +535,20 @@ font-weight:700;
 #cBtn::before{content:"C";}
 #dBtn::before{content:"D";}
 
-/*=========================
-ENGLISH TEXT
-=========================*/
+/* Hover */
+
+#aBtn:hover,
+#bBtn:hover,
+#cBtn:hover,
+#dBtn:hover{
+
+border-color:#2F80ED;
+
+background:#FAFCFF;
+
+}
+
+/* English */
 
 #aBtn small,
 #bBtn small,
@@ -482,30 +557,15 @@ ENGLISH TEXT
 
 display:block;
 
-margin-top:6px;
+margin-top:4px;
 
-font-size:14px;
+font-size:13px;
 
 font-weight:400;
 
+line-height:1.35;
+
 color:#666;
-
-line-height:1.45;
-
-}
-
-/*=========================
-HOVER
-=========================*/
-
-#aBtn:hover,
-#bBtn:hover,
-#cBtn:hover,
-#dBtn:hover{
-
-border-color:#2f80ed;
-
-background:#f8fbff;
 
 }
 
@@ -515,25 +575,31 @@ CORRECT
 
 .correct{
 
-background:#e9f8ef !important;
+background:#F2FBF5 !important;
 
-border-color:#22c55e !important;
+border-left:5px solid #2E7D32 !important;
 
-color:#166534 !important;
+border-top:1px solid #CDEDD5 !important;
 
-}
+border-right:1px solid #CDEDD5 !important;
 
-.correct::before{
+border-bottom:1px solid #CDEDD5 !important;
 
-background:#22c55e !important;
-
-color:#fff !important;
+color:#145A32 !important;
 
 }
 
 .correct small{
 
-color:#166534 !important;
+color:#2E7D32 !important;
+
+}
+
+.correct::before{
+
+background:#2E7D32;
+
+color:#fff;
 
 }
 
@@ -543,31 +609,35 @@ WRONG
 
 .wrong{
 
-background:#fdecec !important;
+background:#FFF5F5 !important;
 
-border-color:#ef4444 !important;
+border-left:5px solid #D32F2F !important;
 
-color:#b91c1c !important;
+border-top:1px solid #F3CACA !important;
 
-}
+border-right:1px solid #F3CACA !important;
 
-.wrong::before{
+border-bottom:1px solid #F3CACA !important;
 
-background:#ef4444 !important;
-
-color:#fff !important;
+color:#B71C1C !important;
 
 }
 
 .wrong small{
 
-color:#b91c1c !important;
+color:#C62828 !important;
 
 }
 
-/*=========================
-DISABLED
-=========================*/
+.wrong::before{
+
+background:#D32F2F;
+
+color:#fff;
+
+}
+
+/* Disabled */
 
 #aBtn:disabled,
 #bBtn:disabled,
@@ -576,355 +646,489 @@ DISABLED
 
 opacity:1;
 
-cursor:not-allowed;
+cursor:default;
 
 }
 
-/*=========================
-NEXT BUTTON
-=========================*/
+/* NEXT */
 
 #nextBtn{
 
-margin-top:8px;
+position:fixed;
 
-background:#2f80ed;
+left:14px;
+
+right:14px;
+
+bottom:12px;
 
 height:54px;
 
-font-size:18px;
+border-radius:14px;
+
+background:#2F80ED;
+
+color:#fff;
+
+font-size:17px;
 
 font-weight:700;
 
-border-radius:12px;
+box-shadow:0 8px 18px rgba(47,128,237,.25);
 
-box-shadow:0 4px 14px rgba(47,128,237,.30);
-
-}
-
-#nextBtn:hover{
-
-background:#1f6fd8;
+z-index:999;
 
 }
 /*==================================================
 PART 4
-RESULT PAGE + MOBILE + EFFECTS
+RESULT PAGE
 ==================================================*/
 
-/*=========================
-RESULT PAGE
-=========================*/
-
-#resultPage{
-
-margin:14px;
-
-text-align:center;
-
+#resultPage {
+    
+    padding: 18px;
+    
+    margin-top: 12px;
+    
+    background: #fff;
+    
+    border-radius: 18px;
+    
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
+    
+    text-align: center;
+    
 }
 
-.resultIcon{
-
-width:90px;
-
-height:90px;
-
-margin:0 auto 18px;
-
-border-radius:50%;
-
-background:linear-gradient(135deg,#2f80ed,#56ccf2);
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:42px;
-
-color:#fff;
-
-box-shadow:0 8px 20px rgba(47,128,237,.25);
-
+.resultTop {
+    
+    margin-bottom: 18px;
+    
 }
 
-#resultPage h2{
-
-font-size:28px;
-
-margin-bottom:12px;
-
-color:#222;
-
+.trophy {
+    
+    width: 70px;
+    
+    height: 70px;
+    
+    margin: auto;
+    
+    border-radius: 50%;
+    
+    background: linear-gradient(180deg, #FFD54F, #FFB300);
+    
+    display: flex;
+    
+    align-items: center;
+    
+    justify-content: center;
+    
+    font-size: 34px;
+    
+    box-shadow: 0 5px 15px rgba(255, 193, 7, .25);
+    
 }
 
-#finalScore{
-
-font-size:34px;
-
-font-weight:700;
-
-color:#2f80ed;
-
-margin-bottom:20px;
-
+#resultPage h2 {
+    
+    margin-top: 14px;
+    
+    font-size: 24px;
+    
+    color: #222;
+    
 }
 
-.resultSummary{
-
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:12px;
-
-margin-bottom:22px;
-
+#finalScore {
+    
+    margin-top: 10px;
+    
+    font-size: 34px;
+    
+    font-weight: 700;
+    
+    color: #2F80ED;
+    
 }
 
-.resultSummary div{
-
-background:#f7f8fb;
-
-border-radius:12px;
-
-padding:14px;
-
+.summary {
+    
+    display: grid;
+    
+    grid-template-columns: 1fr 1fr;
+    
+    gap: 12px;
+    
+    margin-top: 20px;
+    
+    margin-bottom: 22px;
+    
 }
 
-.resultSummary span{
-
-display:block;
-
-font-size:13px;
-
-color:#777;
-
-margin-bottom:6px;
-
+.summaryCard {
+    
+    background: #F8FAFD;
+    
+    border: 1px solid #E5EAF1;
+    
+    border-radius: 14px;
+    
+    padding: 16px;
+    
 }
 
-.resultSummary b{
-
-font-size:20px;
-
-color:#222;
-
+.summaryCard span {
+    
+    display: block;
+    
+    font-size: 13px;
+    
+    color: #777;
+    
+    margin-bottom: 6px;
+    
 }
 
-/*=========================
-LEADERBOARD
-=========================*/
-
-.leaderTitle{
-
-margin:18px 0 12px;
-
-font-size:22px;
-
-color:#2f80ed;
-
+.summaryCard b {
+    
+    font-size: 22px;
+    
+    color: #222;
+    
 }
 
-#leaderboard{
-
-background:#fff;
-
-border:1px solid #e6e8ee;
-
-border-radius:14px;
-
-overflow:hidden;
-
-box-shadow:0 2px 10px rgba(0,0,0,.05);
-
+.leaderboardTitle {
+    
+    margin-bottom: 12px;
+    
+    font-size: 22px;
+    
+    color: #2F80ED;
+    
 }
 
-#leaderboard div{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:14px 16px;
-
-border-bottom:1px solid #eceff4;
-
-font-size:16px;
-
+#leaderboard {
+    
+    background: #fff;
+    
+    border: 1px solid #E5EAF1;
+    
+    border-radius: 14px;
+    
+    overflow: hidden;
+    
 }
 
-#leaderboard div:last-child{
-
-border-bottom:none;
-
+#leaderboard div {
+    
+    display: flex;
+    
+    justify-content: space-between;
+    
+    padding: 14px 16px;
+    
+    border-bottom: 1px solid #EEF2F7;
+    
+    font-size: 15px;
+    
 }
 
-#leaderboard div:nth-child(1){
-
-background:#fff8e1;
-
-font-weight:700;
-
+#leaderboard div:last-child {
+    
+    border-bottom: none;
+    
 }
 
-#leaderboard div:nth-child(2){
-
-background:#f8f9fb;
-
+#leaderboard div:nth-child(1) {
+    
+    background: #FFF8E6;
+    
+    font-weight: 700;
+    
 }
 
-#leaderboard div:nth-child(3){
-
-background:#fafafa;
-
+#leaderboard div:nth-child(2) {
+    
+    background: #F8FAFD;
+    
 }
 
-/*=========================
-BUTTON EFFECT
-=========================*/
-
-button{
-
-transition:all .25s ease;
-
+#leaderboard div:nth-child(3) {
+    
+    background: #FBFCFE;
+    
 }
 
-button:hover{
+#resultPage button {
+    
+    margin-top: 18px;
+    
+}
+/*==================================================
+PART 5
+FINAL POLISH + MOBILE OPTIMIZATION
+==================================================*/
 
-transform:translateY(-2px);
+/* Page */
 
+html,
+body {
+    
+    height: 100%;
+    
+    overflow-x: hidden;
+    
+    background: #F5F7FB;
+    
 }
 
-button:active{
+/* Container */
 
-transform:scale(.98);
-
+.container {
+    
+    padding: 12px;
+    
+    padding-bottom: 85px;
+    
 }
 
-/*=========================
-CARD ANIMATION
-=========================*/
+/* Header */
 
-.card{
-
-animation:showCard .35s ease;
-
+.header {
+    
+    padding: 12px 16px;
+    
+    margin-bottom: 10px;
+    
 }
 
-@keyframes showCard{
-
-0%{
-
-opacity:0;
-
-transform:translateY(15px);
-
+.logo {
+    
+    font-size: 22px;
+    
 }
 
-100%{
-
-opacity:1;
-
-transform:translateY(0);
-
+#todayTopic {
+    
+    font-size: 13px;
+    
 }
 
+/* Cards */
+
+.card {
+    
+    padding: 14px;
+    
+    border-radius: 14px;
+    
 }
 
-/*=========================
-SCROLLBAR
-=========================*/
+/* Question */
 
-::-webkit-scrollbar{
-
-width:7px;
-
+#questionBox {
+    
+    margin-bottom: 10px;
+    
 }
 
-::-webkit-scrollbar-thumb{
-
-background:#2f80ed;
-
-border-radius:20px;
-
+#questionHindi {
+    
+    font-size: 19px;
+    
+    line-height: 1.45;
+    
+    margin-bottom: 6px;
+    
 }
 
-/*=========================
-MOBILE
-=========================*/
-
-@media(max-width:600px){
-
-body{
-
-font-size:15px;
-
+#questionEnglish {
+    
+    font-size: 14px;
+    
+    line-height: 1.45;
+    
+    color: #666;
+    
 }
 
-.app{
+/* Options */
 
-width:100%;
-
-}
-
-#questionHindi{
-
-font-size:21px;
-
-}
-
-#questionEnglish{
-
-font-size:15px;
-
+#optionsBox {
+    
+    gap: 8px;
+    
 }
 
 #aBtn,
 #bBtn,
 #cBtn,
-#dBtn{
-
-font-size:15px;
-
-padding:14px 14px 14px 56px;
-
+#dBtn {
+    
+    padding: 12px 12px 12px 52px;
+    
+    border-radius: 12px;
+    
+    font-size: 15px;
+    
+    line-height: 1.35;
+    
+    box-shadow: none;
+    
+    min-height: auto;
+    
 }
 
-#quizHeader{
-
-flex-direction:column;
-
-align-items:stretch;
-
+#aBtn::before,
+#bBtn::before,
+#cBtn::before,
+#dBtn::before {
+    
+    left: 12px;
+    
+    top: 14px;
+    
+    width: 26px;
+    
+    height: 26px;
+    
+    font-size: 13px;
+    
 }
 
-.scoreBox{
+/* English */
 
-width:100%;
-
+#aBtn small,
+#bBtn small,
+#cBtn small,
+#dBtn small {
+    
+    font-size: 12px;
+    
+    margin-top: 3px;
+    
+    line-height: 1.3;
+    
 }
 
-#progress{
+/* Next Button */
 
-width:100%;
-
+#nextBtn {
+    
+    position: fixed;
+    
+    left: 12px;
+    
+    right: 12px;
+    
+    bottom: 10px;
+    
+    height: 50px;
+    
+    border-radius: 12px;
+    
+    font-size: 16px;
+    
+    z-index: 999;
+    
 }
 
-.resultSummary{
+/* Result */
 
-grid-template-columns:1fr;
-
+#resultPage {
+    
+    padding: 16px;
+    
 }
 
-#finalScore{
-
-font-size:28px;
-
+.trophy {
+    
+    width: 60px;
+    
+    height: 60px;
+    
+    font-size: 30px;
+    
 }
 
+#finalScore {
+    
+    font-size: 28px;
+    
+}
+
+/* Animation */
+
+#aBtn,
+#bBtn,
+#cBtn,
+#dBtn,
+.card {
+    
+    transition: .18s ease;
+    
+}
+
+#aBtn:active,
+#bBtn:active,
+#cBtn:active,
+#dBtn:active {
+    
+    transform: scale(.98);
+    
+}
+
+/* Mobile */
+
+@media (max-width:600px) {
+    
+    .container {
+        
+        padding: 10px;
+        
+        padding-bottom: 80px;
+        
+    }
+    
+    .topInfo {
+        
+        gap: 8px;
+        
+    }
+    
+    .scoreCard {
+        
+        width: 75px;
+        
+        padding: 8px;
+        
+    }
+    
+    #score {
+        
+        font-size: 22px;
+        
+    }
+    
+    .progressCard {
+        
+        padding: 10px;
+        
+    }
+    
+    #progress {
+        
+        font-size: 14px;
+        
+    }
+    
+    .summary {
+        
+        grid-template-columns: 1fr;
+        
+        gap: 8px;
+        
+    }
+    
 }
