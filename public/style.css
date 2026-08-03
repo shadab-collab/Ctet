@@ -1,389 +1,342 @@
-/* ============================================================
-   CTET Quiz — Testbook-style theme
-   Works with the existing index.html + student.js as-is.
-   No JS IDs/classes were changed — only visual styling.
-   ============================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+/* ==========================================================
+   CTET Quiz — Testbook Style Theme
+   ========================================================== */
 
 :root {
-  --navy: #12194f;
-  --navy-light: #232c73;
-  --accent: #ff7a1a;
-  --accent-dark: #e8690a;
-  --success: #1ba672;
-  --error: #e3413a;
-  --bg: #eef1f7;
-  --card: #ffffff;
-  --text: #1b1f3b;
-  --muted: #6b7280;
-  --border: #e4e7f0;
+  --bg-app: #f2f3f8;          /* halka grey-blue background */
+  --header-bg: #1c1c2e;       /* dark navy/black header (jaisa screenshot me) */
+  --header-text: #ffffff;
+
+  --card-bg: #ffffff;
+  --text-main: #1c1c2e;
+  --text-sub: #5f6272;        /* english subtitle grey */
+  --border-light: #e3e5ee;
+
+  --brand-blue: #2b57ff;
+
+  --correct-bg: #e6f4ea;      /* halka green background */
+  --correct-border: #1f8a44;  /* dark green border */
+  --correct-text: #14622c;    /* dark green text (hindi + english dono ke liye) */
+
+  --wrong-bg: #fdeaea;        /* halka red background */
+  --wrong-border: #d32f2f;    /* dark red border */
+  --wrong-text: #a31515;      /* dark red text (hindi + english dono ke liye) */
+
   --radius: 14px;
-  --safe-b: env(safe-area-inset-bottom, 0px);
-  --safe-t: env(safe-area-inset-top, 0px);
+  --shadow-card: 0 2px 10px rgba(28, 28, 46, 0.06);
 }
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
 html, body {
   height: 100%;
   margin: 0;
-  overscroll-behavior: none;
+  padding: 0;
+  background: var(--bg-app);
+  font-family: "Segoe UI", "Noto Sans Devanagari", Arial, sans-serif;
+  color: var(--text-main);
 }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Noto Sans', 'Noto Sans Devanagari', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ---------------- App shell : fills the screen, no page scroll ---------------- */
+/* ==========================================================
+   APP SHELL — poori screen me fit, bina scroll ke
+   ========================================================== */
 
 .app {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
   max-width: 480px;
   margin: 0 auto;
-  background: var(--bg);
+  height: 100vh;
+  height: 100dvh; /* mobile browsers ke liye zyada accurate */
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-app);
   overflow: hidden;
-  padding-top: var(--safe-t);
 }
 
+/* ==========================================================
+   TOP BAR
+   ========================================================== */
+
 .appTitle {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  font-size: 1.05rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-align: center;
-  color: #fff;
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
   margin: 0;
-  padding: 12px 16px 10px;
-  flex: 0 0 auto;
+  padding: 12px 16px;
+  background: var(--header-bg);
+  color: var(--header-text);
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
 }
 
 #todayTopic {
-  flex: 0 0 auto;
-  text-align: center;
-  font-size: 0.72rem;
+  flex-shrink: 0;
+  padding: 8px 16px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
   font-weight: 600;
-  color: var(--navy);
-  background: #ffffffcc;
-  padding: 6px 10px;
-  border-bottom: 1px solid var(--border);
+  color: var(--brand-blue);
+  text-align: center;
 }
 
-/* Hide the topic strip while the quiz is actually running, to save vertical space */
-.app:has(#quizPage[style*="block"]) #todayTopic {
-  display: none;
+/* ==========================================================
+   GENERIC CARD (start page / question box / result page)
+   ========================================================== */
+
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+  margin: 12px;
 }
 
-/* ---------------- Start page ---------------- */
+/* ==========================================================
+   START PAGE
+   ========================================================== */
 
-#startPage.card {
-  flex: 1 1 auto;
-  min-height: 0;
+#startPage {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  gap: 14px;
-  margin: 16px;
-  padding: 28px 20px;
-  background: var(--card);
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(18, 25, 79, 0.12);
-}
-
-#startPage h3 {
-  margin: 0 0 4px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.1rem;
-  color: var(--navy);
   text-align: center;
 }
 
+#startPage h3 {
+  margin: 0 0 14px;
+  font-size: 17px;
+  color: var(--text-main);
+}
+
 #startPage input {
-  font-size: 16px; /* prevents iOS zoom-on-focus */
-  padding: 13px 14px;
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1.5px solid var(--border-light);
   border-radius: 10px;
-  border: 1.5px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
   outline: none;
-  transition: border-color 0.15s ease;
+  margin-bottom: 14px;
+  background: #fafbff;
+  color: var(--text-main);
 }
 
 #startPage input:focus {
-  border-color: var(--accent);
+  border-color: var(--brand-blue);
 }
 
 #startPage button {
-  font-family: 'Poppins', sans-serif;
+  padding: 13px;
+  font-size: 15px;
   font-weight: 700;
-  font-size: 0.95rem;
-  color: #fff;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   border: none;
   border-radius: 10px;
-  padding: 14px;
+  background: var(--brand-blue);
+  color: #fff;
   cursor: pointer;
-  box-shadow: 0 6px 16px rgba(255, 122, 26, 0.35);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 #startPage button:active {
-  transform: translateY(1px) scale(0.99);
-  box-shadow: 0 3px 8px rgba(255, 122, 26, 0.3);
+  opacity: 0.85;
 }
 
-/* ---------------- Quiz page : the no-scroll screen ---------------- */
+/* ==========================================================
+   QUIZ PAGE — flex column jo poori height me fit ho
+   ========================================================== */
 
 #quizPage {
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding: 10px 12px calc(10px + var(--safe-b));
-  gap: 8px;
+  padding: 10px 12px 12px;
+  min-height: 0; /* important: children ko shrink/scroll karne dene ke liye */
 }
 
 #quizHeader {
-  flex: 0 0 auto;
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  padding: 8px 14px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
 }
 
-#quizHeader > div {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: 0.78rem;
-  padding: 7px 12px;
-  border-radius: 999px;
+#quizHeader #score {
+  color: var(--correct-border);
+  font-weight: 800;
 }
 
-#quizHeader > div:first-child {
-  background: #e6f7f0;
-  color: var(--success);
+#quizHeader #progress {
+  color: var(--text-sub);
 }
 
-#quizHeader > div:first-child::before {
-  content: "🏆 ";
-}
-
-#progress {
-  background: #eef0ff;
-  color: var(--navy-light);
-}
-
-#progress::before {
-  content: "📝 ";
-}
-
-/* Question card: flexible but capped, shrinks gracefully via clamp() */
-
-#questionBox.card {
+/* Question box: agar bada question ho tabhi scroll aayega, warna fit ho jayega */
+#questionBox {
   flex: 0 1 auto;
-  min-height: 0;
   overflow-y: auto;
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  box-shadow: 0 4px 14px rgba(18, 25, 79, 0.08);
-  border-left: 4px solid var(--accent);
+  max-height: 34vh;
+  margin: 0 0 8px;
+  padding: 14px;
 }
 
 #questionHindi {
   margin: 0 0 6px;
-  font-size: clamp(0.95rem, 2.3vh + 0.4rem, 1.2rem);
+  font-size: 16px;
   line-height: 1.4;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 700;
+  color: var(--text-main);
 }
 
 #questionEnglish {
   margin: 0;
-  font-size: clamp(0.72rem, 1.4vh + 0.3rem, 0.85rem);
-  color: var(--muted);
-  line-height: 1.3;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--text-sub);
 }
 
-/* Options: fill remaining space, evenly distributed, never overflow */
+/* ==========================================================
+   OPTIONS — Testbook jaisa look
+   ========================================================== */
 
 #optionsBox {
   flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 #optionsBox button {
-  font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif;
+  width: 100%;
   text-align: left;
-  background: var(--card);
-  color: var(--text);
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  padding: 9px 12px;
-  font-size: clamp(0.82rem, 1.7vh + 0.3rem, 0.98rem);
+  padding: 10px 14px;
+  font-size: 14px;
   line-height: 1.35;
+  background: var(--card-bg);
+  color: var(--text-main);
+  border: 1.5px solid var(--border-light);
+  border-radius: 10px;
   cursor: pointer;
-  transition: border-color 0.12s ease, background 0.12s ease, transform 0.08s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
 }
 
-#optionsBox button:active:not(:disabled) {
+#optionsBox button:active {
   transform: scale(0.99);
 }
 
-#optionsBox button:not(:disabled):hover {
-  border-color: var(--accent);
-  background: #fff7f0;
+#optionsBox button b {
+  color: inherit;
+  margin-right: 4px;
+}
+
+/* Hindi (main line) button ke apne color se aata hai.
+   English (small tag) ke liye "color: inherit" use kiya hai — matlab
+   student.js jab kisi button ka color JS se set karta hai (jaise sahi
+   jawab par white, ya normal state me dark), small tag automatically
+   wahi color le lega. Isi wajah se ab green/red background par bhi
+   English text hamesha readable rahega, chahe background kaisa bhi ho.
+   Sirf thoda opacity kam kiya hai taaki wo "subtitle" jaisa dikhe,
+   lekin hue/contrast hamesha parent jaisa hi rahega. */
+#optionsBox button small {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: inherit;
+  opacity: 0.72;
 }
 
 #optionsBox button:disabled {
-  cursor: not-allowed;
-  opacity: 0.85;
+  cursor: default;
 }
 
-#optionsBox button b {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 24px;
-  height: 24px;
-  padding: 0 4px;
-  margin-right: 8px;
-  border-radius: 50%;
-  background: var(--bg);
-  color: var(--navy);
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 700;
-  vertical-align: middle;
-}
-
-#optionsBox button small {
-  display: block;
-  margin-top: 2px;
-  margin-left: 32px;
-  color: var(--muted);
-  font-size: 0.72em;
-}
-
-/* Next button: pinned at the bottom of the quiz screen */
+/* ==========================================================
+   NEXT BUTTON — bottom par fixed feel, hamesha visible
+   ========================================================== */
 
 #nextBtn {
-  flex: 0 0 auto;
-  font-family: 'Poppins', sans-serif;
+  flex-shrink: 0;
+  margin-top: 8px;
+  padding: 13px;
+  font-size: 15px;
   font-weight: 700;
-  font-size: 0.92rem;
-  color: #fff;
-  background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
   border: none;
   border-radius: 10px;
-  padding: 12px;
+  background: var(--brand-blue);
+  color: #fff;
   cursor: pointer;
-  box-shadow: 0 6px 16px rgba(18, 25, 79, 0.25);
 }
 
 #nextBtn:active {
-  transform: translateY(1px);
+  opacity: 0.85;
 }
 
-/* ---------------- Result page ---------------- */
+/* ==========================================================
+   RESULT PAGE
+   ========================================================== */
 
-#resultPage.card {
-  flex: 1 1 auto;
-  min-height: 0;
+#resultPage {
+  flex: 1;
   overflow-y: auto;
-  margin: 14px;
-  padding: 20px 18px calc(20px + var(--safe-b));
-  background: var(--card);
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(18, 25, 79, 0.12);
+  text-align: center;
 }
 
 #resultPage h2 {
-  font-family: 'Poppins', sans-serif;
-  color: var(--navy);
-  text-align: center;
-  margin: 0 0 6px;
-  font-size: 1.2rem;
+  margin: 4px 0 10px;
+  color: var(--text-main);
+  font-size: 19px;
 }
 
 #finalScore {
-  text-align: center;
-  color: var(--accent-dark);
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.15rem;
-  margin: 0 0 18px;
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--brand-blue);
 }
 
 #resultPage h3 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
-  color: var(--navy);
-  margin: 0 0 8px;
-  border-bottom: 2px solid var(--bg);
-  padding-bottom: 6px;
+  margin: 16px 0 8px;
+  font-size: 15px;
+  color: var(--text-main);
+  text-align: left;
+}
+
+#leaderboard {
+  text-align: left;
 }
 
 #leaderboard div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background: #fafbff;
+  border-radius: 10px;
   padding: 10px 12px !important;
-  border-bottom: 1px solid var(--border) !important;
-  font-size: 0.88rem;
-  border-radius: 8px;
+  margin-bottom: 6px;
+  border-bottom: none !important;
+  font-size: 13px;
+  color: var(--text-main);
 }
 
-#leaderboard div:nth-child(1) { background: #fff8e1; }
-#leaderboard div:nth-child(2) { background: #f2f3f8; }
-#leaderboard div:nth-child(3) { background: #fdece3; }
+/* ==========================================================
+   Chhoti screens ke liye thoda aur compact
+   ========================================================== */
 
-#leaderboard b {
-  color: var(--navy);
-  font-family: 'Poppins', sans-serif;
-}
-
-/* ---------------- Scrollbars (only ever used as a safety fallback) ---------------- */
-
-#questionBox::-webkit-scrollbar,
-#optionsBox::-webkit-scrollbar,
-#resultPage::-webkit-scrollbar {
-  width: 4px;
-}
-
-#questionBox::-webkit-scrollbar-thumb,
-#optionsBox::-webkit-scrollbar-thumb,
-#resultPage::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
-}
-
-/* ---------------- Reduced motion ---------------- */
-
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
-}
-
-/* ---------------- Small-height phones: tighten spacing further ---------------- */
-
-@media (max-height: 640px) {
-  .appTitle { padding: 8px 16px 6px; font-size: 0.95rem; }
-  #todayTopic { padding: 4px 10px; font-size: 0.68rem; }
-  #quizPage { padding: 6px 10px calc(6px + var(--safe-b)); gap: 6px; }
-  #questionBox.card { padding: 10px 12px; }
-  #optionsBox button { padding: 7px 10px; }
+@media (max-height: 620px) {
+  .appTitle { padding: 8px 14px; font-size: 16px; }
+  #todayTopic { padding: 6px 14px; font-size: 12px; }
+  #questionBox { max-height: 30vh; padding: 10px; }
+  #questionHindi { font-size: 14.5px; }
+  #questionEnglish { font-size: 12px; }
+  #optionsBox button { padding: 8px 12px; font-size: 13px; }
+  #nextBtn, #startPage button { padding: 11px; font-size: 14px; }
 }
