@@ -1307,144 +1307,173 @@ font-size:15px;
 
 
 
-/* Background */
-body {
-    background: #f5f7fb;
-    color: #1f2937;
+/*==========================
+TESTBOOK COLOR THEME
+==========================*/
+
+/* Primary Blue */
+:root {
+    
+    --primary: #2563eb;
+    --primary-light: #eff6ff;
+    --primary-border: #bfdbfe;
+    
+    --bg: #f5f7fb;
+    
+    --card: #ffffff;
+    
+    --text: #111827;
+    
+    --text-light: #6b7280;
+    
+    --border: #dbe3ec;
+    
+    --success: #16a34a;
+    
+    --danger: #ef4444;
+    
 }
 
-/* Cards */
-#startPage,
-#quizPage,
-#resultPage,
-#editBox,
-#questionBox,
-#quizHeader,
-#questionList div,
-#activeQuiz div,
-#archiveQuiz div,
-#leaderboard div {
+
+/* Normal Buttons */
+
+button {
     
-    background: #ffffff;
+    background: var(--primary);
     
-    border: 1px solid #e5e7eb;
-    
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+    color: #fff;
     
 }
 
-/* Main Heading */
-h2 {
-    color: #1e40af;
+
+/* Progress */
+
+#progress {
+    
+    color: var(--primary);
+    
 }
 
-/* Topic */
-#todayTopic {
+
+/* Score */
+
+#score {
     
-    background: #eef4ff;
-    
-    color: #1e40af;
-    
-    border: 1px solid #c7d2fe;
+    color: var(--success);
     
 }
+
 
 /* Question */
+
 #questionHindi {
-    color: #111827;
+    
+    color: var(--text);
+    
 }
 
 #questionEnglish {
-    color: #6b7280;
+    
+    color: var(--text-light);
+    
 }
 
-/* Options */
+
+/* Question Number */
+
+.questionNo {
+    
+    background: var(--primary);
+    
+    color: #fff;
+    
+}
+
+
+/* Small English */
+
+small {
+    
+    color: var(--text-light);
+    
+}
+
+
+/* Option Buttons */
+
 #aBtn,
 #bBtn,
 #cBtn,
 #dBtn {
     
-    background: #ffffff;
+    background: #fff;
     
-    color: #111827;
+    color: var(--text);
     
-    border: 1px solid #d1d5db;
+    border: 2px solid var(--border);
     
 }
+
+
+/* Hover */
 
 #aBtn:hover,
 #bBtn:hover,
 #cBtn:hover,
 #dBtn:hover {
     
-    background: #f8fafc;
+    background: var(--primary-light);
     
-    border-color: #2563eb;
+    border-color: var(--primary);
     
 }
+
+
+/* English Text */
+
+#aBtn small,
+#bBtn small,
+#cBtn small,
+#dBtn small {
+    
+    color: var(--text-light);
+    
+}
+
 
 /* Correct */
+
 .correct {
     
-    background: #22c55e !important;
+    background: var(--success) !important;
+    
+    border-color: var(--success) !important;
     
     color: #fff !important;
     
-    border-color: #22c55e !important;
+}
+
+.correct small {
+    
+    color: #fff !important;
     
 }
+
 
 /* Wrong */
+
 .wrong {
     
-    background: #ef4444 !important;
+    background: var(--danger) !important;
+    
+    border-color: var(--danger) !important;
     
     color: #fff !important;
     
-    border-color: #ef4444 !important;
-    
 }
 
-/* Next Button */
-#nextBtn {
+.wrong small {
     
-    background: #2563eb;
+    color: #fff !important;
     
-    color: #fff;
-    
-    border: none;
-    
-}
-
-#nextBtn:hover {
-    
-    background: #1d4ed8;
-    
-}
-
-/* Normal Buttons */
-button {
-    
-    background: #ffffff;
-    
-    color: #111827;
-    
-    border: 1px solid #d1d5db;
-    
-}
-
-button:hover {
-    
-    background: #f3f4f6;
-    
-}
-
-/* Score */
-#score {
-    color: #16a34a;
-}
-
-/* Leaderboard Left Border */
-#leaderboard div {
-    border-left: 5px solid #2563eb;
 }
