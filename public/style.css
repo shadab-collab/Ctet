@@ -1,14 +1,12 @@
 /*==================================================
-CTET QUIZ APP
-TESTBOOK STYLE CSS
-PART 1A
+CTET QUIZ PREMIUM UI
+PART 1 : GLOBAL + APP + START PAGE
 ==================================================*/
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -18,128 +16,54 @@ html {
 
 body {
     
-    background: #f5f7fb;
+    font-family: Arial, Helvetica, sans-serif;
+    
+    background: #eef3f8;
+    
+    background-image:
+        radial-gradient(circle at top, #dfefff 0%, transparent 40%);
     
     color: #222;
     
-    max-width: 700px;
+    min-height: 100vh;
     
-    margin: auto;
-    
-    padding: 8px;
+    padding: 18px;
     
 }
 
-h2 {
-    
-    font-size: 24px;
-    
-    font-weight: 700;
-    
-    text-align: center;
-    
-    color: #1565c0;
-    
-    margin-bottom: 8px;
-    
-}
-
-h3 {
-    
-    font-size: 18px;
-    
-    margin: 6px 0;
-    
-    font-weight: 700;
-    
-}
-
-h4 {
-    
-    font-size: 15px;
-    
-    margin: 4px 0;
-    
-    font-weight: 400;
-    
-    color: #666;
-    
-}
-
-hr {
-    
-    border: none;
-    
-    height: 1px;
-    
-    background: #e5e5e5;
-    
-    margin: 10px 0;
-    
-}
-
-/*==========================
-INPUT
-==========================*/
-
-input,
-textarea,
-select {
+.app {
     
     width: 100%;
     
-    font-size: 16px;
+    max-width: 650px;
     
-    padding: 12px;
-    
-    border-radius: 10px;
-    
-    border: 1px solid #d8d8d8;
-    
-    outline: none;
-    
-    background: #fff;
-    
-    margin-top: 8px;
-    
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    
-    border-color: #1976d2;
-    
-}
-
-textarea {
-    
-    resize: vertical;
-    
-    min-height: 220px;
+    margin: auto;
     
 }
 
 /*==========================
-COMMON CARD
+APP TITLE
 ==========================*/
 
-#startPage,
-#quizPage,
-#resultPage,
-#editBox {
+.appTitle {
     
-    background: #ffffff;
+    text-align: center;
     
-    border: 1px solid #eceff3;
+    color: #fff;
     
-    border-radius: 14px;
+    font-size: 28px;
     
-    padding: 14px;
+    font-weight: 800;
     
-    box-shadow: 0 1px 5px rgba(0, 0, 0, .05);
+    padding: 18px;
     
-    margin-top: 10px;
+    border-radius: 20px;
+    
+    background: linear-gradient(135deg, #0057d9, #1976d2, #42a5f5);
+    
+    box-shadow: 0 12px 30px rgba(25, 118, 210, .28);
+    
+    letter-spacing: .5px;
     
 }
 
@@ -149,51 +73,127 @@ TODAY TOPIC
 
 #todayTopic {
     
-    background: #e8f1ff;
+    margin-top: 16px;
+    
+    background: #ffffff;
+    
+    border-left: 6px solid #1976d2;
+    
+    border-radius: 16px;
+    
+    padding: 15px;
+    
+    font-size: 17px;
+    
+    font-weight: 700;
     
     color: #0d47a1;
     
-    padding: 10px;
-    
-    text-align: center;
-    
-    border-radius: 10px;
-    
-    font-size: 15px;
-    
-    font-weight: bold;
-    
-    margin-bottom: 8px;
-    
-    border: 1px solid #bbdefb;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
     
 }
 
 /*==========================
-BUTTON
+CARD
+==========================*/
+
+.card {
+    
+    margin-top: 18px;
+    
+    background: #ffffff;
+    
+    border-radius: 22px;
+    
+    padding: 22px;
+    
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .08);
+    
+    border: 1px solid #edf2f7;
+    
+}
+
+/*==========================
+START PAGE
+==========================*/
+
+#startPage h3 {
+    
+    text-align: center;
+    
+    font-size: 23px;
+    
+    color: #1b4f9c;
+    
+    margin-bottom: 18px;
+    
+}
+
+/*==========================
+INPUT
+==========================*/
+
+input {
+    
+    width: 100%;
+    
+    height: 58px;
+    
+    border: 2px solid #d9e5f3;
+    
+    border-radius: 14px;
+    
+    outline: none;
+    
+    font-size: 18px;
+    
+    padding: 0 16px;
+    
+    margin-bottom: 18px;
+    
+    transition: .25s;
+    
+    background: #fafcff;
+    
+}
+
+input:focus {
+    
+    border-color: #1976d2;
+    
+    background: #fff;
+    
+    box-shadow: 0 0 0 4px rgba(25, 118, 210, .12);
+    
+}
+
+/*==========================
+PRIMARY BUTTON
 ==========================*/
 
 button {
     
     width: 100%;
     
+    height: 56px;
+    
     border: none;
     
-    border-radius: 12px;
+    border-radius: 14px;
     
-    padding: 15px;
-    
-    font-size: 17px;
-    
-    font-weight: bold;
-    
-    background: #1976d2;
+    background: linear-gradient(135deg, #1976d2, #1565c0);
     
     color: #fff;
     
+    font-size: 18px;
+    
+    font-weight: 700;
+    
     cursor: pointer;
     
-    transition: .2s;
+    transition: .25s;
+    
+    box-shadow: 0 8px 18px rgba(25, 118, 210, .25);
     
 }
 
@@ -203,87 +203,163 @@ button:active {
     
 }
 
-button:disabled {
+button:hover {
     
-    opacity: .6;
-    
-    cursor: not-allowed;
+    filter: brightness(1.05);
     
 }
 /*==================================================
-PART 1B
-QUESTION AREA
+CTET QUIZ PREMIUM UI
+PART 2 : QUIZ HEADER + QUESTION CARD
 ==================================================*/
 
-/* Quiz Card */
+/*==========================
+QUIZ PAGE
+==========================*/
 
 #quizPage {
     
-    position: relative;
+    margin-top: 18px;
     
 }
 
-/* Progress */
+/*==========================
+QUIZ HEADER
+==========================*/
 
-#progress {
+#quizHeader {
     
-    display: block;
+    display: flex;
     
-    text-align: center;
+    justify-content: space-between;
+    
+    align-items: center;
+    
+    gap: 12px;
+    
+    background: #ffffff;
+    
+    border-radius: 18px;
+    
+    padding: 14px 18px;
+    
+    margin-bottom: 18px;
+    
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .08);
+    
+    border: 1px solid #e8eef7;
+    
+    position: sticky;
+    
+    top: 10px;
+    
+    z-index: 100;
+    
+}
+
+/*==========================
+SCORE
+==========================*/
+
+#quizHeader div:first-child {
     
     font-size: 16px;
     
     font-weight: 700;
     
-    color: #1976d2;
-    
-    margin-bottom: 6px;
+    color: #555;
     
 }
-
-/* Score */
 
 #score {
     
-    font-size: 22px;
+    font-size: 24px;
     
-    font-weight: 700;
+    color: #16a34a;
     
-    color: #2e7d32;
+    font-weight: 800;
+    
+    margin-left: 4px;
     
 }
 
-/* Question Hindi */
+/*==========================
+PROGRESS
+==========================*/
+
+#progress {
+    
+    background: linear-gradient(135deg, #1976d2, #42a5f5);
+    
+    color: #fff;
+    
+    padding: 8px 16px;
+    
+    border-radius: 30px;
+    
+    font-size: 15px;
+    
+    font-weight: 700;
+    
+    box-shadow: 0 4px 12px rgba(25, 118, 210, .25);
+    
+}
+
+/*==========================
+QUESTION CARD
+==========================*/
+
+#questionBox {
+    
+    background: #ffffff;
+    
+    border-radius: 22px;
+    
+    padding: 24px;
+    
+    margin-bottom: 20px;
+    
+    border-left: 7px solid #1976d2;
+    
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
+    
+}
+
+/*==========================
+QUESTION HINDI
+==========================*/
 
 #questionHindi {
     
-    font-size: 20px;
+    font-size: 23px;
     
     font-weight: 700;
     
-    line-height: 1.45;
+    line-height: 1.7;
     
-    color: #222;
-    
-    margin: 10px 0 6px;
-    
-}
-
-/* Question English */
-
-#questionEnglish {
-    
-    font-size: 14px;
-    
-    line-height: 1.45;
-    
-    color: #666;
+    color: #202124;
     
     margin-bottom: 12px;
     
 }
 
-/* Question Number Badge */
+/*==========================
+QUESTION ENGLISH
+==========================*/
+
+#questionEnglish {
+    
+    font-size: 16px;
+    
+    color: #666;
+    
+    line-height: 1.7;
+    
+}
+
+/*==========================
+QUESTION NUMBER BADGE
+==========================*/
 
 .questionNo {
     
@@ -293,117 +369,23 @@ QUESTION AREA
     
     color: #fff;
     
-    padding: 4px 10px;
-    
-    border-radius: 20px;
-    
     font-size: 13px;
     
-    font-weight: bold;
+    font-weight: 700;
     
-    margin-bottom: 8px;
+    padding: 6px 12px;
+    
+    border-radius: 25px;
+    
+    margin-bottom: 14px;
     
 }
 
-/* Small Text */
+/*==========================
+SMALL TEXT
+==========================*/
 
 small {
-    
-    font-size: 13px;
-    
-    color: #666;
-    
-    display: block;
-    
-    margin-top: 3px;
-    
-}
-
-/* Card Shadow */
-
-#quizPage,
-#resultPage {
-    
-    box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
-    
-}
-
-/* Smooth */
-
-#questionHindi,
-#questionEnglish {
-    
-    transition: .2s;
-    
-}
-/*==================================================
-PART 2
-OPTION BUTTONS
-==================================================*/
-
-#aBtn,
-#bBtn,
-#cBtn,
-#dBtn {
-    
-    display: block;
-    
-    width: 100%;
-    
-    background: #ffffff;
-    
-    color: #222;
-    
-    border: 1px solid #e3e6eb;
-    
-    border-radius: 10px;
-    
-    padding: 15px 16px;
-    
-    margin: 8px 0;
-    
-    font-size: 17px;
-    
-    font-weight: 600;
-    
-    line-height: 1.45;
-    
-    text-align: left;
-    
-    word-break: break-word;
-    
-    transition: all .20s ease;
-    
-    box-shadow: none;
-    
-}
-
-#aBtn:hover,
-#bBtn:hover,
-#cBtn:hover,
-#dBtn:hover {
-    
-    background: #f8fbff;
-    
-    border-color: #1976d2;
-    
-}
-
-#aBtn:active,
-#bBtn:active,
-#cBtn:active,
-#dBtn:active {
-    
-    transform: scale(.98);
-    
-}
-
-/* English Text */
-
-#aBtn small,
-#bBtn small,
-#cBtn small,
-#dBtn small {
     
     display: block;
     
@@ -411,127 +393,313 @@ OPTION BUTTONS
     
     font-size: 14px;
     
-    font-weight: 400;
-    
-    color: #666;
-    
-    line-height: 1.35;
+    color: #777;
     
 }
 
-/* Correct */
+/*==========================
+FADE EFFECT
+==========================*/
 
-.correct {
+#questionHindi,
+#questionEnglish {
     
-    background: #edf8ef !important;
-    
-    border-color: 1px solid #81c784 !important;
-    
-    color: #81c784 !important;
+    animation: fadeQuestion .35s ease;
     
 }
 
-.correct small {
+@keyframes fadeQuestion {
     
-    color: #81c784 !important;
+    from {
+        
+        opacity: 0;
+        
+        transform: translateY(8px);
+        
+    }
     
-}
-
-/* Wrong */
-
-.wrong {
-    
-    background: #ffefef !important;
-    
-    
-    border: 1px solid #ef9a9a !important;
-    
-    color: #ef9a9a !important;
-    
-}
-
-.wrong small {
-    
-    color: #ef9a9a !important;
+    to {
+        
+        opacity: 1;
+        
+        transform: translateY(0);
+        
+    }
     
 }
+/*==================================================
+CTET QUIZ PREMIUM UI
+PART 3 : OPTIONS + NEXT BUTTON
+==================================================*/
 
-/* Disabled */
+#optionsBox{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+    margin-top:10px;
+
+}
+
+/*==========================
+OPTION BUTTONS
+==========================*/
+
+#aBtn,
+#bBtn,
+#cBtn,
+#dBtn{
+
+    position:relative;
+
+    width:100%;
+
+    min-height:72px;
+
+    padding:16px 18px 16px 62px;
+
+    background:#ffffff;
+
+    color:#222;
+
+    border:2px solid #dbe6f3;
+
+    border-radius:18px;
+
+    text-align:left;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    line-height:1.6;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.06);
+
+    transition:.25s;
+
+}
+
+/* A B C D Circle */
+
+#aBtn::before,
+#bBtn::before,
+#cBtn::before,
+#dBtn::before{
+
+    position:absolute;
+
+    left:16px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:32px;
+
+    height:32px;
+
+    border-radius:50%;
+
+    background:#eaf3ff;
+
+    color:#1976d2;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:800;
+
+    font-size:15px;
+
+}
+
+#aBtn::before{content:"A";}
+#bBtn::before{content:"B";}
+#cBtn::before{content:"C";}
+#dBtn::before{content:"D";}
+
+/* Hover */
+
+#aBtn:hover,
+#bBtn:hover,
+#cBtn:hover,
+#dBtn:hover{
+
+    border-color:#1976d2;
+
+    background:#f7fbff;
+
+    transform:translateY(-2px);
+
+}
+
+/* Active */
+
+#aBtn:active,
+#bBtn:active,
+#cBtn:active,
+#dBtn:active{
+
+    transform:scale(.98);
+
+}
+
+/* English */
+
+#aBtn small,
+#bBtn small,
+#cBtn small,
+#dBtn small{
+
+    display:block;
+
+    margin-top:6px;
+
+    color:#666;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+}
+
+/*==========================
+CORRECT
+==========================*/
+
+.correct{
+
+    background:#16a34a !important;
+
+    color:#fff !important;
+
+    border-color:#16a34a !important;
+
+}
+
+.correct::before{
+
+    background:#fff !important;
+
+    color:#16a34a !important;
+
+}
+
+.correct small{
+
+    color:#eefdee !important;
+
+}
+
+/*==========================
+WRONG
+==========================*/
+
+.wrong{
+
+    background:#dc2626 !important;
+
+    color:#fff !important;
+
+    border-color:#dc2626 !important;
+
+}
+
+.wrong::before{
+
+    background:#fff !important;
+
+    color:#dc2626 !important;
+
+}
+
+.wrong small{
+
+    color:#ffeaea !important;
+
+}
+
+/*==========================
+DISABLED
+==========================*/
 
 #aBtn:disabled,
 #bBtn:disabled,
 #cBtn:disabled,
-#dBtn:disabled {
-    
-    opacity: 1;
-    
-    cursor: not-allowed;
-    
+#dBtn:disabled{
+
+    opacity:1;
+
+    cursor:not-allowed;
+
+}
+
+/*==========================
+NEXT BUTTON
+==========================*/
+
+#nextBtn{
+
+    margin-top:22px;
+
+    height:58px;
+
+    border-radius:16px;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    background:linear-gradient(135deg,#ff9800,#fb8c00);
+
+    color:#fff;
+
+    box-shadow:0 10px 24px rgba(251,140,0,.30);
+
+}
+
+#nextBtn:hover{
+
+    filter:brightness(1.05);
+
 }
 /*==================================================
-PART 3
-NEXT BUTTON + RESULT + LEADERBOARD
+CTET QUIZ PREMIUM UI
+PART 4 : RESULT + LEADERBOARD + MOBILE
 ==================================================*/
 
-/* ---------- Next Button ---------- */
-
-#nextBtn {
-    
-    position: sticky;
-    
-    bottom: 10px;
-    
-    display: none;
-    
-    width: 100%;
-    
-    padding: 16px;
-    
-    margin-top: 15px;
-    
-    border: none;
-    
-    border-radius: 14px;
-    
-    background: #2e7d32;
-    
-    color: #fff;
-    
-    font-size: 18px;
-    
-    font-weight: 700;
-    
-    box-shadow: 0 4px 12px rgba(0, 0, 0, .18);
-    
-    z-index: 99;
-    
-}
-
-#nextBtn:hover {
-    
-    background: #256628;
-    
-}
-
-#nextBtn:active {
-    
-    transform: scale(.98);
-    
-}
-
-/* ---------- Result ---------- */
+/*==========================
+RESULT PAGE
+==========================*/
 
 #resultPage {
     
+    margin-top: 20px;
+    
+    background: #ffffff;
+    
+    border-radius: 22px;
+    
+    padding: 25px;
+    
     text-align: center;
+    
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
     
 }
 
 #resultPage h2 {
     
-    font-size: 26px;
+    color: #1565c0;
     
-    color: #2e7d32;
+    font-size: 30px;
     
     margin-bottom: 10px;
     
@@ -539,31 +707,39 @@ NEXT BUTTON + RESULT + LEADERBOARD
 
 #finalScore {
     
-    font-size: 34px;
+    margin: 18px 0;
     
-    font-weight: 700;
+    padding: 18px;
     
-    color: #1565c0;
+    border-radius: 18px;
     
-    margin: 15px 0;
+    background: linear-gradient(135deg, #1976d2, #42a5f5);
     
-}
-
-#resultPage p {
+    color: #fff;
     
-    font-size: 17px;
+    font-size: 30px;
     
-    color: #555;
+    font-weight: 800;
     
-    margin-top: 8px;
+    box-shadow: 0 10px 25px rgba(25, 118, 210, .25);
     
 }
 
-/* ---------- Leaderboard ---------- */
+/*==========================
+LEADERBOARD
+==========================*/
 
 #leaderboard {
     
-    margin-top: 18px;
+    margin-top: 20px;
+    
+    border-radius: 18px;
+    
+    overflow: hidden;
+    
+    background: #fff;
+    
+    border: 1px solid #e6edf5;
     
 }
 
@@ -575,738 +751,191 @@ NEXT BUTTON + RESULT + LEADERBOARD
     
     align-items: center;
     
-    padding: 14px;
-    
-    margin: 8px 0;
-    
-    background: #fff;
-    
-    border-radius: 12px;
-    
-    border: 1px solid #e5e5e5;
-    
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
-    
-}
-
-#leaderboard b {
+    padding: 15px 18px;
     
     font-size: 17px;
     
-    color: #222;
+    border-bottom: 1px solid #edf2f7;
     
 }
-
-#leaderboard span {
-    
-    font-size: 16px;
-    
-    font-weight: bold;
-    
-    color: #1565c0;
-    
-}
-
-/* ---------- Top 3 ---------- */
 
 #leaderboard div:nth-child(1) {
     
     background: #fff8dc;
     
-    border-left: 6px solid #f4b400;
+    font-weight: 700;
     
 }
 
 #leaderboard div:nth-child(2) {
     
-    background: #f5f5f5;
-    
-    border-left: 6px solid #9e9e9e;
+    background: #f7f9fc;
     
 }
 
 #leaderboard div:nth-child(3) {
     
-    background: #fff3e0;
-    
-    border-left: 6px solid #cd7f32;
+    background: #fcfcfc;
     
 }
 
-/* ---------- Animation ---------- */
-
-#leaderboard div {
+#leaderboard div:last-child {
     
-    transition: .2s;
+    border-bottom: none;
     
 }
 
-#leaderboard div:hover {
+/*==========================
+SCROLLBAR
+==========================*/
+
+::-webkit-scrollbar {
     
-    transform: translateY(-2px);
+    width: 8px;
     
 }
-/*==================================================
-PART 4
-MOBILE COMPACT
-==================================================*/
 
-@media (max-width:600px) {
+::-webkit-scrollbar-thumb {
+    
+    background: #1976d2;
+    
+    border-radius: 20px;
+    
+}
+
+/*==========================
+ANIMATION
+==========================*/
+
+.card,
+button,
+#aBtn,
+#bBtn,
+#cBtn,
+#dBtn {
+    
+    animation: fadeUp .35s ease;
+    
+}
+
+@keyframes fadeUp {
+    
+    from {
+        
+        opacity: 0;
+        
+        transform: translateY(10px);
+        
+    }
+    
+    to {
+        
+        opacity: 1;
+        
+        transform: translateY(0);
+        
+    }
+    
+}
+
+/*==========================
+MOBILE
+==========================*/
+
+@media(max-width:600px) {
     
     body {
         
-        padding: 6px;
-        
-        background: #eef2f7;
+        padding: 12px;
         
     }
     
-    /* Header */
-    
-    h2 {
+    .appTitle {
         
-        font-size: 21px;
+        font-size: 24px;
         
-        margin: 2px 0 6px;
+        padding: 16px;
         
     }
     
-    h3 {
+    #quizHeader {
         
-        font-size: 17px;
+        flex-direction: column;
         
-        margin: 3px 0;
-        
-    }
-    
-    h4 {
-        
-        font-size: 14px;
-        
-        margin: 2px 0;
+        gap: 10px;
         
     }
     
-    /* Topic */
-    
-    #todayTopic {
+    #progress {
         
-        padding: 8px;
+        width: 100%;
         
-        font-size: 14px;
-        
-        margin-bottom: 6px;
+        text-align: center;
         
     }
-    
-    /* Card */
-    
-    #startPage,
-    #quizPage,
-    #resultPage,
-    #editBox {
-        
-        padding: 10px;
-        
-        margin-top: 6px;
-        
-        border-radius: 12px;
-        
-    }
-    
-    /* Question */
     
     #questionHindi {
         
-        font-size: 18px;
-        
-        line-height: 1.4;
-        
-        margin: 6px 0;
+        font-size: 21px;
         
     }
     
     #questionEnglish {
         
-        font-size: 13px;
-        
-        line-height: 1.35;
-        
-        margin-bottom: 8px;
+        font-size: 15px;
         
     }
-    
-    /* Option */
     
     #aBtn,
     #bBtn,
     #cBtn,
     #dBtn {
         
-        padding: 12px;
+        font-size: 16px;
         
-        margin: 6px 0;
-        
-        font-size: 15px;
-        
-        line-height: 1.35;
-        
-        border-radius: 12px;
-        
-        min-height: 58px;
+        min-height: 68px;
         
     }
-    
-    /* English Option */
-    
-    #aBtn small,
-    #bBtn small,
-    #cBtn small,
-    #dBtn small {
-        
-        font-size: 12px;
-        
-    }
-    
-    /* Next */
-    
-    #nextBtn {
-        
-        padding: 14px;
-        
-        font-size: 17px;
-        
-        margin-top: 10px;
-        
-    }
-    
-    /* Score */
-    
-    #score {
-        
-        font-size: 22px;
-        
-    }
-    
-    /* Progress */
-    
-    #progress {
-        
-        font-size: 15px;
-        
-        margin-bottom: 5px;
-        
-    }
-    
-    /* Leaderboard */
-    
-    #leaderboard div {
-        
-        padding: 10px;
-        
-        margin: 6px 0;
-        
-    }
-    
-    #leaderboard b {
-        
-        font-size: 15px;
-        
-    }
-    
-    #leaderboard span {
-        
-        font-size: 15px;
-        
-    }
-    
-    /* Inputs */
-    
-    input,
-    textarea,
-    select {
-        
-        padding: 10px;
-        
-        font-size: 15px;
-        
-    }
-    
-    /* Buttons */
     
     button {
         
-        font-size: 16px;
-        
-        padding: 14px;
-        
-    }
-    
-    /* Reduce Gaps */
-    
-    hr {
-        
-        margin: 8px 0;
-        
-    }
-    
-}
-/*==================================================
-PART 5
-ADMIN PANEL
-==================================================*/
-
-/* ---------- Section Heading ---------- */
-
-#questionList,
-#activeQuiz,
-#archiveQuiz,
-#leaderboard {
-    
-    margin-top: 12px;
-    
-}
-
-/* ---------- Cards ---------- */
-
-#questionList>div,
-#activeQuiz>div,
-#archiveQuiz>div {
-    
-    background: #ffffff;
-    
-    border: 1px solid #e4e4e4;
-    
-    border-radius: 14px;
-    
-    padding: 14px;
-    
-    margin-bottom: 12px;
-    
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
-    
-    transition: .2s;
-    
-}
-
-#questionList>div:hover,
-#activeQuiz>div:hover,
-#archiveQuiz>div:hover {
-    
-    transform: translateY(-2px);
-    
-}
-
-/* ---------- Quiz Title ---------- */
-
-#questionList b,
-#activeQuiz b,
-#archiveQuiz b {
-    
-    display: block;
-    
-    font-size: 19px;
-    
-    color: #1565c0;
-    
-    margin-bottom: 6px;
-    
-}
-
-/* ---------- Admin Buttons ---------- */
-
-#questionList button,
-#activeQuiz button,
-#archiveQuiz button {
-    
-    margin-top: 8px;
-    
-    margin-right: 6px;
-    
-    width: auto;
-    
-    min-width: 110px;
-    
-    padding: 11px 18px;
-    
-    display: inline-block;
-    
-    font-size: 15px;
-    
-    border-radius: 10px;
-    
-}
-
-/* ---------- Edit ---------- */
-
-button[onclick*="edit"] {
-    
-    background: #1976d2;
-    
-    color: #fff;
-    
-}
-
-/* ---------- Save ---------- */
-
-button[onclick*="save"] {
-    
-    background: #2e7d32;
-    
-    color: #fff;
-    
-}
-
-/* ---------- Archive ---------- */
-
-button[onclick*="archive"] {
-    
-    background: #ef6c00;
-    
-    color: #fff;
-    
-}
-
-/* ---------- Reuse ---------- */
-
-button[onclick*="reuse"] {
-    
-    background: #7b1fa2;
-    
-    color: #fff;
-    
-}
-
-/* ---------- Delete ---------- */
-
-button[onclick*="delete"] {
-    
-    background: #d32f2f;
-    
-    color: #fff;
-    
-}
-
-/* ---------- Import ---------- */
-
-button[onclick*="import"] {
-    
-    background: #1565c0;
-    
-    color: #fff;
-    
-}
-
-/* ---------- Edit Box ---------- */
-
-#editBox {
-    
-    background: #ffffff;
-    
-    border: 2px solid #1565c0;
-    
-    padding: 15px;
-    
-    border-radius: 14px;
-    
-}
-
-#editBox h3 {
-    
-    text-align: center;
-    
-    margin-bottom: 12px;
-    
-}
-
-/* ---------- Bulk Text ---------- */
-
-#bulkText {
-    
-    font-size: 15px;
-    
-    line-height: 1.5;
-    
-}
-
-/* ---------- Admin Leaderboard ---------- */
-
-#leaderboard div {
-    
-    display: flex;
-    
-    justify-content: space-between;
-    
-    align-items: center;
-    
-    padding: 12px;
-    
-    background: #fff;
-    
-    border-radius: 10px;
-    
-    margin-bottom: 8px;
-    
-    border-left: 5px solid #1976d2;
-    
-}
-
-/* ---------- Mobile ---------- */
-
-@media(max-width:600px) {
-    
-    #questionList button,
-    #activeQuiz button,
-    #archiveQuiz button {
-        
-        width: 100%;
-        
-        margin: 6px 0;
-        
-        font-size: 16px;
-        
-    }
-    
-    #questionList b,
-    #activeQuiz b,
-    #archiveQuiz b {
-        
         font-size: 17px;
         
     }
     
-}
-/*==================================================
-PART 6
-FINAL POLISH
-==================================================*/
-
-/* Smooth */
-
-*{
-transition:.18s ease;
+    #finalScore {
+        
+        font-size: 26px;
+        
+    }
+    
 }
 
-/* Hide blue tap */
+/*==========================
+TABLET
+==========================*/
 
-*{
--webkit-tap-highlight-color:transparent;
+@media(min-width:768px) {
+    
+    .app {
+        
+        max-width: 720px;
+        
+    }
+    
+    #questionHindi {
+        
+        font-size: 25px;
+        
+    }
+    
+    #aBtn,
+    #bBtn,
+    #cBtn,
+    #dBtn {
+        
+        font-size: 18px;
+        
+    }
+    
 }
-
-/* Better Selection */
-
-::selection{
-
-background:#1976d2;
-
-color:#fff;
-
-}
-
-/* Scrollbar */
-
-::-webkit-scrollbar{
-
-width:7px;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-background:#bdbdbd;
-
-border-radius:20px;
-
-}
-
-::-webkit-scrollbar-thumb:hover{
-
-background:#9e9e9e;
-
-}
-
-/* Button Press */
-
-button:active{
-
-transform:scale(.97);
-
-}
-
-/* Input */
-
-input,
-textarea,
-select{
-
-transition:.2s;
-
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-
-box-shadow:0 0 0 3px rgba(25,118,210,.15);
-
-}
-
-/* Option Hover */
-
-#aBtn:hover,
-#bBtn:hover,
-#cBtn:hover,
-#dBtn:hover{
-
-transform:translateY(-1px);
-
-box-shadow:0 5px 14px rgba(0,0,0,.08);
-
-}
-
-/* Correct */
-
-.correct{
-
-animation:correctFlash .25s;
-
-}
-
-@keyframes correctFlash{
-
-0%{transform:scale(.95);}
-
-100%{transform:scale(1);}
-
-}
-
-/* Wrong */
-
-.wrong{
-
-animation:wrongShake .25s;
-
-}
-
-@keyframes wrongShake{
-
-0%{transform:translateX(-4px);}
-
-25%{transform:translateX(4px);}
-
-50%{transform:translateX(-4px);}
-
-75%{transform:translateX(4px);}
-
-100%{transform:translateX(0);}
-
-}
-
-/* Leaderboard */
-
-#leaderboard div{
-
-transition:.2s;
-
-}
-
-#leaderboard div:hover{
-
-transform:translateY(-2px);
-
-}
-
-/* First Rank */
-
-#leaderboard div:nth-child(1){
-
-background:#fff8dc;
-
-}
-
-/* Second */
-
-#leaderboard div:nth-child(2){
-
-background:#f7f7f7;
-
-}
-
-/* Third */
-
-#leaderboard div:nth-child(3){
-
-background:#fff3e0;
-
-}
-
-/* Images */
-
-img{
-
-max-width:100%;
-
-height:auto;
-
-}
-
-/* Long Question */
-
-#questionHindi,
-#questionEnglish{
-
-word-break:break-word;
-
-}
-
-/* Landscape */
-
-@media (orientation:landscape){
-
-body{
-
-max-width:900px;
-
-}
-
-#quizPage{
-
-padding:18px;
-
-}
-
-}
-
-/* Small Mobile */
-
-@media(max-width:360px){
-
-#questionHindi{
-
-font-size:17px;
-
-}
-
-#aBtn,
-#bBtn,
-#cBtn,
-#dBtn{
-
-font-size:14px;
-
-padding:10px;
-
-}
-
-button{
-
-font-size:15px;
-
-}
-
-}
-
-/* End */
-
-
-
