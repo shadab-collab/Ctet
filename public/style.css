@@ -1,1134 +1,389 @@
-/*==================================================
-CTET QUIZ PREMIUM UI
-PART 1 : GLOBAL + HEADER + START PAGE
-==================================================*/
+/* ============================================================
+   CTET Quiz — Testbook-style theme
+   Works with the existing index.html + student.js as-is.
+   No JS IDs/classes were changed — only visual styling.
+   ============================================================ */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
 
 :root {
-    
-    --primary: #2F80ED;
-    --primary-light: #EAF3FF;
-    --success: #EAF8EF;
-    --danger: #FDEDED;
-    --text: #222222;
-    --subtext: #666666;
-    --border: #E4E8EF;
-    --bg: #F5F7FB;
-    --card: #FFFFFF;
-    
+  --navy: #12194f;
+  --navy-light: #232c73;
+  --accent: #ff7a1a;
+  --accent-dark: #e8690a;
+  --success: #1ba672;
+  --error: #e3413a;
+  --bg: #eef1f7;
+  --card: #ffffff;
+  --text: #1b1f3b;
+  --muted: #6b7280;
+  --border: #e4e7f0;
+  --radius: 14px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
 }
 
 body {
-    
-    font-family: Arial, Helvetica, sans-serif;
-    
-    background: var(--bg);
-    
-    color: var(--text);
-    
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans', 'Noto Sans Devanagari', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-.container {
-    
-    max-width: 700px;
-    
-    margin: auto;
-    
-    padding: 14px;
-    
-    min-height: 100vh;
-    
+/* ---------------- App shell : fills the screen, no page scroll ---------------- */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--bg);
+  overflow: hidden;
+  padding-top: var(--safe-t);
 }
 
-/*=========================
-HEADER
-=========================*/
-
-.header {
-    
-    background: #fff;
-    
-    border-radius: 16px;
-    
-    padding: 16px 18px;
-    
-    display: flex;
-    
-    justify-content: space-between;
-    
-    align-items: center;
-    
-    margin-bottom: 14px;
-    
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
-    
-    border: 1px solid var(--border);
-    
-}
-
-.logo {
-    
-    font-size: 24px;
-    
-    font-weight: 700;
-    
-    color: var(--primary);
-    
-    margin-bottom: 4px;
-    
+.appTitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  margin: 0;
+  padding: 12px 16px 10px;
+  flex: 0 0 auto;
 }
 
 #todayTopic {
-    
-    font-size: 14px;
-    
-    color: #666;
-    
-    line-height: 1.4;
-    
+  flex: 0 0 auto;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: #ffffffcc;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
 }
 
-/*=========================
-CARD
-=========================*/
-
-.card {
-    
-    background: #fff;
-    
-    border-radius: 16px;
-    
-    padding: 18px;
-    
-    border: 1px solid var(--border);
-    
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
-    
+/* Hide the topic strip while the quiz is actually running, to save vertical space */
+.app:has(#quizPage[style*="block"]) #todayTopic {
+  display: none;
 }
 
-/*=========================
-START PAGE
-=========================*/
+/* ---------------- Start page ---------------- */
 
-#startPage {
-    
-    margin-top: 20px;
-    
+#startPage.card {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 14px;
+  margin: 16px;
+  padding: 28px 20px;
+  background: var(--card);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(18, 25, 79, 0.12);
 }
 
-#startPage h2 {
-    
-    font-size: 28px;
-    
-    margin-bottom: 10px;
-    
+#startPage h3 {
+  margin: 0 0 4px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  color: var(--navy);
+  text-align: center;
 }
 
-#startPage p {
-    
-    font-size: 15px;
-    
-    color: #666;
-    
-    margin-bottom: 18px;
-    
+#startPage input {
+  font-size: 16px; /* prevents iOS zoom-on-focus */
+  padding: 13px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease;
 }
 
-/*=========================
-INPUT
-=========================*/
-
-input {
-    
-    width: 100%;
-    
-    height: 52px;
-    
-    padding: 0 15px;
-    
-    font-size: 17px;
-    
-    border: 1px solid var(--border);
-    
-    border-radius: 12px;
-    
-    outline: none;
-    
-    margin-bottom: 16px;
-    
-    transition: .2s;
-    
+#startPage input:focus {
+  border-color: var(--accent);
 }
 
-input:focus {
-    
-    border-color: var(--primary);
-    
-    box-shadow: 0 0 0 3px rgba(47, 128, 237, .10);
-    
+#startPage button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255, 122, 26, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-/*=========================
-PRIMARY BUTTON
-=========================*/
-
-.primaryBtn {
-    
-    width: 100%;
-    
-    height: 52px;
-    
-    border: none;
-    
-    border-radius: 12px;
-    
-    background: var(--primary);
-    
-    color: #fff;
-    
-    font-size: 17px;
-    
-    font-weight: 700;
-    
-    cursor: pointer;
-    
-    transition: .2s;
-    
+#startPage button:active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: 0 3px 8px rgba(255, 122, 26, 0.3);
 }
 
-.primaryBtn:active {
-    
-    transform: scale(.98);
-    
-}
-/*==================================================
-PART 2
-QUIZ HEADER + QUESTION CARD
-==================================================*/
+/* ---------------- Quiz page : the no-scroll screen ---------------- */
 
 #quizPage {
-    
-    margin-top: 14px;
-    
-    padding-bottom: 80px;
-    
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 10px 12px calc(10px + var(--safe-b));
+  gap: 8px;
 }
 
-/*=========================
-TOP INFO
-=========================*/
-
-.topInfo {
-    
-    display: flex;
-    
-    gap: 12px;
-    
-    margin-bottom: 14px;
-    
+#quizHeader {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
 }
 
-.scoreCard {
-    
-    width: 95px;
-    
-    background: #fff;
-    
-    border: 1px solid var(--border);
-    
-    border-radius: 14px;
-    
-    padding: 12px;
-    
-    text-align: center;
-    
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
-    
+#quizHeader > div {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 7px 12px;
+  border-radius: 999px;
 }
 
-.scoreCard span {
-    
-    display: block;
-    
-    font-size: 12px;
-    
-    color: #777;
-    
-    margin-bottom: 4px;
-    
+#quizHeader > div:first-child {
+  background: #e6f7f0;
+  color: var(--success);
 }
 
-#score {
-    
-    font-size: 28px;
-    
-    font-weight: 700;
-    
-    color: var(--primary);
-    
-}
-
-.progressCard {
-    
-    flex: 1;
-    
-    background: #fff;
-    
-    border: 1px solid var(--border);
-    
-    border-radius: 14px;
-    
-    padding: 12px 16px;
-    
-    display: flex;
-    
-    align-items: center;
-    
-    justify-content: center;
-    
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
-    
+#quizHeader > div:first-child::before {
+  content: "🏆 ";
 }
 
 #progress {
-    
-    font-size: 17px;
-    
-    font-weight: 700;
-    
-    color: var(--primary);
-    
+  background: #eef0ff;
+  color: var(--navy-light);
 }
 
-/*=========================
-QUESTION CARD
-=========================*/
-
-#questionBox {
-    
-    margin-bottom: 14px;
-    
+#progress::before {
+  content: "📝 ";
 }
 
-.badge {
-    
-    display: inline-block;
-    
-    padding: 5px 12px;
-    
-    background: #EAF3FF;
-    
-    color: var(--primary);
-    
-    font-size: 12px;
-    
-    font-weight: 700;
-    
-    border-radius: 50px;
-    
-    margin-bottom: 12px;
-    
-    letter-spacing: .5px;
-    
+/* Question card: flexible but capped, shrinks gracefully via clamp() */
+
+#questionBox.card {
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: 0 4px 14px rgba(18, 25, 79, 0.08);
+  border-left: 4px solid var(--accent);
 }
 
 #questionHindi {
-    
-    font-size: 22px;
-    
-    font-weight: 700;
-    
-    line-height: 1.5;
-    
-    color: #222;
-    
-    margin-bottom: 10px;
-    
+  margin: 0 0 6px;
+  font-size: clamp(0.95rem, 2.3vh + 0.4rem, 1.2rem);
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--text);
 }
 
 #questionEnglish {
-    
-    font-size: 15px;
-    
-    line-height: 1.6;
-    
-    color: #666;
-    
+  margin: 0;
+  font-size: clamp(0.72rem, 1.4vh + 0.3rem, 0.85rem);
+  color: var(--muted);
+  line-height: 1.3;
 }
 
-/*=========================
-QUESTION ANIMATION
-=========================*/
+/* Options: fill remaining space, evenly distributed, never overflow */
 
-#questionBox {
-    
-    animation: questionFade .25s ease;
-    
+#optionsBox {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
 }
 
-@keyframes questionFade {
-    
-    from {
-        
-        opacity: 0;
-        
-        transform: translateY(8px);
-        
-    }
-    
-    to {
-        
-        opacity: 1;
-        
-        transform: translateY(0);
-        
-    }
-    
+#optionsBox button {
+  font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif;
+  text-align: left;
+  background: var(--card);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: clamp(0.82rem, 1.7vh + 0.3rem, 0.98rem);
+  line-height: 1.35;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease, transform 0.08s ease;
 }
 
-/*=========================
-MOBILE
-=========================*/
-
-@media(max-width:600px) {
-    
-    .topInfo {
-        
-        gap: 10px;
-        
-    }
-    
-    .scoreCard {
-        
-        width: 82px;
-        
-        padding: 10px;
-        
-    }
-    
-    #score {
-        
-        font-size: 24px;
-        
-    }
-    
-    #progress {
-        
-        font-size: 15px;
-        
-    }
-    
-    #questionHindi {
-        
-        font-size: 19px;
-        
-    }
-    
-    #questionEnglish {
-        
-        font-size: 14px;
-        
-    }
-    
-}
-/*==================================================
-PART 3
-OPTION CARD UI
-==================================================*/
-
-#optionsBox{
-
-display:flex;
-
-flex-direction:column;
-
-gap:10px;
-
-margin-top:8px;
-
+#optionsBox button:active:not(:disabled) {
+  transform: scale(0.99);
 }
 
-/*=========================
-OPTION CARD
-=========================*/
-
-#aBtn,
-#bBtn,
-#cBtn,
-#dBtn{
-
-position:relative;
-
-display:block;
-
-width:100%;
-
-padding:14px 14px 14px 56px;
-
-background:#fff;
-
-border:1.5px solid #E4E8EF;
-
-border-radius:14px;
-
-text-align:left;
-
-font-size:16px;
-
-font-weight:600;
-
-color:#202124;
-
-line-height:1.4;
-
-box-shadow:0 1px 4px rgba(0,0,0,.04);
-
-transition:.18s;
-
-min-height:auto;
-
+#optionsBox button:not(:disabled):hover {
+  border-color: var(--accent);
+  background: #fff7f0;
 }
 
-/* OPTION CIRCLE */
-
-#aBtn::before,
-#bBtn::before,
-#cBtn::before,
-#dBtn::before{
-
-position:absolute;
-
-left:14px;
-
-top:16px;
-
-width:28px;
-
-height:28px;
-
-border-radius:50%;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-background:#EAF3FF;
-
-color:#2F80ED;
-
-font-size:14px;
-
-font-weight:700;
-
+#optionsBox button:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
 }
 
-#aBtn::before{content:"A";}
-#bBtn::before{content:"B";}
-#cBtn::before{content:"C";}
-#dBtn::before{content:"D";}
-
-/* Hover */
-
-#aBtn:hover,
-#bBtn:hover,
-#cBtn:hover,
-#dBtn:hover{
-
-border-color:#2F80ED;
-
-background:#FAFCFF;
-
+#optionsBox button b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 4px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--navy);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  vertical-align: middle;
 }
 
-/* English */
-
-#aBtn small,
-#bBtn small,
-#cBtn small,
-#dBtn small{
-
-display:block;
-
-margin-top:4px;
-
-font-size:13px;
-
-font-weight:400;
-
-line-height:1.35;
-
-color:#666;
-
+#optionsBox button small {
+  display: block;
+  margin-top: 2px;
+  margin-left: 32px;
+  color: var(--muted);
+  font-size: 0.72em;
 }
 
-/*=========================
-CORRECT
-=========================*/
+/* Next button: pinned at the bottom of the quiz screen */
 
-.correct{
-
-background:#F2FBF5 !important;
-
-border-left:5px solid #2E7D32 !important;
-
-border-top:1px solid #CDEDD5 !important;
-
-border-right:1px solid #CDEDD5 !important;
-
-border-bottom:1px solid #CDEDD5 !important;
-
-color:#145A32 !important;
-
+#nextBtn {
+  flex: 0 0 auto;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(18, 25, 79, 0.25);
 }
 
-.correct small{
-
-color:#2E7D32 !important;
-
+#nextBtn:active {
+  transform: translateY(1px);
 }
 
-.correct::before{
+/* ---------------- Result page ---------------- */
 
-background:#2E7D32;
-
-color:#fff;
-
-}
-
-/*=========================
-WRONG
-=========================*/
-
-.wrong{
-
-background:#FFF5F5 !important;
-
-border-left:5px solid #D32F2F !important;
-
-border-top:1px solid #F3CACA !important;
-
-border-right:1px solid #F3CACA !important;
-
-border-bottom:1px solid #F3CACA !important;
-
-color:#B71C1C !important;
-
-}
-
-.wrong small{
-
-color:#C62828 !important;
-
-}
-
-.wrong::before{
-
-background:#D32F2F;
-
-color:#fff;
-
-}
-
-/* Disabled */
-
-#aBtn:disabled,
-#bBtn:disabled,
-#cBtn:disabled,
-#dBtn:disabled{
-
-opacity:1;
-
-cursor:default;
-
-}
-
-/* NEXT */
-
-#nextBtn{
-
-position:fixed;
-
-left:14px;
-
-right:14px;
-
-bottom:12px;
-
-height:54px;
-
-border-radius:14px;
-
-background:#2F80ED;
-
-color:#fff;
-
-font-size:17px;
-
-font-weight:700;
-
-box-shadow:0 8px 18px rgba(47,128,237,.25);
-
-z-index:999;
-
-}
-/*==================================================
-PART 4
-RESULT PAGE
-==================================================*/
-
-#resultPage {
-    
-    padding: 18px;
-    
-    margin-top: 12px;
-    
-    background: #fff;
-    
-    border-radius: 18px;
-    
-    box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
-    
-    text-align: center;
-    
-}
-
-.resultTop {
-    
-    margin-bottom: 18px;
-    
-}
-
-.trophy {
-    
-    width: 70px;
-    
-    height: 70px;
-    
-    margin: auto;
-    
-    border-radius: 50%;
-    
-    background: linear-gradient(180deg, #FFD54F, #FFB300);
-    
-    display: flex;
-    
-    align-items: center;
-    
-    justify-content: center;
-    
-    font-size: 34px;
-    
-    box-shadow: 0 5px 15px rgba(255, 193, 7, .25);
-    
+#resultPage.card {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  margin: 14px;
+  padding: 20px 18px calc(20px + var(--safe-b));
+  background: var(--card);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(18, 25, 79, 0.12);
 }
 
 #resultPage h2 {
-    
-    margin-top: 14px;
-    
-    font-size: 24px;
-    
-    color: #222;
-    
+  font-family: 'Poppins', sans-serif;
+  color: var(--navy);
+  text-align: center;
+  margin: 0 0 6px;
+  font-size: 1.2rem;
 }
 
 #finalScore {
-    
-    margin-top: 10px;
-    
-    font-size: 34px;
-    
-    font-weight: 700;
-    
-    color: #2F80ED;
-    
+  text-align: center;
+  color: var(--accent-dark);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.15rem;
+  margin: 0 0 18px;
 }
 
-.summary {
-    
-    display: grid;
-    
-    grid-template-columns: 1fr 1fr;
-    
-    gap: 12px;
-    
-    margin-top: 20px;
-    
-    margin-bottom: 22px;
-    
-}
-
-.summaryCard {
-    
-    background: #F8FAFD;
-    
-    border: 1px solid #E5EAF1;
-    
-    border-radius: 14px;
-    
-    padding: 16px;
-    
-}
-
-.summaryCard span {
-    
-    display: block;
-    
-    font-size: 13px;
-    
-    color: #777;
-    
-    margin-bottom: 6px;
-    
-}
-
-.summaryCard b {
-    
-    font-size: 22px;
-    
-    color: #222;
-    
-}
-
-.leaderboardTitle {
-    
-    margin-bottom: 12px;
-    
-    font-size: 22px;
-    
-    color: #2F80ED;
-    
-}
-
-#leaderboard {
-    
-    background: #fff;
-    
-    border: 1px solid #E5EAF1;
-    
-    border-radius: 14px;
-    
-    overflow: hidden;
-    
+#resultPage h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  color: var(--navy);
+  margin: 0 0 8px;
+  border-bottom: 2px solid var(--bg);
+  padding-bottom: 6px;
 }
 
 #leaderboard div {
-    
-    display: flex;
-    
-    justify-content: space-between;
-    
-    padding: 14px 16px;
-    
-    border-bottom: 1px solid #EEF2F7;
-    
-    font-size: 15px;
-    
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px !important;
+  border-bottom: 1px solid var(--border) !important;
+  font-size: 0.88rem;
+  border-radius: 8px;
 }
 
-#leaderboard div:last-child {
-    
-    border-bottom: none;
-    
+#leaderboard div:nth-child(1) { background: #fff8e1; }
+#leaderboard div:nth-child(2) { background: #f2f3f8; }
+#leaderboard div:nth-child(3) { background: #fdece3; }
+
+#leaderboard b {
+  color: var(--navy);
+  font-family: 'Poppins', sans-serif;
 }
 
-#leaderboard div:nth-child(1) {
-    
-    background: #FFF8E6;
-    
-    font-weight: 700;
-    
+/* ---------------- Scrollbars (only ever used as a safety fallback) ---------------- */
+
+#questionBox::-webkit-scrollbar,
+#optionsBox::-webkit-scrollbar,
+#resultPage::-webkit-scrollbar {
+  width: 4px;
 }
 
-#leaderboard div:nth-child(2) {
-    
-    background: #F8FAFD;
-    
+#questionBox::-webkit-scrollbar-thumb,
+#optionsBox::-webkit-scrollbar-thumb,
+#resultPage::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
 }
 
-#leaderboard div:nth-child(3) {
-    
-    background: #FBFCFE;
-    
+/* ---------------- Reduced motion ---------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
 }
 
-#resultPage button {
-    
-    margin-top: 18px;
-    
-}
-/*==================================================
-PART 5
-FINAL POLISH + MOBILE OPTIMIZATION
-==================================================*/
+/* ---------------- Small-height phones: tighten spacing further ---------------- */
 
-/* Page */
-
-html,
-body {
-    
-    height: 100%;
-    
-    overflow-x: hidden;
-    
-    background: #F5F7FB;
-    
-}
-
-/* Container */
-
-.container {
-    
-    padding: 12px;
-    
-    padding-bottom: 85px;
-    
-}
-
-/* Header */
-
-.header {
-    
-    padding: 12px 16px;
-    
-    margin-bottom: 10px;
-    
-}
-
-.logo {
-    
-    font-size: 22px;
-    
-}
-
-#todayTopic {
-    
-    font-size: 13px;
-    
-}
-
-/* Cards */
-
-.card {
-    
-    padding: 14px;
-    
-    border-radius: 14px;
-    
-}
-
-/* Question */
-
-#questionBox {
-    
-    margin-bottom: 10px;
-    
-}
-
-#questionHindi {
-    
-    font-size: 19px;
-    
-    line-height: 1.45;
-    
-    margin-bottom: 6px;
-    
-}
-
-#questionEnglish {
-    
-    font-size: 14px;
-    
-    line-height: 1.45;
-    
-    color: #666;
-    
-}
-
-/* Options */
-
-#optionsBox {
-    
-    gap: 8px;
-    
-}
-
-#aBtn,
-#bBtn,
-#cBtn,
-#dBtn {
-    
-    padding: 12px 12px 12px 52px;
-    
-    border-radius: 12px;
-    
-    font-size: 15px;
-    
-    line-height: 1.35;
-    
-    box-shadow: none;
-    
-    min-height: auto;
-    
-}
-
-#aBtn::before,
-#bBtn::before,
-#cBtn::before,
-#dBtn::before {
-    
-    left: 12px;
-    
-    top: 14px;
-    
-    width: 26px;
-    
-    height: 26px;
-    
-    font-size: 13px;
-    
-}
-
-/* English */
-
-#aBtn small,
-#bBtn small,
-#cBtn small,
-#dBtn small {
-    
-    font-size: 12px;
-    
-    margin-top: 3px;
-    
-    line-height: 1.3;
-    
-}
-
-/* Next Button */
-
-#nextBtn {
-    
-    position: fixed;
-    
-    left: 12px;
-    
-    right: 12px;
-    
-    bottom: 10px;
-    
-    height: 50px;
-    
-    border-radius: 12px;
-    
-    font-size: 16px;
-    
-    z-index: 999;
-    
-}
-
-/* Result */
-
-#resultPage {
-    
-    padding: 16px;
-    
-}
-
-.trophy {
-    
-    width: 60px;
-    
-    height: 60px;
-    
-    font-size: 30px;
-    
-}
-
-#finalScore {
-    
-    font-size: 28px;
-    
-}
-
-/* Animation */
-
-#aBtn,
-#bBtn,
-#cBtn,
-#dBtn,
-.card {
-    
-    transition: .18s ease;
-    
-}
-
-#aBtn:active,
-#bBtn:active,
-#cBtn:active,
-#dBtn:active {
-    
-    transform: scale(.98);
-    
-}
-
-/* Mobile */
-
-@media (max-width:600px) {
-    
-    .container {
-        
-        padding: 10px;
-        
-        padding-bottom: 80px;
-        
-    }
-    
-    .topInfo {
-        
-        gap: 8px;
-        
-    }
-    
-    .scoreCard {
-        
-        width: 75px;
-        
-        padding: 8px;
-        
-    }
-    
-    #score {
-        
-        font-size: 22px;
-        
-    }
-    
-    .progressCard {
-        
-        padding: 10px;
-        
-    }
-    
-    #progress {
-        
-        font-size: 14px;
-        
-    }
-    
-    .summary {
-        
-        grid-template-columns: 1fr;
-        
-        gap: 8px;
-        
-    }
-    
+@media (max-height: 640px) {
+  .appTitle { padding: 8px 16px 6px; font-size: 0.95rem; }
+  #todayTopic { padding: 4px 10px; font-size: 0.68rem; }
+  #quizPage { padding: 6px 10px calc(6px + var(--safe-b)); gap: 6px; }
+  #questionBox.card { padding: 10px 12px; }
+  #optionsBox button { padding: 7px 10px; }
 }

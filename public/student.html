@@ -5,8 +5,7 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CTET Quiz</title>
 
@@ -14,253 +13,211 @@ content="width=device-width,initial-scale=1.0">
 
 </head>
 
+
 <body>
 
-<div class="container">
 
-<!-- Header -->
+<div class="app">
 
-<header class="header">
 
-<div>
-
-<h2 class="logo">
-
+<h2 class="appTitle">
 CTET Quiz
-
 </h2>
 
-<p id="todayTopic">
 
+<div id="todayTopic">
 Loading Quiz...
-
-</p>
-
 </div>
 
-</header>
+
 
 <!-- Start Page -->
 
-<section id="startPage" class="card">
+<div id="startPage" class="card">
 
-<h2>
 
-Welcome 👋
+<h3>
+Enter Your Name
+</h3>
 
-</h2>
-
-<p>
-
-Enter your name to begin today's quiz.
-
-</p>
 
 <input
 id="studentName"
-type="text"
 placeholder="Enter Your Name"
 autocomplete="off">
 
-<button
-class="primaryBtn"
-onclick="startQuiz()">
 
+<button onclick="startQuiz()">
 Start Quiz
-
 </button>
 
-</section>
-
-<!-- Quiz -->
-
-<section
-id="quizPage"
-style="display:none;">
-
-<div class="topInfo">
-
-<div class="scoreCard">
-
-<span>
-
-Score
-
-</span>
-
-<h2 id="score">
-
-0
-
-</h2>
 
 </div>
 
-<div class="progressCard">
+
+
+
+
+<!-- Quiz Page -->
+
+<div id="quizPage" style="display:none;">
+
+
+
+<!-- Header -->
+
+<div id="quizHeader">
+
+
+<div>
+Score :
+<span id="score">
+0
+</span>
+</div>
+
 
 <div id="progress">
+Question 1 / 1
+</div>
 
-Question 1 / 10
 
 </div>
 
-</div>
 
-</div>
 
-<div
-id="questionBox"
-class="card">
 
-<div class="badge">
 
-QUESTION
+<!-- Question -->
 
-</div>
+<div id="questionBox" class="card">
+
 
 <h3 id="questionHindi">
 
 </h3>
 
+
 <p id="questionEnglish">
 
 </p>
 
+
 </div>
+
+
+
+
+
+<!-- Options -->
+
 
 <div id="optionsBox">
 
-<button
-id="aBtn"
-onclick="checkAnswer(0)">
+
+<button id="aBtn" onclick="checkAnswer(0)">
 </button>
 
-<button
-id="bBtn"
-onclick="checkAnswer(1)">
+
+<button id="bBtn" onclick="checkAnswer(1)">
 </button>
 
-<button
-id="cBtn"
-onclick="checkAnswer(2)">
+
+<button id="cBtn" onclick="checkAnswer(2)">
 </button>
 
-<button
-id="dBtn"
-onclick="checkAnswer(3)">
+
+<button id="dBtn" onclick="checkAnswer(3)">
 </button>
+
 
 </div>
+
+
+
+
+
+<!-- Next Button -->
+
 
 <button
 id="nextBtn"
-class="primaryBtn"
-style="display:none;"
-onclick="nextQuestion()">
+onclick="nextQuestion()"
+style="display:none;">
 
-Next →
+Next Question
 
 </button>
 
-</section>
-<!-- RESULT PAGE -->
 
-<section
-id="resultPage"
-class="card"
-style="display:none;">
 
-<div class="resultTop">
-
-<div class="trophy">
-
-🏆
 
 </div>
 
+
+
+
+
+
+
+
+<!-- Result Page -->
+
+
+<div id="resultPage" style="display:none;" class="card">
+
+
 <h2>
-
-Quiz Completed
-
+Quiz Finished
 </h2>
+
+
 
 <h3 id="finalScore">
 
-0 / 10
-
 </h3>
 
-</div>
 
-<div class="summary">
 
-<div class="summaryCard">
-
-<span>
-
-Score
-
-</span>
-
-<b id="scorePercent">
-
-0%
-
-</b>
-
-</div>
-
-<div class="summaryCard">
-
-<span>
-
-Performance
-
-</span>
-
-<b id="performance">
-
-Excellent
-
-</b>
-
-</div>
-
-</div>
-
-<h3 class="leaderboardTitle">
-
+<h3>
 Leaderboard
-
 </h3>
+
 
 <div id="leaderboard">
 
 </div>
 
-<button
-class="primaryBtn"
-onclick="location.reload()">
 
-Restart Quiz
-
-</button>
-
-</section>
 
 </div>
+
+
+
+
+
+</div>
+
+
+
+
 
 <audio
 id="correctSound"
 src="correct.mp3">
 </audio>
 
+
 <audio
 id="wrongSound"
 src="wrong.mp3">
 </audio>
 
+
+
 <script src="student.js"></script>
 
+
 </body>
+
 </html>
