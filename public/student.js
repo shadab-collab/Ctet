@@ -37,6 +37,18 @@ const leaderboard = document.getElementById("leaderboard");
 
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
+
+// Testbook jaisa light color palette (style.css ke --correct-* / --wrong-*
+// variables se match karta hai). Sirf yahi color values badli gayi hain,
+// baaki poora logic bilkul waisa hi hai jaisa pehle tha.
+const CORRECT_BG = "#d9f2e1";
+const CORRECT_BORDER = "#4caf78";
+const CORRECT_TEXT = "#157347";
+
+const WRONG_BG = "#fbdfe0";
+const WRONG_BORDER = "#e57373";
+const WRONG_TEXT = "#c62828";
+
 // -------------------- LOAD QUIZ --------------------
 
 async function loadQuiz() {
@@ -142,6 +154,8 @@ function showQuestion() {
     
     btn.style.color = "";
     
+    btn.style.borderColor = "";
+    
   });
   
   const q = quiz.questions[current];
@@ -195,8 +209,9 @@ function checkAnswer(selected) {
     
     scoreBox.innerHTML = score;
     
-    optionButtons[selected].style.background = "#2e7d32";
-    optionButtons[selected].style.color = "#fff";
+    optionButtons[selected].style.background = CORRECT_BG;
+    optionButtons[selected].style.color = CORRECT_TEXT;
+    optionButtons[selected].style.borderColor = CORRECT_BORDER;
     
     if (correctSound) {
       
@@ -208,11 +223,13 @@ function checkAnswer(selected) {
     
   } else {
     
-    optionButtons[selected].style.background = "#d32f2f";
-    optionButtons[selected].style.color = "#fff";
+    optionButtons[selected].style.background = WRONG_BG;
+    optionButtons[selected].style.color = WRONG_TEXT;
+    optionButtons[selected].style.borderColor = WRONG_BORDER;
     
-    optionButtons[q.answer].style.background = "#2e7d32";
-    optionButtons[q.answer].style.color = "#fff";
+    optionButtons[q.answer].style.background = CORRECT_BG;
+    optionButtons[q.answer].style.color = CORRECT_TEXT;
+    optionButtons[q.answer].style.borderColor = CORRECT_BORDER;
     
     if (wrongSound) {
       
