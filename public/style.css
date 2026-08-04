@@ -364,6 +364,12 @@ html, body {
   flex-shrink: 0;
 }
 
+/* Top-3 students ko medal jaisa color (gold / silver / bronze) —
+   professional exam-app leaderboards jaisa touch */
+#leaderboard .lbRow:nth-child(1) .lbRank { background: #d4af37; }
+#leaderboard .lbRow:nth-child(2) .lbRank { background: #9aa0ae; }
+#leaderboard .lbRow:nth-child(3) .lbRank { background: #c07a3e; }
+
 #leaderboard .lbName {
   display: flex;
   align-items: center;

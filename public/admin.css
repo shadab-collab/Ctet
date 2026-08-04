@@ -1,7 +1,19 @@
 /* ==========================================================
-   CTET Quiz — Admin Panel Theme
+   CTET Quiz — Admin Panel Theme (v2)
    (student wale quiz-taking page se alag, isi file ko
    admin.html apne <link> me use karega)
+
+   Is version me sirf ye add/badla hai:
+   - top title sticky (app-bar jaisa)
+   - naam/topic/bulk-text teeno fields ko ek connected
+     "card" jaisa jodkar dikhaya (HTML nahi chheda)
+   - Import / Save Quiz buttons ab neeche fixed bottom
+     action bar ban gaye hain (mobile app jaisa feel)
+   - Leaderboard ko professional pill-row look diya,
+     top-3 ko medal color, aur export-time ke liye ek
+     alag "branded" title style (.lbExportTitle) — jo
+     admin.js sirf photo-export ke waqt jodta/hataata hai
+   Baaki poora layout/logic pehle jaisa hi hai.
    ========================================================== */
 
 :root {
@@ -31,12 +43,14 @@
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   margin: 0 auto;
   max-width: 860px;
-  padding: 20px 20px 70px;
+  padding: 20px 20px 20px;
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
   background: var(--bg-app);
   font-family: "Segoe UI", "Noto Sans Devanagari", Arial, sans-serif;
   color: var(--text-main);
@@ -44,11 +58,15 @@ body {
 }
 
 /* ==========================================================
-   TOP TITLE — full-bleed dark banner
+   TOP TITLE — full-bleed dark banner, ab sticky bhi hai
+   (app-bar jaisa feel — scroll karne par bhi upar dikhta rahega)
    ========================================================== */
 
 body > h2:first-of-type {
-  margin: -20px -20px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  margin: -20px -20px 20px;
   padding: 18px 20px;
   background: var(--header-bg);
   color: var(--header-text);
@@ -88,7 +106,7 @@ input,
 textarea,
 select {
   font-family: inherit;
-  font-size: 14px;
+  font-size: 16px; /* 16px rakha hai taaki mobile par focus karte hi zoom na ho */
   padding: 11px 13px;
   border: 1.5px solid var(--border-light);
   border-radius: 10px;
@@ -120,6 +138,35 @@ textarea {
   width: 100% !important; /* HTML me inline width:100% pehle se hai, ye bas ensure karta hai */
   resize: vertical;
   line-height: 1.6;
+}
+
+/* ---- Naam / Topic / Bulk-text: teeno ko ek connected "card" jaisa jodna ----
+   HTML me ye teeno seedhe <body> ke andar hain (koi wrapper div nahi), isliye
+   in beech ke <br><br> ko chhupakar aur teeno par shared background/border
+   deke ek single grouped card jaisa look banaya hai — bina HTML chhue. */
+
+body > br {
+  display: none;
+}
+
+body > input:nth-of-type(1) {
+  margin-bottom: 0;
+  border-radius: var(--radius) var(--radius) 0 0;
+  border-bottom: none;
+  box-shadow: var(--shadow-card);
+}
+
+body > input:nth-of-type(2) {
+  margin-bottom: 0;
+  border-radius: 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: none;
+}
+
+body > textarea {
+  margin-bottom: 18px;
+  border-radius: 0 0 var(--radius) var(--radius);
+  border-top: 1px solid var(--border-light);
 }
 
 /* Option pairs (A/B/C/D ke Hindi + English inputs) — side by side,
@@ -162,11 +209,36 @@ button:active {
   transform: scale(0.97);
 }
 
-/* Primary actions */
+/* ---- Import + Save Quiz: ab ek fixed bottom action bar (mobile app jaisa) ----
+   Dono buttons hamesha screen ke neeche chipke rehte hain, chahe page kahin
+   bhi scroll ho — jaise kisi real app ka persistent action bar hota hai. */
+
 button[onclick="importQuestions()"],
 button[onclick="updateQuestion()"] {
   background: var(--brand-blue);
   color: #fff;
+}
+
+button[onclick="importQuestions()"],
+button[onclick="saveQuiz()"] {
+  position: fixed;
+  bottom: 0;
+  width: 50%;
+  margin: 0;
+  padding: 16px 14px calc(16px + env(safe-area-inset-bottom, 0px));
+  border-radius: 0;
+  font-size: 15px;
+  z-index: 40;
+  box-shadow: 0 -4px 14px rgba(28, 28, 46, 0.15);
+}
+
+button[onclick="importQuestions()"] {
+  left: 0;
+}
+
+button[onclick="saveQuiz()"] {
+  left: 50%;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 /* Save = success */
@@ -320,13 +392,63 @@ hr:last-of-type + h3 ~ button[onclick="exportLeaderboard()"] {
   box-shadow: var(--shadow-card);
 }
 
-#leaderboard div {
+/* ---- Professional pill rows (student wale style jaisa) ----
+   admin.js ab .lbRow / .lbRank / .lbName / .lbScore classes ke saath
+   render karta hai. Yahi structure jab exportLeaderboard() se PNG
+   banta hai to bhi exact waisa hi dikhega. */
+
+#leaderboard .lbRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   background: #fafbff;
   border-radius: 10px;
-  padding: 12px 14px !important;
+  padding: 12px 14px;
   margin-bottom: 8px;
-  border-bottom: none !important;
-  font-size: 14px;
+  box-shadow: 0 1px 4px rgba(28, 28, 46, 0.05);
+}
+
+#leaderboard .lbRank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--brand-blue);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* Top-3 ko medal jaisa color */
+#leaderboard .lbRow:nth-child(1) .lbRank { background: #d4af37; }
+#leaderboard .lbRow:nth-child(2) .lbRank { background: #9aa0ae; }
+#leaderboard .lbRow:nth-child(3) .lbRank { background: #c07a3e; }
+
+#leaderboard .lbName {
+  display: flex;
+  align-items: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#leaderboard .lbScore {
+  flex-shrink: 0;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--success);
+  background: var(--success-bg);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
 }
 
 #leaderboard p {
@@ -336,12 +458,27 @@ hr:last-of-type + h3 ~ button[onclick="exportLeaderboard()"] {
   margin: 10px 0;
 }
 
+/* ---- Export-only branded title ----
+   admin.js sirf exportLeaderboard() chalne ke thik pehle ye div
+   #leaderboard ke andar temporarily jodta hai (aur turant baad
+   hata deta hai), taaki on-screen kuch duplicate na dikhe lekin
+   download hui PNG me ek professional heading rahe. */
+.lbExportTitle {
+  margin: -14px -20px 14px;
+  padding: 14px 20px;
+  background: var(--header-bg);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 16px 16px 0 0;
+}
+
 /* ==========================================================
    Chhoti screens ke liye
    ========================================================== */
 
 @media (max-width: 480px) {
-  body { padding: 14px 14px 60px; }
+  body { padding: 14px 14px 14px; padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)); }
   body > h2:first-of-type { margin: -14px -14px 20px; padding: 14px; }
   #aH, #aE, #bH, #bE, #cH, #cE, #dH, #dE { width: 100%; margin-right: 0; }
   hr:last-of-type + h3,
@@ -351,4 +488,5 @@ hr:last-of-type + h3 ~ button[onclick="exportLeaderboard()"] {
     margin-right: -14px;
     width: calc(100% + 28px);
   }
+  .lbExportTitle { margin-left: -14px; margin-right: -14px; }
 }

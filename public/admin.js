@@ -449,6 +449,9 @@ async function deleteArchive(id){
 
 
 // -------------------- LEADERBOARD --------------------
+// Ab student.js jaisa hi professional pill-row structure (.lbRow /
+// .lbRank / .lbName / .lbScore) use karta hai, aur khaali hone par
+// "No Result Yet" bhi dikhata hai (pehle kuch nahi dikhta tha).
 
 async function loadLeaderboard(){
 
@@ -458,25 +461,20 @@ async function loadLeaderboard(){
 
     leaderboard.innerHTML="";
 
+    if(data.length===0){
+        leaderboard.innerHTML="<p>No Result Yet</p>";
+        return;
+    }
+
     data.forEach((u,index)=>{
 
 leaderboard.innerHTML+=`
 
-<div>
+<div class="lbRow">
 
-<b>
+<span class="lbName"><span class="lbRank">${index+1}</span>${u.studentName||u.name}</span>
 
-${index+1}.
-
-${u.studentName||u.name}
-
-</b>
-
-<br>
-
-Score :
-
-${u.score}/${u.total}
+<span class="lbScore">${u.score}/${u.total}</span>
 
 </div>
 
@@ -507,10 +505,21 @@ async function resetLeaderboard(){
 
 
 // -------------------- EXPORT --------------------
+// Photo export ke thik pehle ek chhota branded title temporarily
+// #leaderboard ke andar joda jata hai (taaki PNG professional/branded
+// dikhe), aur capture hote hi turant hata diya jata hai — on-screen
+// koi extra/duplicate banner permanently nahi dikhega.
 
 function exportLeaderboard(){
 
+    const exportTitle=document.createElement("div");
+    exportTitle.className="lbExportTitle";
+    exportTitle.textContent="🏆 Leaderboard — SHADAB COACHING CENTER";
+    leaderboard.prepend(exportTitle);
+
     html2canvas(leaderboard).then(canvas=>{
+
+        exportTitle.remove();
 
         const a=document.createElement("a");
 
@@ -519,6 +528,10 @@ function exportLeaderboard(){
         a.href=canvas.toDataURL();
 
         a.click();
+
+    }).catch(()=>{
+
+        exportTitle.remove();
 
     });
 
