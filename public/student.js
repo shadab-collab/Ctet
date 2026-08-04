@@ -355,13 +355,11 @@ async function loadLeaderboard() {
       
       leaderboard.innerHTML += `
 
-            <div style="padding:10px;border-bottom:1px solid #ddd;">
+            <div class="lbRow">
 
-            <b>${index+1}. ${s.studentName}</b>
+            <span class="lbName"><span class="lbRank">${index+1}</span>${s.studentName}</span>
 
-            <br>
-
-            Score : ${s.score}/${s.total}
+            <span class="lbScore">${s.score}/${s.total}</span>
 
             </div>
 

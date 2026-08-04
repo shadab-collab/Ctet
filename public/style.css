@@ -316,18 +316,81 @@ html, body {
   text-align: left;
 }
 
-#leaderboard {
-  text-align: left;
+/* "Leaderboard" wala h3 (finalScore ke turant baad) ko ek full-bleed
+   colored banner bana diya — jaise koi naya page/section shuru ho
+   raha ho, baaki result page se saaf alag */
+#finalScore + h3 {
+  margin: 26px -16px 0;
+  padding: 12px 16px;
+  background: var(--header-bg);
+  color: #fff;
+  border-radius: 12px 12px 0 0;
+  font-size: 15px;
 }
 
-#leaderboard div {
-  background: #fafbff;
+#leaderboard {
+  text-align: left;
+  margin: 0 -16px 0;
+  padding: 12px 16px 4px;
+  background: #f6f7fb;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Har row me naam left side, score right side (pill badge jaisa) */
+#leaderboard .lbRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #ffffff;
   border-radius: 10px;
-  padding: 10px 12px !important;
-  margin-bottom: 6px;
-  border-bottom: none !important;
-  font-size: 13px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 4px rgba(28, 28, 46, 0.05);
+}
+
+#leaderboard .lbRank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--brand-blue);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+#leaderboard .lbName {
+  display: flex;
+  align-items: center;
+  font-size: 13.5px;
+  font-weight: 600;
   color: var(--text-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#leaderboard .lbScore {
+  flex-shrink: 0;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--correct-text);
+  background: var(--correct-bg);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+#leaderboard p {
+  color: var(--text-sub);
+  font-style: italic;
+  text-align: center;
+  margin: 12px 0;
 }
 
 /* ==========================================================
