@@ -295,6 +295,22 @@ h3 + div:empty::before {
   border-bottom: 1px solid var(--border-light);
   font-size: 13.5px;
 }
+
+/* Question/option preview me agar aapne Enter se line-break daale hain
+   (jaise Statement I / II / III ko alag line par), to wo yahan bhi
+   dikhein — HTML normally line-breaks chhupa deta hai, pre-line se
+   wo bilkul waise hi dikhte hain jaise aapne type kiye the. */
+#questionList p {
+  white-space: pre-line;
+}
+
+/* Edit Question ke andar ke textarea (Question/Option fields) —
+   pehle ye single-line <input> the, ab textarea hain taaki Enter se
+   khud line change kiya ja sake. */
+#editBox textarea {
+  min-height: 46px;
+  line-height: 1.5;
+}
 #questionList > div:last-child,
 #activeQuiz > div:last-child,
 #archiveQuiz > div:last-child {

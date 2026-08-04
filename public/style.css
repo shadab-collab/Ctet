@@ -199,6 +199,7 @@ html, body {
   line-height: 1.4;
   font-weight: 700;
   color: var(--text-main);
+  white-space: pre-line; /* admin ne Enter se jo line-breaks daale hain (jaise Statement I/II/III), wo yahan bhi dikhein */
 }
 
 #questionEnglish {
@@ -206,6 +207,7 @@ html, body {
   font-size: 13px;
   line-height: 1.35;
   color: var(--text-sub);
+  white-space: pre-line;
 }
 
 /* ==========================================================
@@ -238,6 +240,10 @@ html, body {
 
 #optionsBox button:active {
   transform: scale(0.99);
+}
+
+#optionsBox button {
+  white-space: pre-line;
 }
 
 #optionsBox button b {

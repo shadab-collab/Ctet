@@ -39,21 +39,25 @@ placeholder="Paste Bulk Questions Here"></textarea>
 <div id="editBox" style="display:none;border:1px solid #999;padding:10px;margin-top:20px;margin-bottom:20px;">
 <h3>Edit Question</h3>
 
-<input id="eqh" placeholder="Question Hindi"><br><br>
+<!-- Ye saare fields ab <textarea> hain (pehle <input> the) — taaki
+     "Match the following" ya (I)/(II)/(III) jaise multi-statement
+     questions me aap khud Enter dabakar line change kar sakein. -->
 
-<input id="eqe" placeholder="Question English"><br><br>
+<textarea id="eqh" rows="2" placeholder="Question Hindi (Enter se nayi line)"></textarea><br><br>
 
-<input id="aH" placeholder="A Hindi">
-<input id="aE" placeholder="A English"><br><br>
+<textarea id="eqe" rows="2" placeholder="Question English (Enter se nayi line)"></textarea><br><br>
 
-<input id="bH" placeholder="B Hindi">
-<input id="bE" placeholder="B English"><br><br>
+<textarea id="aH" rows="2" placeholder="A Hindi"></textarea>
+<textarea id="aE" rows="2" placeholder="A English"></textarea><br><br>
 
-<input id="cH" placeholder="C Hindi">
-<input id="cE" placeholder="C English"><br><br>
+<textarea id="bH" rows="2" placeholder="B Hindi"></textarea>
+<textarea id="bE" rows="2" placeholder="B English"></textarea><br><br>
 
-<input id="dH" placeholder="D Hindi">
-<input id="dE" placeholder="D English"><br><br>
+<textarea id="cH" rows="2" placeholder="C Hindi"></textarea>
+<textarea id="cE" rows="2" placeholder="C English"></textarea><br><br>
+
+<textarea id="dH" rows="2" placeholder="D Hindi"></textarea>
+<textarea id="dE" rows="2" placeholder="D English"></textarea><br><br>
 
 <select id="ans">
 <option>A</option>

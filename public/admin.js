@@ -514,7 +514,7 @@ function exportLeaderboard(){
 
     const exportTitle=document.createElement("div");
     exportTitle.className="lbExportTitle";
-    exportTitle.textContent="🏆 Leaderboard — SHADAB COACHING CENTER";
+    exportTitle.textContent="🏆 Leaderboard";
     leaderboard.prepend(exportTitle);
 
     html2canvas(leaderboard).then(canvas=>{
