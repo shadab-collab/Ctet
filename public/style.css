@@ -153,7 +153,7 @@ html, body {
 
 #quizPage {
   flex: 1;
-  display: flex !important;  /* zaroori: student.js is element par inline style.display = "block"/"none" set karta hai, jo normally CSS se upar hota hai — isliye yahan !important zaroori hai taaki layout hamesha flex hi rahe */
+  display: flex;   /* student.js ab isi value ko seedha set karta hai jab quiz dikhana hota hai, aur "none" set karta hai chhupane ke liye — dono normally kaam karte hain */
   flex-direction: column;
   overflow: hidden;
   padding: 10px 12px 12px;

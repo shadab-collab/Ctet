@@ -117,7 +117,7 @@ function startQuiz() {
   
   startPage.style.display = "none";
   
-  quizPage.style.display = "block";
+  quizPage.style.display = "flex";
   
   resultPage.style.display = "none";
   
