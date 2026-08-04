@@ -1,0 +1,354 @@
+/* ==========================================================
+   CTET Quiz — Admin Panel Theme
+   (student wale quiz-taking page se alag, isi file ko
+   admin.html apne <link> me use karega)
+   ========================================================== */
+
+:root {
+  --bg-app: #eef0f6;
+  --header-bg: #1c1c2e;
+  --header-text: #ffffff;
+
+  --card-bg: #ffffff;
+  --text-main: #1c1c2e;
+  --text-sub: #5f6272;
+  --border-light: #dfe2ee;
+
+  --brand-blue: #2b57ff;
+  --brand-blue-dark: #1a3fd6;
+
+  --success: #1f9d5a;
+  --success-bg: #e6f7ee;
+
+  --danger: #d33;
+  --danger-bg: #fdeaea;
+
+  --accent-teal: #0d9488;
+
+  --radius: 14px;
+  --shadow-card: 0 2px 12px rgba(28, 28, 46, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 860px;
+  padding: 20px 20px 70px;
+  background: var(--bg-app);
+  font-family: "Segoe UI", "Noto Sans Devanagari", Arial, sans-serif;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+/* ==========================================================
+   TOP TITLE — full-bleed dark banner
+   ========================================================== */
+
+body > h2:first-of-type {
+  margin: -20px -20px 24px;
+  padding: 18px 20px;
+  background: var(--header-bg);
+  color: var(--header-text);
+  font-size: 20px;
+  border-radius: 0 0 16px 16px;
+  box-shadow: var(--shadow-card);
+}
+
+/* ==========================================================
+   SECTION HEADINGS
+   ========================================================== */
+
+h3 {
+  margin: 26px 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border-light);
+}
+
+/* ==========================================================
+   DIVIDERS — halka, subtle
+   ========================================================== */
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 30px 0;
+}
+
+/* ==========================================================
+   FORM FIELDS
+   ========================================================== */
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 11px 13px;
+  border: 1.5px solid var(--border-light);
+  border-radius: 10px;
+  background: #fafbff;
+  color: var(--text-main);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+input,
+select {
+  width: 100%;
+  display: block;
+  margin-bottom: 4px;
+}
+
+input::placeholder {
+  color: #9799ab;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--brand-blue);
+  background: #fff;
+}
+
+textarea {
+  width: 100% !important; /* HTML me inline width:100% pehle se hai, ye bas ensure karta hai */
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Option pairs (A/B/C/D ke Hindi + English inputs) — side by side,
+   ID se target kiya hai taaki HTML/JS chhedna na pade */
+#aH, #aE, #bH, #bE, #cH, #cE, #dH, #dE {
+  width: 48%;
+  display: inline-block;
+  vertical-align: top;
+}
+#aH, #bH, #cH, #dH {
+  margin-right: 3%;
+}
+
+#ans {
+  width: auto;
+  min-width: 120px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* ==========================================================
+   BUTTONS — role ke hisaab se rang
+   ========================================================== */
+
+button {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 18px;
+  margin: 4px 6px 4px 0;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  background: #eef0f6;
+  color: var(--text-main);
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Primary actions */
+button[onclick="importQuestions()"],
+button[onclick="updateQuestion()"] {
+  background: var(--brand-blue);
+  color: #fff;
+}
+
+/* Save = success */
+button[onclick="saveQuiz()"] {
+  background: var(--success);
+  color: #fff;
+}
+
+/* Leaderboard toolbar */
+button[onclick="loadLeaderboard()"] {
+  background: #fff;
+  border: 1.5px solid var(--border-light);
+  color: var(--text-main);
+}
+
+button[onclick="resetLeaderboard()"] {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1.5px solid #f3b9b9;
+}
+
+button[onclick="exportLeaderboard()"] {
+  background: var(--accent-teal);
+  color: #fff;
+}
+
+/* ==========================================================
+   CARD-STYLE CONTAINERS — jo bhi <div> kisi <h3> ke turant
+   baad aata hai, use white card ka look milta hai
+   (Imported Questions / Active Quiz / Archive)
+   ========================================================== */
+
+h3 + div {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 12px 14px;
+  min-height: 20px;
+}
+
+h3 + div:empty::before {
+  content: "Kuch bhi nahi hai";
+  color: var(--text-sub);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* Un cards ke andar agar admin.js koi div/row insert karta hai,
+   unhe list-item jaisa dikhaya */
+#questionList > div,
+#activeQuiz > div,
+#archiveQuiz > div {
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13.5px;
+}
+#questionList > div:last-child,
+#activeQuiz > div:last-child,
+#archiveQuiz > div:last-child {
+  border-bottom: none;
+}
+
+#questionList button,
+#activeQuiz button,
+#archiveQuiz button {
+  font-size: 12.5px;
+  padding: 6px 12px;
+  margin: 4px 4px 0 0;
+}
+
+/* ==========================================================
+   EDIT QUESTION BOX — modal-jaisa card
+   (inline style se border/padding/margin overwrite karna
+   zaroori hai kyunki HTML me hardcoded inline style hai)
+   ========================================================== */
+
+#editBox {
+  background: var(--card-bg) !important;
+  border: 1.5px solid var(--border-light) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow-card);
+  padding: 18px !important;
+  margin-top: 24px !important;
+  margin-bottom: 24px !important;
+}
+
+#editBox h3 {
+  margin-top: 0;
+}
+
+/* ==========================================================
+   LEADERBOARD — bilkul alag "page" jaisa feel
+   ========================================================== */
+
+/* Document ka aakhri <hr> (Leaderboard ke thik pehle wala) ko
+   ek bada "section break" bana diya */
+hr:last-of-type {
+  margin-top: 56px;
+  border-top: 2px dashed #c7cadf;
+}
+
+/* Us hr ke turant baad wala h3 (yaani "Leaderboard") ek full-bleed
+   colored banner ban jata hai — jaise naya page shuru ho raha ho */
+hr:last-of-type + h3 {
+  margin: 0 -20px 0;
+  padding: 16px 20px;
+  background: var(--header-bg);
+  color: #fff;
+  border: none;
+  border-radius: 16px 16px 0 0;
+  font-size: 17px;
+}
+
+/* Us heading ke baad wale saare buttons (Refresh/Reset/Export)
+   ek connected toolbar jaisa dikhte hain */
+hr:last-of-type + h3 ~ button {
+  margin: 0 -20px 0;
+  width: calc(100% + 40px);
+  text-align: left;
+  border-radius: 0;
+  background: #f4f5fa;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-light);
+  padding: 12px 20px;
+  display: block;
+}
+
+hr:last-of-type + h3 ~ button + button {
+  border-top: none;
+}
+
+hr:last-of-type + h3 ~ button[onclick="resetLeaderboard()"] {
+  color: var(--danger);
+  background: #fbeeee;
+}
+
+hr:last-of-type + h3 ~ button[onclick="exportLeaderboard()"] {
+  color: var(--accent-teal);
+  background: #eafaf8;
+  border-radius: 0 0 0 0;
+}
+
+/* Leaderboard ka result panel — card jo upar wale banner/toolbar
+   se seedha juda hua lage */
+#leaderboard {
+  margin: 0 -20px 0;
+  width: calc(100% + 40px);
+  background: var(--card-bg);
+  padding: 14px 20px 22px;
+  border-radius: 0 0 16px 16px;
+  box-shadow: var(--shadow-card);
+}
+
+#leaderboard div {
+  background: #fafbff;
+  border-radius: 10px;
+  padding: 12px 14px !important;
+  margin-bottom: 8px;
+  border-bottom: none !important;
+  font-size: 14px;
+}
+
+#leaderboard p {
+  color: var(--text-sub);
+  font-style: italic;
+  text-align: center;
+  margin: 10px 0;
+}
+
+/* ==========================================================
+   Chhoti screens ke liye
+   ========================================================== */
+
+@media (max-width: 480px) {
+  body { padding: 14px 14px 60px; }
+  body > h2:first-of-type { margin: -14px -14px 20px; padding: 14px; }
+  #aH, #aE, #bH, #bE, #cH, #cE, #dH, #dE { width: 100%; margin-right: 0; }
+  hr:last-of-type + h3,
+  hr:last-of-type + h3 ~ button,
+  #leaderboard {
+    margin-left: -14px;
+    margin-right: -14px;
+    width: calc(100% + 28px);
+  }
+}
